@@ -1,0 +1,1332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title></title><link rel="stylesheet" type="text/css" href="template_stylesheet.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.78.1" /></head><body><div xml:lang="en" class="article" lang="en"><div class="titlepage"><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl class="toc"><dt><span class="section"><a href="#_declaration_of_authenticity">1. Declaration of Authenticity</a></span></dt><dt><span class="section"><a href="#_acknowledgements">2. Acknowledgements</a></span></dt><dt><span class="section"><a href="#_introduction">3. Introduction</a></span></dt><dt><span class="section"><a href="#_project_goals">4. Project Goals</a></span></dt><dt><span class="section"><a href="#_project_scope">5. Project Scope</a></span></dt><dt><span class="section"><a href="#_project_processes">6. Project Processes</a></span></dt><dd><dl><dt><span class="section"><a href="#_project_source_control">6.1. Project Source Control</a></span></dt><dt><span class="section"><a href="#_project_licence">6.2. Project Licence</a></span></dt><dt><span class="section"><a href="#_project_stakeholders">6.3. Project Stakeholders</a></span></dt><dt><span class="section"><a href="#_project_testing">6.4. Project Testing</a></span></dt></dl></dd><dt><span class="section"><a href="#_project_documentation">7. Project Documentation</a></span></dt><dt><span class="section"><a href="#_deliverables">8. Deliverables</a></span></dt><dd><dl><dt><span class="section"><a href="#_deliverables_in_semester_7">8.1. Deliverables in Semester 7</a></span></dt><dt><span class="section"><a href="#_deliverables_in_semester_8">8.2. Deliverables in Semester 8</a></span></dt></dl></dd><dt><span class="section"><a href="#_iteration_plan">9. Iteration Plan</a></span></dt><dd><dl><dt><span class="section"><a href="#_iteration_0">9.1. Iteration 0</a></span></dt><dt><span class="section"><a href="#_iteration_1">9.2. Iteration 1</a></span></dt><dt><span class="section"><a href="#_iteration_2">9.3. Iteration 2</a></span></dt><dt><span class="section"><a href="#_iteration_3">9.4. Iteration 3</a></span></dt><dt><span class="section"><a href="#_iteration_4">9.5. Iteration 4</a></span></dt><dt><span class="section"><a href="#_iteration_5">9.6. Iteration 5</a></span></dt><dt><span class="section"><a href="#_iteration_6">9.7. Iteration 6</a></span></dt><dt><span class="section"><a href="#_iteration_7">9.8. Iteration 7</a></span></dt><dt><span class="section"><a href="#_iteration_8">9.9. Iteration 8</a></span></dt><dt><span class="section"><a href="#_iteration_9">9.10. Iteration 9</a></span></dt><dt><span class="section"><a href="#_iteration_10">9.11. Iteration 10</a></span></dt><dt><span class="section"><a href="#_iteration_11">9.12. Iteration 11</a></span></dt><dt><span class="section"><a href="#_iteration_12">9.13. Iteration 12</a></span></dt><dt><span class="section"><a href="#_iteration_13">9.14. Iteration 13</a></span></dt><dt><span class="section"><a href="#_iteration_14">9.15. Iteration 14</a></span></dt></dl></dd><dt><span class="section"><a href="#_project_backlog">10. Project Backlog</a></span></dt><dt><span class="section"><a href="#_ardtweeno_engineering_release_2">11. Ardtweeno Engineering Release 2</a></span></dt><dd><dl><dt><span class="section"><a href="#_setup_and_configuration">11.1. Setup and Configuration</a></span></dt><dt><span class="section"><a href="#_basic_network_configuration">11.2. Basic Network Configuration</a></span></dt><dt><span class="section"><a href="#_high_level_feature_list">11.3. High Level Feature List</a></span></dt></dl></dd><dt><span class="section"><a href="#_project_class_diagram_and_class_listing">12. Project Class Diagram and Class Listing</a></span></dt><dt><span class="section"><a href="#_package_diagrams">13. Package Diagrams</a></span></dt><dt><span class="section"><a href="#_api_specification">14. API Specification</a></span></dt><dd><dl><dt><span class="section"><a href="#_http_rest_interface">14.1. HTTP REST Interface</a></span></dt><dt><span class="section"><a href="#_http_rest_api_authentication">14.2. HTTP REST API Authentication</a></span></dt><dt><span class="section"><a href="#_posting_packet">14.3. Posting Packet</a></span></dt><dt><span class="section"><a href="#_retrieving_packets">14.4. Retrieving Packets</a></span></dt><dt><span class="section"><a href="#_retrieving_nodes">14.5. Retrieving Nodes</a></span></dt><dt><span class="section"><a href="#_adding_a_node_to_the_watchlist">14.6. Adding a Node to the Watchlist</a></span></dt><dt><span class="section"><a href="#_retrieving_zones">14.7. Retrieving Zones</a></span></dt><dt><span class="section"><a href="#_ardtweeno_api_front_end">14.8. Ardtweeno API Front End</a></span></dt></dl></dd><dt><span class="section"><a href="#_ardtweeno_minimum_system_requirements">15. Ardtweeno Minimum System Requirements</a></span></dt><dd><dl><dt><span class="section"><a href="#_software_dependencies">15.1. Software Dependencies</a></span></dt><dt><span class="section"><a href="#_hardware_dependencies">15.2. Hardware Dependencies</a></span></dt></dl></dd><dt><span class="section"><a href="#_installation_instructions">16. Installation Instructions</a></span></dt><dd><dl><dt><span class="section"><a href="#_install_package_dependencies">16.1. Install Package Dependencies</a></span></dt><dt><span class="section"><a href="#_install_nodejs">16.2. Install NodeJS</a></span></dt><dt><span class="section"><a href="#_install_rvm_and_ruby">16.3. Install RVM and Ruby</a></span></dt><dt><span class="section"><a href="#_install_ruby_gem_dependencies">16.4. Install Ruby Gem Dependencies</a></span></dt><dt><span class="section"><a href="#_install_the_ardtweeno_gateway_application">16.5. Install the Ardtweeno Gateway Application</a></span></dt><dt><span class="section"><a href="#_launch_the_ardtweeno_gateway">16.6. Launch the Ardtweeno Gateway</a></span></dt><dt><span class="section"><a href="#_ardtweeno_configuration">16.7. Ardtweeno Configuration</a></span></dt></dl></dd><dt><span class="section"><a href="#_xbee_radio_network">17. XBEE Radio Network</a></span></dt><dd><dl><dt><span class="section"><a href="#_xbee_configuration">17.1. XBEE Configuration</a></span></dt></dl></dd><dt><span class="section"><a href="#_node_design">18. Node Design</a></span></dt><dd><dl><dt><span class="section"><a href="#_temperature_sensor_platform_schematic">18.1. Temperature Sensor Platform Schematic</a></span></dt><dt><span class="section"><a href="#_movement_sensor_platform_schematic">18.2. Movement Sensor Platform Schematic</a></span></dt></dl></dd><dt><span class="section"><a href="#_technologies_used_in_ardtweeno">19. Technologies Used in Ardtweeno</a></span></dt><dd><dl><dt><span class="section"><a href="#_hardware_used_in_the_ardtweeno_system">19.1. Hardware Used in the Ardtweeno System</a></span></dt><dt><span class="section"><a href="#_software_used_in_the_ardtweeno_system">19.2. Software Used in the Ardtweeno System</a></span></dt></dl></dd><dt><span class="section"><a href="#_future_work">20. Future Work</a></span></dt><dt><span class="section"><a href="#_conclusions">21. Conclusions</a></span></dt><dt><span class="section"><a href="#_bibliography">22. Bibliography:</a></span></dt></dl></div><div class="informalfigure"><div class="mediaobject" align="center"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="15%"><tr><td align="center"><img src="tssg_logo.png" align="middle" width="500px" height="320px" alt="TSSG Logo" /></td></tr></table></div></div><h2><a id="_ardtweeno_final_report"></a>Ardtweeno - Final Report</h2><p><strong>Research Group: </strong>Department of Computing, Maths &amp; Physics</p><p><strong>Address: </strong>Waterford Institute of Technology, Cork RD Campus, Waterford</p><p><strong>Author(s): </strong>David Kirwan</p><p><strong>Email List: </strong><a class="ulink" href="mailto:davidkirwanirl@gmail.com" target="_top">davidkirwanirl@gmail.com</a></p><p><strong>Rev Date: </strong>May 18, 2013</p><p><strong>Rev Number: </strong>0.2.4</p><p><strong>Date: </strong>September 10, 2012</p><p><strong>Copyright: </strong>© David Kirwan</p><h4><a id="_synopsis"></a>Synopsis:</h4><p>Ardtweeno - An open source application gateway to link a distributed sensor mesh network to an Internet Protocol network</p><p></p><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_declaration_of_authenticity"></a>1. Declaration of Authenticity</h2></div></div></div><pre class="screen">Except where explicitly stated, this report represents work that I have done
+myself. I have not submitted the work represented in this report in any other
+course of study to an academic reward.
+
+
+
+
+
+
+
+
+
+Name:
+
+===========================
+
+
+Date:
+
+===========================</pre><p></p><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_acknowledgements"></a>2. Acknowledgements</h2></div></div></div><p>This project would not have been possible without the support of the following people.</p><p>To my fantastic supervisor Eamonn de Leastar to whom I am eternally grateful for his patience, guidance, knowledge and for being so generous
+with his time throughout the development period. Thank you, it has been a real pleasure working together.</p><p>To my classmates in Applied Computing class 2009 - 2013, what a fantastic bunch of people, thanks for the experiences over
+the last four years. It has been an honour.</p><p>To my lecturers at the Waterford Institute of Technology, you have all been so open and free with your sharing of knowledge, it
+has been an absolute pleasure learning from you at WIT.</p><p>To my sister Jean, you inspired me to work as hard as I have these last 4 years. I wanted to make you as proud of me as I am of you.
+If you beat me to PhD, I’ll buy you a bag of chips in Roccos.</p><p>To my father, I can only imagine the conversations we might have had, I suspect you would have loved playing with this equipment
+as much as I have.</p><p>To my mother, thank you for your friendship. You have always been a positive influence in my life. Some day you must sit down and
+explain how you can walk past, and in the time it takes to cross a room and without any prior involvement, solve a problem I
+have been struggling with for days.</p><p>To my four dogs Noah, Oscar, Rosie and Skippy, you are the best mutts a man could ask for.</p><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>3. Introduction</h2></div></div></div><p>As consumer programmable embedded systems shrink in size, cost and availability, it becomes
+feasible to deploy them in roles previously considered cost prohibitive. While the costs fall
+the computing power of these embedded systems rise sharply as they fast approach that of
+personal computers. This allows the computing enthusiast to develop interesting creations
+previously only available to large corporations with extensive research and development budgets.</p><p>The most well known consumer programmable embedded platform todate is the <span class="emphasis"><em>Arduino</em></span>. The <span class="emphasis"><em>Arduino</em></span> was
+released by Massimo Banzi, David Cuartielles, Gianluca Martino, Tom Igoe and David Mellis in 2005,
+but began life as a teaching tool for students at the <span class="emphasis"><em>Interaction Design Institute Ivrea</em></span> in Italy.
+The project started in 2002, as Banzai had been hired by the IDII institute as an associate professor
+to help create new methods of performing interaction design <a class="xref" href="#IEEE-2011">[IEEE-2011]</a>.
+Banzai hoped to create a platform to program a micro-controller in the same easy fashion as the on screen
+visuals created by the <span class="emphasis"><em>Processing</em></span> language and its IDE. A masters student at IDDI, Hernando Barragan,
+took the first steps towards realising this when he created a prototyping platform he named <span class="emphasis"><em>Wiring</em></span>
+which contained an IDE and a programmable circuit board.</p><p><span class="emphasis"><em>Arduino</em></span> was released as an open hardware prototyping platform and continues to be the go to technology
+for artists, electronics hobbyists and students <a class="xref" href="#IEEE-2011">[IEEE-2011]</a>. I had my first experience with <span class="emphasis"><em>Arduino</em></span>
+in 2010 when I purchased a DIY kit to create a remote control from eBay. The kit contained the <span class="emphasis"><em>Arduino</em></span>
+Mega board which has the Atmel1280 16 MHZ CPU, 4 KB of RAM, and 128KB of storage, along with 52 mix of
+analog/digital inputs/outputs suitable for connecting to and controlling devices such as motors, switches
+or LED’s. After several months of reading forums, online tutorials and Youtube videos I had a good grasp
+of what the <span class="emphasis"><em>Arduino</em></span> systems were capable of. I envisioned the <span class="emphasis"><em>Arduino</em></span> FIO board to be perfectly
+suited to my project.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="50%"><tr><td><img src="../images/fio.jpg" width="100%" alt="Arduino FIO" /></td></tr></table></div></div><p>The FIO board has the Atmel328 8 MHZ CPU, 2 KB of RAM, and 32KB of storage, with a limited number of
+inputs/outputs, the main selling point of the FIO board is the on-board circuit to handle the trickle
+charging of Lithium Polymer batteries using solar panels, and equally important, the on-board cradle to hold
+an XBEE radio. The FIO is the perfect solar powered sensor platform which can communicate sensor data back
+to a collector system using the XBEE radio. It is for this reason I decided to make use of the <span class="emphasis"><em>Arduino</em></span> FIO board
+in my project.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="50%"><tr><td><img src="../images/raspberrypi.jpg" width="100%" alt="Raspberry Pi" /></td></tr></table></div></div><p>One recent particularly newsworthy development is the release of the Raspberry Pi earlier this year. The Pi
+is a Broadcom ARM CPU powered full featured computer system designed to be cheap and easy to use
+as a means to teach children how to write code. The Pi board was released at the end of February 2012, is
+no bigger than a credit card and has already shipped upwards of half a million units since. The Raspberry Pi
+foundation is a not for profit charity created by Ebon Upton et al. at the University of Cambridge in the
+United Kingdom.</p><p>It is interesting to many computing enthusiasts as this machine has a sub-40 Euro price tag, it can run from
+a battery source while still providing HDMI video output. The Pi system has multiple Linux distributions
+available, such as Archlinux Arm or Debian Squeeze <a class="xref" href="#raspberrypi-2012">[raspberrypi-2012]</a>. The Linux distribution I picked
+for the Operating System on my Raspberry Pi is <span class="emphasis"><em>Debian 7 Wheezy</em></span>. I have found Debian 7 to be comfortable
+to work with as it has access to a large number of applications and utilities compiled for ARM systems in the
+apt-get repositories, making it the perfect development platform for my project.</p><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_project_goals"></a>4. Project Goals</h2></div></div></div><p>The Ardtweeno system I have developed is a distributed sensor mesh network gateway,
+which bridges devices connected through a serial link to devices over Internet Protocol (IP).
+The core system is a Ruby application with an exposed Sinatra micro web application acting as an API. It
+has been designed to run on the Raspberry Pi as a Platform as a Service or <span class="emphasis"><em>PaaS</em></span>. I had hoped to develop
+the serial parser subsystem in Ruby also, but due to issues surrounding threading, namely threading while
+reading from a serial device, I abandoned the Ruby gem <span class="emphasis"><em>serialport</em></span> in favour of a similar serial library in
+<span class="emphasis"><em>NodeJS</em></span>. This is how it is implemented in the initial release, it is something I intend on changing at the
+earliest possible opportunity, I hope to replace this system with a C implementation of the parser sub system,
+as a Ruby <span class="emphasis"><em>C Extension</em></span>.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/Ardtweeno_system_concept.jpg" width="100%" alt="Ardtweeno System" /></td></tr></table></div></div><p><span class="emphasis"><em>Ardtweeno - Application Gateway for a Mesh Network</em></span></p><p>All data collected is logged to a database if one is configured and available. The intention for this is to allow
+statistical analysis and perhaps graphs to be generated. These graphs could potentially be included in hourly / daily
+reports which can be attached to the systems twitter feed in automatic updates and to other suitable social
+media. This is currently possible using data gathered through the Ardtweeno API.</p><p>I have several examples of the API being consumed, which can be seen in the <code class="literal">tech demo</code> web application which I developed to
+demonstrate some possible uses for the Ardtweeno system. The tech demo web application consumes the Ardtweeno API and generates
+output such as the dynamically constructed topology diagram for the Ardweeno gateway. However in the long run I hope to see the
+Ardtweeno system being used like a locally running version of <a class="xref" href="#cosm">[cosm]</a>. The system can act as a gateway and storage solution for
+smart sensor platforms in the home. Eventually I hope to mature the system to the point where applications can be developed to
+take advantage of the Ardtweeno features while building home / commercial automation systems.</p><p>In later releases I hope to make it possible to interact with the service so that it may respond to commands received on twitter,
+by developing a Twitter bot to handle and respond user requests such as creating reports on demand, or simply
+attaching the latest graph in a reply tweet to the user. Integration with <code class="literal">Dropbox</code>, or some other cloud storage
+is also a possibility, where subscribers to the Ardtweeno system may receive update files within a folder shared
+between the user and the Ardtweeno system.</p><p>A feature which made it into the 0.2.x release branch at the last minute is the web hook push notification
+system. Ardtweeno has a rudimentary implementation of a watch list system where a user can instruct the gateway to
+place a watch on a node. Should traffic be received on the SerialParser from this particular watched node,
+Ardtweeno will construct a push notification packet and using a HTTP 1.1 POST request, push the packet to the designated
+web hook. This could potentially offer another way to interact with approved third parties. It could also be used to spur
+the update and automatic generation of news updates within an application which consumes the Ardtweeno services.</p><p></p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/xbee-mesh-network.png" width="100%" alt="Simple XBEE Mesh Network" /></td></tr></table></div></div><p><span class="emphasis"><em>Simple XBEE Mesh Network</em></span> <a class="xref" href="#xbee-mesh-2012">[xbee-mesh-2012]</a></p><p>Early in development, I envisaged the ultimate goal of being able to push updated firmwares to mesh network
+nodes as required using the Ardtweeno Application Gateway. I have placed this goal on the long term project backlog.
+I hope to eventually allow for firmware uploads to non homogeneous node mesh network nodes as in a targeted node
+firmware upgrade to maximise the usefulness of the system. I also intend to allow the upgrading of all network
+nodes simultaneously in a broadcast fashion as would be the case in a homogeneous node mesh network. I plan to
+use the Arduino command line firmware compiler tool <span class="emphasis"><em>ino</em></span> to develop a solution for pushing firmware updates to
+nodes on the mesh network using my Ardtweeno system <a class="xref" href="#ino-2012">[ino-2012]</a>.</p><p>This feature will increase the commercial appeal of the project exponentially and for this reason I’ll endeavour to
+include as soon as possible.</p><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_project_scope"></a>5. Project Scope</h2></div></div></div><p>I envision the Ardtweeno system being used in locations where an end user requires reliable low maintenance
+embedded sensor platforms to take regular measurements of some industrial process or ambient state. The system also
+has great potential to provide the PaaS infrastructure on top of which developers can produce home automation applications
+to control processes within the home environment.</p><p><strong>Case Study One. </strong>A factory floor with multiple assembly lines producing products which need to be kept at a specific
+temperature. Each mesh network node has a temperature sensor attached which maintains careful watch to ensure
+the temperature does not fall below a certain threshold, or breach an upper temperature level. If either
+condition is met, the node can raise an alarm with the <span class="emphasis"><em>Ardtweeno Application Gateway</em></span>, but can potentially
+be programmed to take steps to rectify the situation such as turning cooling fans on or off, or perhaps heating elements
+up or down.</p><p><strong>Case Study Two. </strong>A data centre maintains 15 racks of servers, all requiring strict temperature control. Each rack has a mesh network
+node attached, monitoring the temperature inside the rack, with a second sensor monitoring the pressure of the water
+cooling system. A drop in water pressure might indicate a pump has failed, at which point the node issues an alarm
+back to the <span class="emphasis"><em>Ardtweeno Application Gateway</em></span>, to issue a request that a service engineer investigate, while lighting
+a warning light on the rack to provide a visual cue to aid service engineers examining the individual rack for sensor
+malfunctions. Upon inspection the rack appears to be fine, and the alarm was caused by an overly sensitive threshold
+for water pressure value in the mesh network node. This is resolved simply by uploading a firmware with this value relaxed
+to all mesh network nodes in the data centre managed by the <span class="emphasis"><em>Ardtweeno Application Gateway</em></span>.</p><p><strong>Case Study Three. </strong>An amateur bird watcher wishes she could capture a picture of visitors to the bird table in the garden. She travels
+often and sadly does not get the time to spend sitting with her camera ready to capture some nice pictures. She decides
+to use a technological solution and sets a mesh network node up in her garden, powered by solar panels and a small
+lithium polymer battery it is autonomous and requires no further maintenance.
+She then attaches an infra-red sensor to the mesh network node, along with a small JPEG camera. Using the
+<span class="emphasis"><em>Ardtweeno Application Gateway</em></span> she instructs the mesh network node to take a picture every time the infra-red sensor
+picks up activity over a certain threshold, and then have it transmit the image back over the serial link to the Gateway
+for processing and storage. The <span class="emphasis"><em>Ardtweeno Application Gateway</em></span> updates her twitter feed and attaches the captured images.
+The neighbours and friends which regularly view the feed, marvel at just how many crows seem to visit her bird table for
+their supper.</p><p><strong>Case Study Four. </strong>An Electronic Engineer has an existing home automation system with an ARM micro-controller hooked up to each sensor. Each
+micro-controller powers an LCD which shows the current sensor reading value. He would like to have a system where he can
+visit a website a web browser on the laptop or perhaps his smart phone or tablet, but is unwilling to develop the entire
+system himself from scratch. A friend recommended the Ardtweeno Application Gateway which is a PaaS and might be perfect
+for his needs. With a little research, he commits to adding the XBee radio links to form a mesh network which can be
+then read by the Ardtweeno gateway. Once the system was up and running he set to work developing the simple web page
+which showed the list of connected devices and their current sensor readings.</p><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_project_processes"></a>6. Project Processes</h2></div></div></div><p>I developed the Ardtweeno system according to Agile Methodology while making use of Extreme Programming
+techniques such as providing iteration sprints on a fortnightly basis. Each iteration producing production grade
+code at each iteration end, with full featured Engineering releases at set points through the semester.
+I had experience using Agile Methodology and Extreme Programming techniques during my internship with the
+<span class="emphasis"><em>Telecommunications Software Support Group (TSSG)</em></span>. I found the experience highly enjoyable and felt that it
+promotes good work practices. It is for this reason I choose Agile Methodology and the Extreme Programming techniques as
+the processes which I followed during my project development cycle.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_project_source_control"></a>6.1. Project Source Control</h3></div></div></div><p>All aspects of the project are maintained under source control in the project bitbucket.org git repository.
+This repository is private, and will remain so until such time as the ER2 has been released, and the project
+released publicly. I hope to release the Engineering Release tagged project on github.com and make it available to
+the public as an open source project with the aim to continue development in the future. Development on this project
+may be continued during my work at the <a class="xref" href="#tssg">[tssg]</a>, and or perhaps further developed during postgraduate study.</p><p>I have created the following Git repository on github.com in anticipation of the release at <span class="emphasis"><em>https://github.com/davidkirwan/ardtweeno</em></span>
+The current codebase is close to reaching the goals and functionality specified in the MVP system specification, and I will
+be releasing the ER2 tagged codebase along with the latest project documentation onto the <span class="emphasis"><em>github.com</em></span> wiki associated
+with the project. ER1 was completed by January 7th 2012 and a working demo was provided to my supervisor, project second
+reader and the head of the Applied Computing course.</p><p>I have also claimed the <span class="emphasis"><em>ardtweeno</em></span> gem name on <span class="emphasis"><em>rubygems.org</em></span>. When the ER2 codebase is released on github.com I
+also intend on releasing the built gem artifact on <span class="emphasis"><em>rubygems.org</em></span> at the following project URL:
+<span class="emphasis"><em>https://rubygems.org/gems/ardtweeno</em></span></p><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_project_licence"></a>6.2. Project Licence</h3></div></div></div><p>I have chosen the Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) licence for the <span class="emphasis"><em>Ardtweeno - Application Gateway</em></span>
+as I feel this licence fits my needs best. This allows developers to use the system for free, while also collaborating with
+others to make changes to it. This licence prevents third parties the right to use the system for commercial
+purposes however, should someone be interested in making commercial use of the system, they must contact me directly.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_project_stakeholders"></a>6.3. Project Stakeholders</h3></div></div></div><p>During my investigations I have identified the following stakeholders in the project. These stakeholders
+should represent all likely users of the Ardtweeno system which have been identified to date.</p><p>The stakeholders identified in the system are as follows:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+User interacting with the Ardtweeno system through Twitter.
+</li><li class="listitem">
+User directly connected to the Ardtweeno Webapp system over HTTP.
+</li><li class="listitem">
+User directly connected to the Ardtweeno Gateway system over HTTP REST API.
+</li><li class="listitem">
+Network Admin, responsible for maintaining the mesh network gateway and nodes.
+</li><li class="listitem">
+Content Admin, responsible for maintaining the content, and overseeing auto generated content on the web application.
+</li><li class="listitem">
+Installation Technician, responsible for the initial set up of the system.
+</li></ul></div><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_project_testing"></a>6.4. Project Testing</h3></div></div></div><p>I have implemented a testing scheme using the <span class="emphasis"><em>Test Driven Development</em></span> methodology in the Ardtweeno project. When commiting to the
+development of new features I first create test cases which correspond to the features which fail at first as they are unimplemented.
+I then implement the features, and test continuously, the test cases begin to pass as the features are implemented. The Ruby gem
+Test-Unit has been used for testing the backend router application, rack-test testing framework  is used for the Sinatra REST API web
+application.</p><p>The following shows the number of lines of code in the ER2 Ardtweeno system, which also includes the tech demonstration sinatra web
+application, and the <span class="emphasis"><em>Test-Unit</em></span> test cases. The total stands at <code class="literal">4068</code> lines of code. When including the Sinatra view code, brings
+the total upto <code class="literal">4992</code> lines of code at the latest count.</p><pre class="screen">[david@archbox ardtweeno]$ find . -name '*.rb' | xargs wc -l
+   147 ./ardtweeno-gem/test/parser_test.rb
+   247 ./ardtweeno-gem/test/rest_api_test.rb
+    43 ./ardtweeno-gem/test/serialport_mock.rb
+   254 ./ardtweeno-gem/test/api_test.rb
+   166 ./ardtweeno-gem/test/nodemanager_test.rb
+   114 ./ardtweeno-gem/test/dispatcher_test.rb
+    15 ./ardtweeno-gem/test/test_helper.rb
+    74 ./ardtweeno-gem/test/packet_test.rb
+   104 ./ardtweeno-gem/test/node_test.rb
+   121 ./ardtweeno-gem/lib/ardtweeno.rb
+   300 ./ardtweeno-gem/lib/ardtweeno/nodemanager.rb
+   117 ./ardtweeno-gem/lib/ardtweeno/node.rb
+   538 ./ardtweeno-gem/lib/ardtweeno/dispatcher.rb
+    98 ./ardtweeno-gem/lib/ardtweeno/packet.rb
+   260 ./ardtweeno-gem/lib/ardtweeno/restapi.rb
+   542 ./ardtweeno-gem/lib/ardtweeno/api.rb
+   221 ./ardtweeno-gem/lib/ardtweeno/serialparser.rb
+    65 ./ardtweeno-gem/lib/ardtweeno/configreader.rb
+    51 ./ardtweeno-gem/lib/ardtweeno/db.rb
+    33 ./ardtweeno-gem/lib/ardtweeno/exceptions.rb
+   558 ./tech-demo/tech-demo.rb
+  4068 total</pre><p></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_project_documentation"></a>7. Project Documentation</h2></div></div></div><p>I have chosen to write all project documentation using the Asciidoc markup language <a class="xref" href="#asciidoc">[asciidoc]</a> which allows me develop a living
+document. Asciidoc is perfect for my needs, as I created a toolchain wrapper for the Asciidoc tool during my internship at the
+TSSG. This toolchain allows the output of PDF documents with a nicely styled header, footer and coverpage from input
+written in the Asciidoc language. This tool is has now been released for public consumption by  the <a class="xref" href="#tssg">[tssg]</a> as an open source
+project on <a class="ulink" href="https://github.com" target="_top">https://github.com</a> here: <a class="xref" href="#asciidoc2html-pdf">[asciidoc2html-pdf]</a>.</p><p>I have taken a modular approach to the construction of the documentation, I break chapters and sections out into new Asciidoc
+files. Images are stored in a single location which I reference within the documentation files with relative path URLs.
+I then construct a single <span class="emphasis"><em>index</em></span> file to reference each chapter and section in the order I require for the particular report. By
+taking this approach, it breaks the documentation into smaller and more manageable chunks which are nicer to work with. This approach
+also forces me to constantly keep an eye on the overall coherency and readability of the documentation, while also allowing the
+potential for reuse of documentation sections in different types of report at a later stage. On my internship I witnessed multiple occasions
+where documentation sections would be reused when building reports for different system stakeholders. This inspired me to attempt
+to emulate this work flow for my Ardtweeno system. The toolchain merges each section together into a single PDF document at build
+time.</p><p>All documentation is maintained under source control in the project Git repository which also includes technical documentation.
+The technical documentation is automatically generated from the documented source code.</p><p>NOTE:
+Technical documentation for the codebase is written side by side the code in the comments above each function. Using the
+Ruby gems <span class="emphasis"><em>rdoc, ri and yard</em></span> technical documentation is automatically extracted then generated during the gem build process.
+This technical documentation will be available at <span class="emphasis"><em>http://rubydoc.info/gems/ardtweeno/</em></span> once the built gem artifacts have
+been uploaded to <span class="emphasis"><em>rubygems.org</em></span>. Usage instructions will also be available in the project Wiki at
+<span class="emphasis"><em>https://github.com/davidkirwan/ardtweeno/wiki</em></span></p><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_deliverables"></a>8. Deliverables</h2></div></div></div><p>This section contains the deliverables due for the Ardtweeno project.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_deliverables_in_semester_7"></a>8.1. Deliverables in Semester 7</h3></div></div></div><p>The following project deliverables are due in Semester 7</p><p><strong>Project Proposal. </strong>Thurs, 20 Sept 2012 <span class="emphasis"><em>Submitted</em></span></p><p><strong>Report 1. </strong>Mon, 5 Nov 2012 <span class="emphasis"><em>Submitted</em></span></p><p><strong>Abstract and Photo. </strong>Fri, 9 Nov 2012 <span class="emphasis"><em>Submitted</em></span></p><p><strong>Report 2. </strong>Fri, 7 Dec 2012 <span class="emphasis"><em>Submitted</em></span></p><p><strong>Presentation. </strong>Mon - Tues, 07 - 08 Jan 2013 <span class="emphasis"><em>Completed</em></span></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_deliverables_in_semester_8"></a>8.2. Deliverables in Semester 8</h3></div></div></div><p>The following is a list of project deliverables due in Semester 8</p><p><strong>Project Poster. </strong>Sat, 26 Jan 2013 <span class="emphasis"><em>Submitted</em></span></p><p><strong>Sun Life Sourcecode Review Permission. </strong>Fri, 1 Feb 2013 <span class="emphasis"><em>Submitted</em></span></p><p><strong>Final Report. </strong>Mon, 18 May 2013 <span class="emphasis"><em>Submitted</em></span></p><p><strong>Final Demonstrations. </strong>Mon, 20 May 2013 <span class="emphasis"><em>Pending</em></span></p><p><strong>Student Faire. </strong>Mon, 23 May 2013 <span class="emphasis"><em>Pending</em></span></p><p><strong>Sunlife Presentations. </strong>TBA</p><p></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_iteration_plan"></a>9. Iteration Plan</h2></div></div></div><p>With help from my project supervisor <span class="emphasis"><em>Eamonn de Leastar</em></span> I have begun breaking down the project workload
+into manageable tasks, and then assigning them to the project backlog. On a weekly basis together we decide
+what to place on the agenda for this weeks iteration.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_0"></a>9.1. Iteration 0</h3></div></div></div><p>03/10/12 - 17/10/12</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Generate a SerialParser class from the feasibility prototype code
+</li><li class="listitem">
+Research a means to mock a serial port
+</li><li class="listitem">
+Implement unit tests for the SerialParser using a serial device mock
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_1"></a>9.2. Iteration 1</h3></div></div></div><p>17/10/12 - 07/11/12</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Refactor SerialParser tests to better meet test driven development best practices
+</li><li class="listitem">
+Implement NodeManager class skeleton and unit tests
+</li><li class="listitem">
+Implement Node class skeleton and unit tests
+</li><li class="listitem">
+Implement Packet class skeleton and unit tests
+</li><li class="listitem">
+Implement Dispatcher class skeleton and unit tests
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_2"></a>9.3. Iteration 2</h3></div></div></div><p>07/11/12 - 21/11/12</p><div class="itemizedlist"><p class="title"><strong>System Modelling</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Create high level overview of each subsystem using a package diagram perhaps
+</li><li class="listitem">
+Look at adding a global configuration file
+</li><li class="listitem">
+Moving the storage items and functions into the Node class.
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Tests</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Implement NodeManager class skeleton and unit tests
+</li><li class="listitem">
+Implement Node class skeleton and unit tests
+</li><li class="listitem">
+Implement Packet class skeleton and unit tests
+</li><li class="listitem">
+Implement Dispatcher class skeleton and unit tests
+</li><li class="listitem">
+Implement SerialParser class skeleton and unit tests
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Housekeeping</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Update the README in the project repository to include the installation and testing instructions
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_3"></a>9.4. Iteration 3</h3></div></div></div><p>21/11/12 - 05/12/12</p><div class="itemizedlist"><p class="title"><strong>REST API</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Develop HTTP REST API interface for the Ardtweeno System
+</li><li class="listitem">
+Authentication system for administrator functions such as an API key
+</li><li class="listitem">
+Documentation for the API
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>System Modelling</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Create high level overview of each subsystem using package diagrams
+</li><li class="listitem">
+Move all storage functions for Ardtweeno::Packet instances into the Node class
+</li><li class="listitem">
+Implement Ardtweeno::Dispatcher#status
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Tests</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Implement Dispatcher class skeleton and unit tests
+</li><li class="listitem">
+Implement API testing
+</li></ul></div><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_4"></a>9.5. Iteration 4</h3></div></div></div><p>05/12/12 - 19/12/12</p><div class="itemizedlist"><p class="title"><strong>Data Storage</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Move all storage functions for Ardtweeno::Packet instances into the Node class
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>REST API</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Continue development on HTTP REST API interface for the Ardtweeno System
+</li><li class="listitem">
+Implement an API class structure and break out into new Module
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>System Modelling</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Create high level overview of each subsystem using package diagrams
+</li><li class="listitem">
+Continue development on documentation for the API
+</li><li class="listitem">
+Create project deliverables documentation for the project
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Tests</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Implement API testing
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_5"></a>9.6. Iteration 5</h3></div></div></div><p>19/12/12 - 02/01/13</p><div class="itemizedlist"><p class="title"><strong>Data Storage</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Move all storage functions for Ardtweeno::Packet instances into the Node class
+</li><li class="listitem">
+Implement means to store data contained in each Node to a database
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>REST API</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Implement an API class structure and break out into new Module
+</li><li class="listitem">
+Implement pagination interface for traversing matching output
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>System Modelling</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Create high level overview of each subsystem using package diagrams
+</li><li class="listitem">
+Continue development on documentation for the API
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Tests</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Implement API testing
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_6"></a>9.7. Iteration 6</h3></div></div></div><p>02/01/13 - 16/01/13</p><div class="itemizedlist"><p class="title"><strong>Data Storage</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Move all storage functions for Ardtweeno::Packet instances into the Node class
+</li><li class="listitem">
+Implement means to store data contained in each Node to a database
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>System Modelling</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Continue development on documentation for the API
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Tests</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Implement API testing
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>ER1</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Prepare final steps for release of the ER1 system
+</li></ul></div><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_7"></a>9.8. Iteration 7</h3></div></div></div><p>16/01/13 - 30/01/13</p><div class="itemizedlist"><p class="title"><strong>Data Storage</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Implement means to store data to a file
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>API Development</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Continue development on documentation for the API
+</li><li class="listitem">
+Implement API according to best practices
+</li><li class="listitem">
+Refactor and moving the REST API into a class within the Ardtweeno gem module
+</li><li class="listitem">
+Move Procfile along with config.ru and Gemfile into the gem root
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>ER1</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Prepare final steps for release of the ER1 system
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_8"></a>9.9. Iteration 8</h3></div></div></div><p>30/01/13 - 13/02/13</p><div class="itemizedlist"><p class="title"><strong>Data Storage</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Implement means to store data contained in each Node to a database
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>API Development</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Continue development on documentation for the API
+</li><li class="listitem">
+Continue development on the REST API
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>ER1</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Prepare final steps for release of the ER1 system
+</li></ul></div><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_9"></a>9.10. Iteration 9</h3></div></div></div><p>13/02/13 - 27/02/13</p><div class="itemizedlist"><p class="title"><strong>Data Storage</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Implement means to store data contained in each Node to a database
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>API Development</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Continue development on documentation for the API
+</li><li class="listitem">
+Continue development on the REST API
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>ER1</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Prepare final steps for release of the ER1 system
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Tech Demonstration</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Develop a web application, possibly responsive, to demonstrate the range of API features being consumed
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_10"></a>9.11. Iteration 10</h3></div></div></div><p>27/02/13 - 13/03/13</p><div class="itemizedlist"><p class="title"><strong>Tech Demonstration</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Develop a web application, possibly responsive, to demonstrate the range of API features being consumed
+</li><li class="listitem">
+Incorporate Ardtweeno Gateway control panel into tech demo web app
+</li><li class="listitem">
+Using a Javascript SVG graphical library produce an image representing nodes in a zone
+</li><li class="listitem">
+Allow navigation to the highchart graphs from this diagram
+</li><li class="listitem">
+Develop interface to dynamically generate and display network topology based on data pulled from the API
+</li><li class="listitem">
+Develop mock mesh network script to simulate 2 - 5 zones with several nodes per zone
+</li></ul></div><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_11"></a>9.12. Iteration 11</h3></div></div></div><p>13/03/13 - 27/03/13</p><div class="itemizedlist"><p class="title"><strong>Tech Demonstration</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Develop a web application, possibly responsive, to demonstrate the range of API features being consumed
+</li><li class="listitem">
+Develop mock mesh network script to simulate 2 - 5 zones with several nodes per zone
+</li><li class="listitem">
+Consider adding the /gateway/topology of the tech demo to the gateway API
+</li><li class="listitem">
+Click on node in topology, takes to an individual node graph
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_12"></a>9.13. Iteration 12</h3></div></div></div><p>27/03/13 - 10/04/13</p><div class="itemizedlist"><p class="title"><strong>REST API</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Flesh out functionality of /api/v1/system/status
+</li><li class="listitem">
+Implement push notifications
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Mesh Network</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Configure and setup 2nd physical ardtweeno node
+</li><li class="listitem">
+Configure Coordinator AT for mesh network mode
+</li></ul></div><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_13"></a>9.14. Iteration 13</h3></div></div></div><p>10/04/13 - 24/04/13</p><div class="itemizedlist"><p class="title"><strong>Project Deliverables</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Prepare Final Report
+</li><li class="listitem">
+Prepare Final Presentation
+</li><li class="listitem">
+Prepare Conference Paper
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_iteration_14"></a>9.15. Iteration 14</h3></div></div></div><p>24/04/13 - 8/05/13</p><div class="itemizedlist"><p class="title"><strong>Push Notifications and Watch List</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Implement a watch or alert system which triggers when data comes in from a certain node
+</li><li class="listitem">
+Implement push notifications
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Project Deliverables</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Prepare Final Report
+</li><li class="listitem">
+Prepare Final Presentation
+</li><li class="listitem">
+Prepare Conference Paper
+</li></ul></div><p></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_project_backlog"></a>10. Project Backlog</h2></div></div></div><p>This section contains the Ardtweeno project backlog. Features planned in future releases are first added to the backlog.
+From here they are ranked in order of importance and priority, before being shifted into the <span class="emphasis"><em>Iteration Plan</em></span> during
+the fortnightly sprints for implementation.</p><div class="itemizedlist"><p class="title"><strong>Longer Term Backlog</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Alter system to take into account recently identified bordercases regarding adding of packets to the system, such as packets with
+no data within
+</li><li class="listitem">
+Add the topology graph, punchcard graph and possibly others from the tech demo as components in the gateway itself
+</li><li class="listitem">
+Move from the manual post creation system over to a dynamically constructed URL from configuration file
+</li><li class="listitem">
+Configure the XBEE radios for API mesh network mode
+</li><li class="listitem">
+Flesh out functionality of /api/v1/system/status
+</li><li class="listitem">
+Implement the pulling of packet data from the database rather than the datastructure in RAM
+</li><li class="listitem">
+Make a favicon.ico for both the tech demo and the gateway maybe
+</li><li class="listitem">
+Investigate webintents.org a possible future replacement for REST services, or as a means to discover how the Ardtweeno
+implements push notifications and how a client can discover these services
+</li><li class="listitem">
+Using the <span class="emphasis"><em>ino</em></span> tool (inotool.org), I can compile the Arduino firmware through commandline, and therefore shouldn’t have issues uploading to the FIO boards over XBee.
+</li><li class="listitem">
+Look into compiling native ruby extensions and what that entails, could maybe handle the <span class="emphasis"><em>tty0tty</em></span> compilation
+automatically on machines, or even the serial parser in native c that would be desirable in the long term. But would
+then probably limit the platform that this system can be installed on, to Linux, Unix or possibly OSX
+</li></ul></div><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_ardtweeno_engineering_release_2"></a>11. Ardtweeno Engineering Release 2</h2></div></div></div><p>Engineering Release 2 of the Ardtweeno system is now ready to be released. All but a handful of features
+promised in the MVP feature list have been implemented in ER2. These remaining features have been pushed
+onto the project backlog with the intention of implementation at a later date.</p><p>The following features have been identified as set for inclusion into the MVP feature set and have been further
+broken up into three different stages:</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/ardtweeno-mvp.jpg" width="100%" alt="Ardtweeno System" /></td></tr></table></div></div><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p class="simpara">
+Setup and Configuration
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+Arduino FIO Configuration
+</li><li class="listitem">
+Raspberry Pi Configuration
+</li><li class="listitem">
+Serial Router Configuration
+</li><li class="listitem">
+Ardtweeno Web Application Configuration
+</li><li class="listitem">
+Database Creation
+</li></ul></div></li><li class="listitem"><p class="simpara">
+Basic Network Configuration
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+Mesh Network Coordinator Configuration
+</li><li class="listitem">
+Mesh Network Node Configuration
+</li></ul></div></li><li class="listitem"><p class="simpara">
+High Level Feature List
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+Web Application Graph Generation
+</li><li class="listitem">
+Web Application Report Generation
+</li><li class="listitem">
+Web Application Tweet report onto <a class="ulink" href="https://twitter.com" target="_top">https://twitter.com</a>
+</li></ul></div></li></ul></div><p></p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_setup_and_configuration"></a>11.1. Setup and Configuration</h3></div></div></div><p>The setup and configuration section groups features which are available with the installation
+of the system. The least complex system requires a single network node, with a single sensor
+attached, and the skeleton firmware installed. This breaks out into the following userstories:</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/mvp-A001-2.png" width="100%" alt="A001 - A002" /></td></tr></table></div></div><p><span class="emphasis"><em>ER1 A001 - A002</em></span></p><p><strong>Single sensor attached to Arduino FIO with barebones firmware. </strong>Arduino FIO with XBEE Radio and single 1-wire compatible sensor attached, running the skeleton
+firmware.</p><pre class="screen">A001
+As an installation technician;
+
+I want to have the 1-Wire library imported on the Arduino FIO;
+
+So that I can read in a sensor value from a 1-wire compatible sensor which is
+attached;</pre><pre class="screen">A002
+As an installation technician;
+
+I want to construct a formatted string from the sensor data in RAM on the Arduino
+FIO;
+
+So that I can transmit it out the serial interface;</pre><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/mvp-A003-5.png" width="100%" alt="A003 - A005" /></td></tr></table></div></div><p><span class="emphasis"><em>ER1 A003 - A005</em></span></p><p><strong>Raspberry Pi Initial System Configuration. </strong>The Raspberry Pi machine is running the latest release of the Raspbian <span class="emphasis"><em>Wheezy</em></span>
+distribution, Raspbian is a fork of the Debian compiled specifically to work with the  ARM 7 platform.
+While it will in all likelihood work fine using any Linux distribution, I picked the distribution which
+was recommended by the RPi team, it is recommended you use a distribution version released after this date so as to
+take advantage of newly bundled kernel modules.</p><pre class="screen">A003
+As an installation technician;
+
+I want to have at least the 18-09-2012 release of Raspbian Wheezy installed on a
+SD Card in the Raspberry Pi;
+
+So that I have the kernel modules available to operate all hardware likely to be
+used in Ardtweeno;</pre><pre class="screen">A004
+As an installation technician;
+
+I want to have all dependencies required by RVM available on the Raspberry Pi;
+
+So that I can install _Ruby Version Manager_ which allows easy access to the Ruby
+programming language and also Ruby on Rails;</pre><pre class="screen">A005
+As an installation technician;
+
+I want to have the Ruby gems installed on which Ardtweeno depends;
+
+So that I can make use of them in the Ardtweeno application;</pre><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/mvp-A006-11.png" width="100%" alt="A006 - A007" /></td></tr></table></div></div><p><span class="emphasis"><em>ER1 A006 - A007</em></span></p><p><strong>Ardtweeno Serial Router Configuration. </strong>The Ardtweeno Serial Router <span class="emphasis"><em>node.js</em></span> application will be installed and run from the Raspberry Pi
+machine.</p><pre class="screen">A006
+As an installation technician;
+
+I want the Ardtweeno Serial Router available on the Raspberry Pi;
+
+So that I can launch an instance of the system to allow routing and or storage
+of signals from serial devices;</pre><pre class="screen">A007
+As an installation technician;
+
+I want the Ardtweeno Serial Router to have access to a database;
+
+So that any data gathered on the serial link, can be stored in the database for
+later retrieval;</pre><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/mvp-A006-11.png" width="100%" alt="A008 - A010" /></td></tr></table></div></div><p><span class="emphasis"><em>ER1 A008 - A0010</em></span></p><p><strong>Ardtweeno Sinatra Web App Configuration. </strong>The Ardtweeno Sinatra web application, will be installed and run from the Raspberry Pi machine. The
+following barebones features will be available after installation of the MVP.</p><pre class="screen">A008
+As an installation technician;
+
+I want the Ardtweeno codebase available on the Raspberry Pi;
+
+So that I can launch the barebones system for configuration;</pre><pre class="screen">A009
+As an installation technician;
+
+I want the Ardtweeno Sinatra Web App to have access to a database;
+
+So that any data previously gathered data can be read into the system;</pre><pre class="screen">A010
+As an installation technician;
+
+I want the Ardtweeno Sinatra web app to be able to display formatted test data;
+
+To ensure that it is successfully displaying data read from the database;</pre><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/mvp-A006-11.png" width="100%" alt="A011" /></td></tr></table></div></div><p><span class="emphasis"><em>ER1 A011</em></span></p><p><strong>Database Setup. </strong>The system can be configured to work with any database suitable for use with a web application,
+However the Ardtweeno has been developed with MongoDB in mind and in the ER2 system only has
+MongoDB support implemented.</p><pre class="screen">A011
+As an installation technician;
+
+I want to install a MongoDB database on the Raspberry Pi;
+
+So that the Ardtweeno system can store and retrieve data;</pre><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_basic_network_configuration"></a>11.2. Basic Network Configuration</h3></div></div></div><p>The following userstories relate to the initial configuration of the XBee 802.15.4 Zigbee Radio Network.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/mvp-A012.png" width="100%" alt="A012" /></td></tr></table></div></div><p><span class="emphasis"><em>ER1 A012</em></span></p><p><strong>Arduino FIO Network Configuration. </strong>Each Arduino FIO node, requires an XBee radio attached. The following userstories relate to
+this network provisioning.</p><pre class="screen">A012
+As an installation technician;
+
+I want to configure an XBee radio transmitter to connect to the XBee Coordinator;
+
+So that I can connect it to the Arduino FIO node, to allow network connectivity
+from the Arduino device to other hosts on the mesh network;</pre><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/mvp-A013-14.png" width="100%" alt="A013 - A014" /></td></tr></table></div></div><p><span class="emphasis"><em>ER1 A013 - A014</em></span></p><p><strong>Ardtweeno Mesh Network Router Configuration. </strong>A single XBee router is required to coordinate the other XBee mesh network hosts. The following
+userstories relate to provisioning the XBee router.</p><pre class="screen">A013
+As an installation technician;
+
+I want to configure an XBee radio transmitter to operate in Coordinator mode;
+
+So that I can use it to coordinate the other XBee hosts in the mesh network;</pre><pre class="screen">A014
+As an installation technician;
+
+I want to connect a Coordinator configured XBee radio to the Raspberry Pi using the
+USB breakout board;
+
+So that the Ardtweeno Serial Router can interact with hosts on the XBee mesh
+network;</pre><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_high_level_feature_list"></a>11.3. High Level Feature List</h3></div></div></div><p>The following userstories will also be included in the Engineering Release 1 and together make
+up the minimum viable product (MVP). This section details some of the features which will
+become the main focus areas in later releases as the system becomes more stable and feature rich.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/mvp-A015-17.png" width="100%" alt="A015 - A017" /></td></tr></table></div></div><p><span class="emphasis"><em>ER1 A015 - A017</em></span></p><pre class="screen">A015
+As an installation technician;
+
+I want to format the data read in from the database;
+
+So that I can construct a graph from the data using the R graphing system;</pre><pre class="screen">A016
+As an installation technician;
+
+I want to ensure that clients connected to the Ardtweeno application over HTTP;
+
+Can view a sample report generated from data collected on the XBee mesh network;</pre><pre class="screen">A017
+As an installation technician;
+
+I want to allow a message to be written in a HTML form;
+
+Which will accompany a freshly generated graph image in a tweet onto the Twitter
+service;</pre><p>ER2 will be released on the <a class="xref" href="#ardtweeno-github">[ardtweeno-github]</a> repository on May 20th to coincide with the Student Fair at the
+Waterford Institute of Technology, Ireland.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/fio-and-components.jpg" width="100%" alt="Arduino FIO and Components" /></td></tr></table></div></div><p><span class="emphasis"><em>Arduino FIO and components used in a network node</em></span></p><p></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_project_class_diagram_and_class_listing"></a>12. Project Class Diagram and Class Listing</h2></div></div></div><p>This section contains the Minimum Viable Product class digram for the Ardtweeno system. I have also included
+a list of the Ruby Classes identified so far and their minimum viable product function designated for release
+in Engineering Release 1.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="100%"><tr><td><img src="../images/mvp-class-diagram.png" width="100%" alt="Ardtweeno Class Diagram" /></td></tr></table></div></div><p><span class="emphasis"><em>Ardtweeno Class Diagram</em></span></p><p>All Classes belong to the Ruby module <span class="emphasis"><em>Ardtweeno</em></span>.</p><p><strong>Ardtweeno::Dispatcher. </strong>The Dispatcher class handles the control of backend systems as follows:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Responsible for the launch and management of the SerialParser subsystem to route information received
+from nodes on the mesh network.
+</li><li class="listitem">
+Launch and manage an instance of the of Ardtweeno::NodeManager class to handle nodes on the Mesh Network serviced by the
+Ardtweeno:SerialParser system.
+</li><li class="listitem">
+Valid data from valid authorised mesh network nodes is converted to <span class="emphasis"><em>Ardtweeno::Packet</em></span> form and then stored in the associated
+<span class="emphasis"><em>Ardtweeno::Node</em></span> buffer.
+</li><li class="listitem">
+Invalid data is dropped.
+</li><li class="listitem">
+Valid data from unauthorised nodes is dropped.
+</li></ul></div><p><strong>Ardtweeno::SerialParser. </strong>The SerialParser class performs the following tasks in the MVP system:</p><p>Currently the SerialParser subsystem has been disabled due to threading issues with the Ruby <span class="emphasis"><em>serialport</em></span> gem. A system
+with similar functionality has been implemented in <span class="emphasis"><em>node.js</em></span> to get the project up and running. The intention is to reimplement
+the SerialParser with a Ruby C extension, or perhaps a C/C++ system. The serial parser subsystem will form a large part of the
+future development of the system in any case.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+SerialParser system listens for mesh network nodes to transmit data to the XBEE Coordinator on a serial port.
+</li><li class="listitem">
+SerialParser submits all data received to the Ardtweeno REST API for filtering/storage.
+</li></ul></div><p><strong>Ardtweeno::NodeManager. </strong>The NodeManager class performs the following:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Manages the addition or removal of <span class="emphasis"><em>Ardtweeno::Node</em></span> to the mesh network.
+</li><li class="listitem">
+Exposes <span class="emphasis"><em>Ardtweeno::Node</em></span> lookup and retrieval interface to other elements in the system.
+</li><li class="listitem">
+Manages when node buffers are written to storage before flushing.
+</li></ul></div><p><strong>Ardtweeno::Node. </strong>The Node class is designed to represent the body of knowledge required by the system to model a real world mesh
+network node.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Maintains an <span class="emphasis"><em>Ardtweeno::Packet</em></span> buffer
+</li><li class="listitem">
+Manages the addition of <span class="emphasis"><em>Ardtweeno::Packet</em></span> instances received by the Ardtweeno::SerialParser
+</li><li class="listitem">
+Exposes <span class="emphasis"><em>Ardtweeno::Packet</em></span> retrieval interface to other elements in the system.
+</li></ul></div><p><strong>Ardtweeno::Packet. </strong>The Packet class is a storage class to hold data received on the mesh network.</p><p><strong>Ardtweeno::API. </strong>This class is responsible for handling requests received through the HTTP REST API.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Parses API requests
+</li><li class="listitem">
+Exposes HTTP REST Interface
+</li><li class="listitem">
+Returns JSON string containing results from query
+</li></ul></div><p><strong>Ardtweeno::ConfigReader. </strong>The ConfigReader has the ability to load and save configuration data. For the most part this system while implemented
+is not used within the system currently. At a later date as functionality is fleshed out, this configuration reader
+and writer class will ensure the settings are serialised to disk correctly.</p><p><strong>Ardtweeno::DB. </strong>The DB class is responsible for initialising the MongoDB connector instance, from the passed parameters.</p><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_package_diagrams"></a>13. Package Diagrams</h2></div></div></div><p>The following section contains the package diagram for the ER2 Ardtweeno system. This diagram aims to show the potential
+distributed nature of the Ardtweeno system. Subsystems such as the SerialParser are designed to have multiple instances executed
+at remote locations while communicating back to the <span class="emphasis"><em>Ardwteeno - Application Gateway</em></span> using the HTTP REST API. This
+system architecture allows multiple mesh networks to be bridged by a single <span class="emphasis"><em>Ardtweeno - Application Gateway</em></span>.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="100%"><tr><td><img src="../images/mvp-package-diagram.png" width="100%" alt="Ardtweeno Package Diagram" /></td></tr></table></div></div><p><span class="emphasis"><em>Ardtweeno MVP Package Diagram</em></span></p><p>The system does not have two way communication implemented, this is a job for future releases. The current SerialParser
+subsystem requires immediate redesign in C or C++. NodeJS while very quick to get up and running with, it is not suitable
+for the job I have tasked it with. I can start to implement the basic functionality of two way
+communication once the SerialParser subsystem has been implemented in a stable way on a tried and tested language such as
+C or C++.</p><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_api_specification"></a>14. API Specification</h2></div></div></div><p>An Application Programming Interface (API) is the means by which one system may interact with another system
+and is essentially a machine to machine system interface. The Ardtweeno system exposes this HTTP REST API which
+can be operated by any device capable of creating HTTP connections to the gateway for this reason. The HTTP REST API
+is the main interface for working with the <span class="emphasis"><em>Ardtweeno Application Gateway</em></span>, it allows third parties to develop custom
+front-ends or data-aggregation systems which interact with the gateway, the REST API allows multiple SerialParser
+instances to communicate with the gateway from multiple remote locations as the method for adding new data to the gateway is
+also only possibly by communicating to the Ardtweeno Gateway through the HTTP REST API.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_http_rest_interface"></a>14.1. HTTP REST Interface</h3></div></div></div><p>The following HTTP REST API Version 1 set for release with the ER2 product and contains the following features:</p><div class="itemizedlist"><p class="title"><strong>Data Manipulation</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Add/List packets in the Ardtweeno system
+</li><li class="listitem">
+List Node data
+</li><li class="listitem">
+List Zone data
+</li><li class="listitem">
+Add Node to the Watchlist
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>System Administration</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+List system configuration settings
+</li><li class="listitem">
+Start/Stop the SerialRouter subsystem
+</li><li class="listitem">
+Restart the gateway host
+</li></ul></div><p></p><div class="table"><a id="idp1375576500"></a><p class="title"><strong>Table 1. API Methods Table and Definitions</strong></p><div class="table-contents"><table summary="API Methods Table and Definitions" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /></colgroup><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>URL</strong></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Method</strong></span></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Function</strong></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/nodes</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GET</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Retrieve a list of Nodes. Returns JSON string</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/packets</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GET</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Retrieve a list of Packets. Returns JSON string</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/packets</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>POST</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Add a packet to the Ardtweeno system</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/watch/<code class="literal">node</code></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>POST</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Add a node to a watch list, and instruct the gateway to update watcher with push notifications</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/zones</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GET</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Retrieve information on zones</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/zones/testzone0</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GET</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Retrieve information on zone testzone0</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/system/start</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GET</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Starts the localhost Ardtweeno SerialRouter</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/system/stop</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GET</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Stops the localhost Ardtweeno SerialRouter</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/system/reboot</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GET</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Reboots the gateway host</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/system/config</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GET</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Read the system configuration file contents</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/system/status</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GET</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Read the current system status</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/b97cb9ae44747ee263363463b7e56/create/post</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GET</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Access the front page news post form</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>/b97cb9ae44747ee263363463b7e56/create/post</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>POST</p></td><td style="" align="left" valign="top"><p>Add a post to the front end</p></td></tr></tbody></table></div></div><br class="table-break" /><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_http_rest_api_authentication"></a>14.2. HTTP REST API Authentication</h3></div></div></div><p>All API requests currently require authentication by means of an API key. This key is configured in the
+<span class="emphasis"><em>/home/user/.ardtweeno/conf.yaml</em></span> configuration file. This API key must be accompanied with any API calls to the
+REST API otherwise they will be ignored entirely and return a HTTP 404 response.</p><div class="table"><a id="idp1375605716"></a><p class="title"><strong>Table 2. API Key Authentication</strong></p><div class="table-contents"><table summary="API Key Authentication" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /></colgroup><tbody><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>key</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/packets?key=0dfdFFeeDx</p></td><td style="" align="left" valign="top"><p>Return all packets and authenticate with the API key 0dfdFFeeDx</p></td></tr></tbody></table></div></div><br class="table-break" /><p>The following pagination options are available for manipulating the data returned by the API</p><div class="table"><a id="idp1375610156"></a><p class="title"><strong>Table 3. REST API Pagination</strong></p><div class="table-contents"><table summary="REST API Pagination" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /></colgroup><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Parameter</strong></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Sample Usage</strong></span></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Function</strong></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>offset</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/packets?offset=50</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Returns packets excluding the first 50</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>length</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/packets?length=50</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Return the first 50 packets only</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>sort</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>/api/v1/packets?sort=(desc or asc)</p></td><td style="" align="left" valign="top"><p>Return all packets in decending order, defaults to ascending order</p></td></tr></tbody></table></div></div><br class="table-break" /><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_posting_packet"></a>14.3. Posting Packet</h3></div></div></div><p>The Packet is the representation of a single piece of information transmitted on the Mesh Network by one
+of the managed nodes. The packet itself can contain data from one or all sensors attached to an individual
+node on the mesh network. The HTTP REST API expects data in a specific format otherwise it will be rejected
+as malformed data. The following JSON objects show the format expected by the HTTP REST API /packets interface
+when posting a new data packet to the system as a HTTP POST request.</p><p><strong>Target and HTTP Method Expected. </strong><span class="emphasis"><em>POST /api/v1/packets HTTP/1.1</em></span></p><p><strong>Parameters Expected. </strong><span class="emphasis"><em>payload</em></span>
+<span class="emphasis"><em>key</em></span></p><p><strong>Payload. </strong>The payload parameter must contain JSON data in the format specified below:</p><div class="informaltable"><table cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /></colgroup><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Field</strong></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Type</strong></span></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Description</strong></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>key</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>string</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>The authentication key for this node</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>data</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>array</p></td><td style="" align="left" valign="top"><p>Array of data values, order is important, should match the sensors defined in the
+sensorlist field inside the corresponding node</p></td></tr></tbody></table></div><p>The following is a sample packet in JSON form suitable for the payload parameter.</p><pre class="screen">{
+  "data": [
+    25.5,
+    999,
+    10.2
+  ],
+  "key": "authenticationkeyfornode"
+}</pre><p><strong>Key. </strong>The key parameter must contain the API authentication key.</p><p>NOTE:
+The API key is different to the node authentication key. One is for gaining access to the REST API, the other
+is for giving an NODE access to the mesh network</p><p></p><p>The following is a full example demonstrating how one might work with the API in order to add a Packet to
+the Ardtweeno Gateway. This is Ruby code and requires the <span class="emphasis"><em>typheous</em></span> gem to be installed and available for use.</p><pre class="programlisting">require 'rubygems'
+require 'typheous'
+
+
+packet = '{"data":[25.5, 999, 10.2], "key":"abcXYZ123etc"}'
+apikey = 'abc33fssfe'
+
+
+Typhoeus::Request.post("http://ardtweeno-hostname/packets",
+:body =&gt; {:payload =&gt; packet, :key =&gt; apikey})</pre><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_retrieving_packets"></a>14.4. Retrieving Packets</h3></div></div></div><p>The Processed Packet contains extra meta data required by the <span class="emphasis"><em>Ardtweeno Application Gateway</em></span> for each Packet
+recieved or transmitted on the Mesh Network. Calls to the API to retrieve Packets from the DB using the
+list interface return JSON as shown below.</p><p><strong>Target. </strong><span class="emphasis"><em>GET /api/v1/packets</em></span></p><p><strong>Parameters Expected. </strong><span class="emphasis"><em>key</em></span></p><p><strong>Sample Usage. </strong><span class="emphasis"><em>/api/v1/packets?length=2&amp;key=APIkey</em></span></p><pre class="screen">{"packets":[{
+  "date": "2012-11-07",
+  "hour": 9,
+  "minute": 36,
+  "node": "node0",
+  "key": "0123456789abcdef",
+  "seqNo": 0,
+  "data": [
+    23.5,
+    997.8,
+    30
+  ]
+},
+{
+  "date": "2012-11-07",
+  "hour": 9,
+  "minute": 37,
+  "node": "node0",
+  "key": "0123456789abcdef",
+  "seqNo": 1,
+  "data": [
+    25.5,
+    994.8,
+    30
+  ]
+}],"total":200,"found":2}</pre><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_retrieving_nodes"></a>14.5. Retrieving Nodes</h3></div></div></div><p>The Ardtweeno::Node is the representation of all the information required to manage a physical node on the mesh
+network. The API offers the means to query the <span class="emphasis"><em>Ardtweeno Application Gateway</em></span> and retrieve the list of information
+stored on each node. See below for an example how to interact with the gateway, and the reponse being generated
+by the gateway. With <span class="emphasis"><em>v1</em></span> of the Ardtweeno API specification, the <span class="emphasis"><em>nodes</em></span> target is read only.</p><p><strong>Target. </strong><span class="emphasis"><em>GET /api/v1/nodes</em></span></p><p><strong>Parameters Expected. </strong><span class="emphasis"><em>key</em></span></p><p><strong>Sample Usage. </strong><span class="emphasis"><em>/api/v1/nodes?key=APIkey</em></span></p><pre class="screen">{"nodes":[{
+  "name": "node0",
+  "key": "500d81aafe637717a52f8650e54206e64da33d27",
+  "description": "This node is outside",
+  "version": "0.1.0",
+  "sensors": [
+    "Temperature",
+    "Barometric Pressure",
+    "Altitude"
+  ]
+},
+{
+  "name": "node1",
+  "key": "f937c37e949d9efa20d2958af309235c73ec039a",
+  "description": "This node is inside",
+  "version": "0.1.0",
+  "sensors": [
+    "Temperature",
+    "Barometric Pressure",
+    "Altitude"
+  ]
+}],"total":2,"found":2}</pre><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_adding_a_node_to_the_watchlist"></a>14.6. Adding a Node to the Watchlist</h3></div></div></div><p>The <span class="emphasis"><em>Ardtweeno Application Gateway</em></span> allows individual nodes to be placed on a watchlist, with the instruction of
+sending a push notification to the watcher when this node receives packets. This system could potentially be used
+as an alarm and offers the ability to check the data received from this particular node immediately rather than
+constantly polling the gateway looking for updates to a particular node.</p><p><strong>Target. </strong><span class="emphasis"><em>POST /api/v1/watch/:node</em></span></p><p><strong>Parameters Expected. </strong><span class="emphasis"><em>key, node, notifyURL, method, timeout</em></span></p><p><strong>Sample Usage. </strong>See the following example to see a node being placed on the watchlist. In this example the <span class="emphasis"><em>Ardtweeno Gateway</em></span>
+is running on <code class="literal">localhost</code>. The <code class="literal">notifyURL</code> parameter is the URL which you wish the <span class="emphasis"><em>Ardtweeno Gateway</em></span> to notify
+with a push notification.</p><pre class="screen">require 'rubygems'
+require 'typhoeus'
+require 'json'
+
+
+body = {:key=&gt; "1230aea77d7bd38898fec74a75a87738dea9f657",
+                :notifyURL=&gt;"http://some-server/push/notifications",
+                :method=&gt;"POST",
+                :timeout=&gt;"60"}
+
+puts Typhoeus::Request.post("http://localhost:4567/api/v1/watch/node2", :body=&gt;body)</pre><p>When the gateway sends a push notification it is in JSON format and looks like the following, this push notification
+system is pre-alpha quality and was rushed in to meet the project deadline. This can be greatly improved in future
+development.</p><pre class="screen">{
+  "title":"Push notification",
+  "content":"node2",
+  "code":""
+}</pre><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_retrieving_zones"></a>14.7. Retrieving Zones</h3></div></div></div><p>The Ardtweeno::Node can be grouped into zones by the <span class="emphasis"><em>Ardtweeno Gateway</em></span>. Zones are a means to assign separate API
+keys to authenticate and partition groups of nodes from one another. The API offers the means to query the gateway
+using the HTTP REST API to retrieve information on the nodes and the particular zone they are associated with.</p><p><strong>Target. </strong><span class="emphasis"><em>GET /api/v1/zones</em></span>
+<span class="emphasis"><em>GET /api/v1/zones/:zonename</em></span></p><p><strong>Parameters Expected. </strong><span class="emphasis"><em>key</em></span></p><p><strong>Sample Usage. </strong><span class="emphasis"><em>/api/v1/zones?zonename=testzone0&amp;key=APIkey</em></span>
+<span class="emphasis"><em>/api/v1/zones/testzone0?key=APIkey</em></span></p><pre class="screen">{
+  "zones": [
+    {
+      "zonename": "testzone0",
+      "key": "455a807bb34b1976bac820b07c263ee81bd267cc",
+      "nodes": [
+        "node0",
+        "node1"
+      ]
+    }
+  ],
+  "total": 2,
+  "found": 1
+}</pre><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_ardtweeno_api_front_end"></a>14.8. Ardtweeno API Front End</h3></div></div></div><p>The following image shows the Ardtweeno HTTP Interface which is powered by the Sinatra micro web application framework.
+Users who connect directly to the gateway are greeted with this screen.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/ardtweeno-http-interface-3.png" width="100%" alt="Ardtweeno HTTP Interface" /></td></tr></table></div></div><p>The ER2 version of Ardtweeno contains URI links to where the source for the system is contained on <span class="emphasis"><em>github.com</em></span> along
+with a URI link to my personal blog. A simple status indicator is shown on this page also which shows whether or not the
+local SerialParser instance is running.</p><p>Content for this page can be either added manually using the form available at the <span class="emphasis"><em>http://&lt;ardtweeno-server-address&gt;/b97cb9ae44747ee263363463b7e56/create/post</em></span> or by creating a HTTP POST request in the following way:</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/ardtweeno-http-interface-4.png" width="100%" alt="Ardtweeno HTTP Interface" /></td></tr></table></div></div><p><strong>Target. </strong><span class="emphasis"><em>POST /b97cb9ae44747ee263363463b7e56/create/post</em></span></p><p><strong>Parameters Expected. </strong><span class="emphasis"><em>title</em></span> String containing the post title
+<span class="emphasis"><em>content</em></span> String containing the post content
+<span class="emphasis"><em>code</em></span> String containing code snippets, or preformatted output</p><p><strong>Sample Usage. </strong>See the following for an example</p><pre class="programlisting">require 'rubygems'
+require 'typheous'
+
+
+title = 'Hi This is a Title'
+content = 'This is some content lorum ipsum, blah blah etc..'
+code = 'require "json"; puts JSON.pretty_generate(
+  JSON.parse("{'browfox':'Jumped over the lazy dog'}".to_json)
+  );'
+
+
+Typhoeus::Request.post("http://ardtweeno-hostname/packets",
+:body =&gt; {:title=&gt;title, :content=&gt;content, :code=&gt;code})</pre><p>The output is something similar to the post seen in the image below:</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/ardtweeno-http-interface-5.png" width="100%" alt="Ardtweeno HTTP Interface" /></td></tr></table></div></div><p></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_ardtweeno_minimum_system_requirements"></a>15. Ardtweeno Minimum System Requirements</h2></div></div></div><p>The Ardtweeno system has been developed with the Raspberry Pi Model B running the Raspbian distribution operating system
+in mind, however it is technically feasible to run the system on any operating system which has the capability to compile
+native extensions for the Ruby gems which require it.</p><p>I hope to make the system available as a disk image ready for loading onto an SDCard for the Raspberry Pi,
+but for the ER2 system, the following software requirements must already be in place on the machine in order for the
+<span class="emphasis"><em>Ardtweeno - Application Gateway</em></span> to operate and function correctly.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="100%"><tr><td><img src="../images/minimum-hardware-ardtweeno-requirements.png" width="100%" alt="Ardtweeno Hardware Component List" /></td></tr></table></div></div><p>The following is a comprehensive software and hardware list of exactly what is required to get the barebones Ardtweeno
+system functional:</p><p></p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_software_dependencies"></a>15.1. Software Dependencies</h3></div></div></div><p>I have identified the following software dependencies used by the Ardtweeno system.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Ruby Programming Language &gt;= 1.8.7, ideally &gt;= Ruby 2.0.0p0
+</li><li class="listitem">
+Ruby gems: rake, nokogiri, rack, foreman, json, typhoeus, mongo, bson_ext, rack-test, test-unit rspec,
+serialport, sinatra, thin, rufus-scheduler
+</li><li class="listitem">
+NodeJS Programming Language
+</li><li class="listitem">
+NodeJS modules: needle, serialport
+</li><li class="listitem">
+arduino libraries: ONEWIRE
+</li><li class="listitem">
+arduino IDE / ino
+</li><li class="listitem">
+All dependencies for compiling Ruby native extensions in C
+</li><li class="listitem">
+<span class="emphasis"><em>gcc</em></span> the C Compiler
+</li></ul></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_hardware_dependencies"></a>15.2. Hardware Dependencies</h3></div></div></div><p>In order to configure and setup a basic Ardtweeno system we need the following hardware:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+1 x Raspberry Pi Model B Embedded ARM System (preferably 512MB RAM version): <a class="ulink" href="http://raspberrypi.org" target="_top">http://raspberrypi.org</a>
+</li></ul></div><p>To replicate the implementation of the Ardtweeno nodes in the same way I have, one would need the following hardware:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+2 x Arduino FIO prototyping board: <a class="ulink" href="http://arduino.cc/en/Main/ArduinoBoardFio" target="_top">http://arduino.cc/en/Main/ArduinoBoardFio</a>
+</li><li class="listitem">
+3 x XBEE Radio Transmitters (1 x Coordinator, 2 x Router)
+</li><li class="listitem">
+2 x 1-wire sensor
+</li><li class="listitem">
+1 x PIR infra-red motion sensor
+</li><li class="listitem">
+1 x FTDI - USB cable for initial firmware loading and XBEE configuration
+</li><li class="listitem">
+1 x USB breakout board for initial firmware uploads to the XBEE boards, and communicating with the Coordinator XBEE in production.
+</li></ul></div><p></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_installation_instructions"></a>16. Installation Instructions</h2></div></div></div><p>These instructions must be followed in sequence to ensure we have the required dependencies to perform the task
+at each stage. If for what ever reason you become stuck in configuring and setting the system up, please first
+examine the FAQ available at <a class="ulink" href="https://github.com/davidkirwan/ardtweeno/wiki" target="_top">https://github.com/davidkirwan/ardtweeno/wiki</a> otherwise please contact
+me for assistance on Twitter at: @kirwan_david</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_install_package_dependencies"></a>16.1. Install Package Dependencies</h3></div></div></div><p>In order to install the dependencies and utilities for compiling Ruby native extensions in C we need to do the
+following steps:</p><pre class="screen">sudo apt-get install build-essential zlib1g-dev \
+libssl-dev libreadline-dev libyaml-dev \
+libcurl4-openssl-dev curl git-core \
+python-software-properties gcc gobjc \
+git</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_install_nodejs"></a>16.2. Install NodeJS</h3></div></div></div><p>To install NodeJS on the system do the following:</p><pre class="screen">sudo apt-add-repository ppa:chris-lea/node.js
+sudo apt-get -y update
+sudo apt-get -y install nodejs</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_install_rvm_and_ruby"></a>16.3. Install RVM and Ruby</h3></div></div></div><p>To install Ruby on the system using RVM do the following:</p><pre class="screen">\curl -#L https://get.rvm.io | bash -s stable --autolibs=3 --ruby
+
+# Then do the following to install Ruby 2.0.0p0 with OpenSSL support
+rvm pkg install openssl
+
+# Then
+rvm install 2.0.0 \
+    --with-openssl-dir=$HOME/.rvm/usr \
+    --verify-downloads 1
+
+# Then
+rvm use 2.0.0</pre><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_install_ruby_gem_dependencies"></a>16.4. Install Ruby Gem Dependencies</h3></div></div></div><p>To install Ruby gems required by Ardtweeno, do the following:</p><pre class="screen">gem install rake nokogiri rack foreman json typhoeus mongo \
+bson_ext rack-test test-unit rspec serialport sinatra thin \
+rufus-scheduler bundler</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_install_the_ardtweeno_gateway_application"></a>16.5. Install the Ardtweeno Gateway Application</h3></div></div></div><p>The final step then is to install the Ardtweeno system itself. The best way to get access to the Ardtweeno
+system is to checkout a copy of the repository on Github. We can do this using the following commands:</p><pre class="screen"># Checkout the latest source code from the Git repository
+git clone git@github.com:davidkirwan/ardtweeno.git
+
+# Enter the folder
+cd ardtweeno/ardtweeno-gem
+
+# Ensure the system dependencies are all correct
+bundle install
+
+# Build and install the Ardtweeno gem, possibly requires sudo
+rake install
+
+# Ensure the dependencies for the tech demo are all correct
+cd ../tech-demo &amp;&amp; bundle install &amp;&amp; cd ../ardtweeno-gem</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_launch_the_ardtweeno_gateway"></a>16.6. Launch the Ardtweeno Gateway</h3></div></div></div><p>If you wish to stick with the Foreman method of launching the gateway, we can launch the Ardtweeno Gateway
+from the ardtweeno/ardtweeno-gem directory with the following command:</p><pre class="screen"># Launch the Ardtweeno gateway on port 4567
+foreman start -p 4567</pre><p>Once complete we should be able to visit the following address in your browser and see the Ardtweeno gateway front end
+running:  <code class="literal">http://localhost:4567/</code></p><p>It should look something similar to the image below:</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/ardtweeno-launch-gateway.png" width="100%" alt="Ardtweeno HTTP Interface" /></td></tr></table></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_ardtweeno_configuration"></a>16.7. Ardtweeno Configuration</h3></div></div></div><p>Once the system has been executed at least once, it will do the following:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+automatically create a configuration directory at the path: <code class="literal">~/.ardtweeno/</code>
+</li><li class="listitem">
+create a configuration file <code class="literal">conf.yaml</code> in this directory
+</li><li class="listitem">
+create a node configuration file <code class="literal">nodelist.yaml</code> in this directory
+</li></ul></div><p>The <code class="literal">~</code> in the path above corresponds with your home directory, this will be something like <code class="literal">/home/yourusername/</code> or <code class="literal">/home/users/yourusername</code>
+If you somehow manage to get the system working on Windows firstly, my congratulations you succeeded where I failed (Getting the Ruby development
+setup was the main issue, which prevented me from compiling the native extensions required by some of the dependencies), secondly the path will be
+something similar to <code class="literal">C:\Users\yourusername</code>.</p><p>To query the default configuration view the following API Request URI: <code class="literal">http://localhost:4567/api/v1/system/config?key=1230aea77d7bd38898fec74a75a87738dea9f657</code></p><p>It should return back something similar to the following with the default settings, keep in mind this is the output when formatted
+in a pretty fashion, the actual output will not be indented nicely as it is not meant to be viewed with human eyes:</p><pre class="screen">{
+  "dev": "/dev/pts/2",
+  "speed": 9600,
+  "adminkey": "1230aea77d7bd38898fec74a75a87738dea9f657",
+  "db": {
+    "dbHost": "localhost",
+    "dbPort": 27017,
+    "dbUser": "david",
+    "dbPass": "86ddd1420701a08d4a4380ca5d240ba7",
+    "dbName": "ardtweeno",
+    "dbPacketsColl": "packets"
+  },
+  "zones": [
+    {
+      "zonename": "testzone0",
+      "zonekey": "455a807bb34b1976bac820b07c263ee81bd267cc",
+      "zonenodes": [
+        "node0",
+        "node1"
+      ]
+    },
+    {
+      "zonename": "testzone1",
+      "zonekey": "79a7c75758879243418fe2c87ec7d5d4e1451129",
+      "zonenodes": [
+        "node2",
+        "node3"
+      ]
+    }
+  ]
+}</pre><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+<code class="literal">dev</code> is the hardware serial device for which the SerialParser will be connected to.
+</li><li class="listitem">
+<code class="literal">speed</code> is the speed at which the SerialParser will attempt to connect to the device.
+</li><li class="listitem">
+<code class="literal">adminkey</code> is the administrator API Key which is required to access the administration features of the Ardtweeno Gateway through the API
+</li><li class="listitem"><p class="simpara">
+<code class="literal">db</code> is further broken down into:
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+<code class="literal">dbHost</code> the hostname which corresponds with the MongoDB database
+</li><li class="listitem">
+<code class="literal">dbPort</code> the port number which the MongoDB database is listening on
+</li><li class="listitem">
+<code class="literal">dbUser</code> the username used to authenticate with the MongoDB database
+</li><li class="listitem">
+<code class="literal">dbPass</code> the password used to authenticate with the MongoDB database
+</li><li class="listitem">
+<code class="literal">dbName</code> the name of the database being managed by MongoDB
+</li><li class="listitem">
+<code class="literal">dbPacketsColl</code> the collection within the database which contains the packet data
+</li></ul></div></li><li class="listitem"><p class="simpara">
+<code class="literal">zones</code> is further broken down, there is an array containing potentially multiple zones each with the format:
+</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: circle; "><li class="listitem">
+<code class="literal">zonename</code> the name of the zone
+</li><li class="listitem">
+<code class="literal">zonekey</code> the API key used to authenticate when performing administrator functions on this zone
+</li><li class="listitem">
+<code class="literal">zonenodes</code> this is further broken down into an array potentially containing multiple strings of the node names
+</li></ul></div></li></ul></div><p>These settings mirror the contents of the <code class="literal">~/.ardtweeno/conf.yaml</code> configuration file, you will need to configure these to suit
+the system on your Raspberry Pi machine. I highly recommend you change the API key values also from the defaults to something
+you prefer. This will ensure the system remains secure when deployed in production. The <code class="literal">conf.yaml</code> file structure is stored
+in the <span class="emphasis"><em>YAML</em></span> markup language. The contents of the default file can be seen below:</p><p>NOTE:
+The configuration files are <code class="literal">YAML</code> which does not work very well or at all with whitespace indentation other than the regular
+space character. Do not use the tab key to indent the configuration files!</p><pre class="screen"># Device the serial device to which the Ardtweeno SerialParser will connect
+dev: /dev/ttyUSB0
+speed: 9600
+
+# Administrator API Key
+adminkey: 1230aea77d7bd38898fec74a75a87738dea9f657
+
+# Settings for the Database
+db:
+  dbHost: localhost
+  dbPort: 27017
+  dbUser: herp
+  dbPass: 86ddd1420701a08d4a4380ca5d240ba7
+  dbName: ardtweeno
+  dbPacketsColl: packets
+
+# Zone configuration
+zones:
+  -
+    zonename: testzone0
+    zonekey: 455a807bb34b1976bac820b07c263ee81bd267cc
+    zonenodes:
+      - node0
+  -
+    zonename: testzone1
+    zonekey: 79a7c75758879243418fe2c87ec7d5d4e1451129
+    zonenodes:
+      - node1</pre><p>The second configuration file <code class="literal">~/.ardtweeno/nodelist.yaml</code> contains the following configuration paramaters relating to the managed
+nodes to which the Ardtweeno gateway is responsible for managing. It is also stored in the <span class="emphasis"><em>YAML</em></span> language:</p><pre class="screen">-
+  name: node0
+  key: 500d81aafe637717a52f8650e54206e64da33d27
+  description: This node has a temperature sensor
+  version: 0.2.1
+  sensors:
+    - Temperature</pre><p>Ardtweeno Nodes are defined in this configuration file. All packets received from nodes which are not also defined in this file
+are dropped automatically by the gateway.</p><p></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_xbee_radio_network"></a>17. XBEE Radio Network</h2></div></div></div><p>The MVP system design called for a pair of XBEE radios configured for AT mode with the first as a single Coordinator AT and
+the second as a Router AT. With this configuration the XBEE system allows the router to only talk to the coordinator
+while the coordinator may only talk to the router. It is a single point to point link as seen in the image below:</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="50%"><tr><td><img src="../images/xbee-mvp-network.png" width="100%" alt="Ardtweeno MVP Network Topology" /></td></tr></table></div></div><p>It is this basic system which I have implemented in ER2. I have a third XBEE radio also configured as a router, and depending
+on whether or not I can get the system configured to operate correctly in a star topology, will decide if I will demo it during
+the presentation on May 20th.</p><p>At the earliest opportunity I intend to spend time implementing a fully functional SerialParser system which will allow me to switch
+to XBEE API firmwares and thereby open up the mesh networking potential of the system. Likewise the firmwares for each node will need
+to be fleshed out and hardened for production use.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="50%"><tr><td><img src="../images/xbee-mesh-network.png" width="100%" alt="Ardtweeno MVP Network Topology" /></td></tr></table></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_xbee_configuration"></a>17.1. XBEE Configuration</h3></div></div></div><p>While it is possible to communicate with the XBEE radios directly over a serial connection, such as that provided by the USB breakout
+board as shown in the following image, it is a lot more user friendly to use the Digi Firmware Configuration Tool <a class="xref" href="#xctu">[xctu]</a>. This tool
+is designed to work on the modern versions of the Microsoft Windows operating system.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="50%"><tr><td><img src="../images/xbee-xctu-software.png" width="100%" alt="XBEE USB Breakout Board" /></td></tr></table></div></div><p>I followed the advice about configuring XBEE radio devices from many sources such as <a class="xref" href="#configuring-xbee">[configuring-xbee]</a>, <a class="xref" href="#sensor-networks">[sensor-networks]</a> and <a class="xref" href="#xbee-pairing">[xbee-pairing]</a> I decided the
+way to configure the network for the initial system release would be adding all XBEE radios to the same <code class="literal">PAN</code> or <span class="emphasis"><em>Personal Area Network</em></span>.
+While setting the Destination High and Destination Low of the RouterAT radios to 0 to ensure they are addressing the Coordinator on this
+PAN. The Coordinator is configured to speak to FFFF which is the broadcast address for the PAN.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="50%"><tr><td><img src="../images/xbee-coordinator-at.png" width="100%" alt="XBEE Coordinator AT" /></td></tr></table></div></div><p>The image above shows the configuration page in the <span class="emphasis"><em>X-CTU</em></span> utility. I set the following parameters shown in the table below for the
+single <span class="emphasis"><em>CoordinatorAT</em></span> radio. The <span class="emphasis"><em>CoordinatorAT</em></span> is responsible for maintaining order on the network, in my configuration I have configured
+it simply to allow this single radio to transmit broadcast data to all other radios on the network.</p><div class="table"><a id="idp1375735116"></a><p class="title"><strong>Table 4. XBEE Radio Configuration Settings for Coordinator AT</strong></p><div class="table-contents"><table summary="XBEE Radio Configuration Settings for Coordinator AT" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /></colgroup><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Parameter</strong></span></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Value</strong></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>PAN ID</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>1337</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Destination High</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>0</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>Destination Low</p></td><td style="" align="left" valign="top"><p>FFFF</p></td></tr></tbody></table></div></div><br class="table-break" /><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="50%"><tr><td><img src="../images/xbee-router-at.png" width="100%" alt="XBEE Router AT" /></td></tr></table></div></div><p>In the inital system I have two RouterAT radios configured to speak to the CoordinatorAT with the following settings in the table below.</p><div class="table"><a id="idp1375744084"></a><p class="title"><strong>Table 5. XBEE Radio Configuration Settings for Router AT</strong></p><div class="table-contents"><table summary="XBEE Radio Configuration Settings for Router AT" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /></colgroup><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Parameter</strong></span></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Value</strong></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>PAN ID</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>1337</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Destination High</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>0</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>Destination Low</p></td><td style="" align="left" valign="top"><p>0</p></td></tr></tbody></table></div></div><br class="table-break" /><p>By configuring the mesh network in the this way has produced a system with the following topology, which details the Ardtweeno Gateway
+at the top, and two Ardtweeno Mesh Network Nodes on either side at the bottom:</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="75%"><tr><td><img src="../images/ardtweeno-mesh-network-topology.png" width="100%" alt="Ardtweeno Mesh Network Topology" /></td></tr></table></div></div><p>The PAN id is the number I choose for my personal Ardtweeno Mesh Network, however it is advisable you choose a value which better suits
+your needs. The settings used in the tables above are suitable for the initial Ardtweeno system, but with the change to the XBEE API firmwares
+in later versions, will require implementing a much more complex system for communicating between mesh network nodes. A fully featured and
+upgraded SerialParser system is the first step in achieving this goal as stated earlier in the document.</p><p></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_node_design"></a>18. Node Design</h2></div></div></div><p>This section contains information about the physical <span class="emphasis"><em>Ardtweeno</em></span> nodes such as the schematics I followed for my system.
+I created the schematics using the CadSoft tool EagleCad <a class="xref" href="#eagle">[eagle]</a>. This software is the defacto standard utility for
+working with and developing electronic systems. The schematic CAD files themselves will be made available in the git
+repository for the project here: <a class="xref" href="#ardtweeno-github">[ardtweeno-github]</a> and fall under the same licence as the project, Creative
+Commons BY-NC 3.0.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_temperature_sensor_platform_schematic"></a>18.1. Temperature Sensor Platform Schematic</h3></div></div></div><p>This following image shows the layout of the temperature sensor platform which I have designed for the <span class="emphasis"><em>Ardtweeno</em></span> system.
+The platform is made up of the following hardware:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+1 x Arduino FIO Microcontroller
+</li><li class="listitem">
+1 x Temperature Sensor DS18B20 (1-wire compatible)
+</li><li class="listitem">
+1 x 4.7K Ohms Resistor
+</li><li class="listitem">
+1 x 2Ah Lithium Polymer Battery
+</li><li class="listitem">
+3 x 1W Solar Panel Max output 5V 600mAh
+</li></ul></div><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="100%"><tr><td><img src="../images/ardtweeno-temperature-sensor-platform-schematic.png" width="100%" alt="Ardtweeno Temperature Sensor Platform" /></td></tr></table></div></div><p><span class="emphasis"><em>Ardtweeno Temperature Sensor Platform</em></span></p><p></p><p>I have not included the information in the schematic regarding how the system is powered. With the Arduino FIO platform
+we can power the system by battery, with the option to charge the battery by micro usb, or trickle charge with a solar
+panel array. I choose to use a solar panel array to keep the battery charged. This ensures the system can be run
+autonomously, while constantly returning data back to the <span class="emphasis"><em>Ardtweeno Gateway</em></span>. The image below shows the completed physical system.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="100%"><tr><td><img src="../images/ardtweeno-temperature-sensor-platform.png" width="100%" alt="Ardtweeno Temperature Sensor Platform" /></td></tr></table></div></div><p><span class="emphasis"><em>Ardtweeno Temperature Sensor Platform</em></span></p><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_movement_sensor_platform_schematic"></a>18.2. Movement Sensor Platform Schematic</h3></div></div></div><p>This following image shows the layout of the movement sensor platform which I have designed for the <span class="emphasis"><em>Ardtweeno</em></span> system.
+The platform is made up of the following hardware:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+1 x Arduino FIO Microcontroller
+</li><li class="listitem">
+1 x PIR infra-red motion sensor SE-10
+</li><li class="listitem">
+1 x LED
+</li></ul></div><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="100%"><tr><td><img src="../images/ardtweeno-movement-sensor-platform-schematic.png" width="100%" alt="Ardtweeno Movement Sensor Platform" /></td></tr></table></div></div><p><span class="emphasis"><em>Ardtweeno Movement Sensor Platform</em></span></p><p>For the movement sensor platform I decided to go with a mains power source to power the Arduino FIO microcontroller. I put together a DIY solder kit
+for a breadboard PSU <a class="xref" href="#breadboard-psu">[breadboard-psu]</a>, and it is this which I plan to power the node. The image below shows the physical completed <span class="emphasis"><em>Ardtweeno Node</em></span>.</p><div class="informalfigure"><div class="mediaobject"><table border="0" summary="manufactured viewport for HTML img" style="cellpadding: 0; cellspacing: 0;" width="100%"><tr><td><img src="../images/ardtweeno-movement-sensor-platform.png" width="100%" alt="Ardtweeno Movement Sensor Platform" /></td></tr></table></div></div><p><span class="emphasis"><em>Ardtweeno Movement Sensor Platform</em></span></p><p></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_technologies_used_in_ardtweeno"></a>19. Technologies Used in Ardtweeno</h2></div></div></div><p>There are a number of technologies listed in the <span class="emphasis"><em>bibliography</em></span> which I have not listed. This is due to them being
+either obviously unsuitable or deemed so after an attempt at incorporating them into the project. The following is by
+no means an exhaustive list, but merely a sample of the various technologies which were used in the Ardtweeno system.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_hardware_used_in_the_ardtweeno_system"></a>19.1. Hardware Used in the Ardtweeno System</h3></div></div></div><p>In this subsection I detail some of the hardware I used to build the system.</p><div class="itemizedlist"><p class="title"><strong>Hardware</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Arduino FIO Micro-controllers - Prototyping Embedded System
+</li><li class="listitem">
+1-Wire Sensors - Temperature and Barometric Pressure Sensors
+</li><li class="listitem">
+Infra-red PIR Motion Sensor - Sparkfun designed movement sensor <a class="xref" href="#pir-motion">[pir-motion]</a>
+</li><li class="listitem">
+Raspberry PI - ARM powered Embedded System
+</li><li class="listitem">
+XBee 802.15.4 Radio transmitters - Zigbee Radio Transmitter
+</li></ul></div><p>The Arduino FIO is the microcontroller I choose to act as a mesh network node. Due to the system having an on board
+trickle charge circuit for the charging of Lithium Polymer batteries using power received from a solar power source.
+Another major reason for picking the FIO is the fact it has a cradle for interacting with the XBEE 802.15.4 Wireless
+Radios. The FIO is the ideal sensor platform for the Ardtweeno project in my opinion, however any microcontroller which
+has the capabilities of interacting with an XBEE radio, or capable of communicating with the Ardtweeno gateway over the
+IP network can be used in the system.</p><p><strong>Arduino FIO Microcontroller <a class="xref" href="#fio">[fio]</a>. </strong>
+</p><pre class="screen">Microcontroller: ATmega328P
+Operating Voltage: 3.3V
+Input Voltage: 3.35 -12 V
+Input Voltage for Charge: 3.7 - 7 V
+Digital I/O Pins: 14 (of which 6 provide PWM output)
+Analog Input Pins: 8
+DC Current per I/O Pin: 40 mA
+Flash Memory: 32 KB (of which 2 KB used by bootloader)
+SRAM: 2 KB
+EEPROM: 1 KB
+Clock Speed: 8 MHz</pre><p>
+</p><p></p><p>The Ardtweeno Gateway is designed to operate from the Raspberry Pi Model B rev 1 or rev 2 without issue. As the specifications
+below show, the Pi is a capable machine considering its sub 40 Euro price tag. The main feature which allowed me to use
+the Pi was the fact it was capable of running an operating system like Linux, and thanks to the community had every single tool
+and utility (already compiled for the ARM platform) I could possibly need available in the apt-get repositories.</p><p><strong>Raspberry Pi Model B ARM Computer <a class="xref" href="#raspberrypi-specs">[raspberrypi-specs]</a>. </strong>
+</p><pre class="screen">CPU: 700 MHz ARM1176JZF-S core (ARM11 family)
+GPU:
+        Broadcom VideoCore IV OpenGL ES 2.0 (24 GFLOPS)
+        MPEG-2 and VC-1 (with license),
+        1080p30 h.264/MPEG-4 AVC high-profile
+        decoder and encoder
+Memory (SDRAM): 256/512 MB (shared with GPU)
+USB 2.0 ports: 2
+Video outputs:
+        Composite RCA (PAL and NTSC),
+        HDMI (rev 1.3 &amp; 1.4),
+        raw LCD Panels via DSI
+Audio outputs:
+        3.5 mm jack,
+        HDMI,
+        I2S audio
+Onboard storage: SD / MMC / SDIO card slot
+Onboard network: 10/100 Ethernet
+Low-level peripherals:
+        8 x GPIO,
+        UART,
+        I2C bus,
+        SPI bus with two chip selects,
+        I2S audio,
+        +3.3 V,
+        +5 V,
+        ground
+Power ratings:
+        300 mA (1.5 W)
+        700 mA (3.5 W)
+Power source:
+        5v via MicroUSB,
+        GPIO header
+Size: 85.60 mm x 53.98 mm
+Weight: 45 g
+Operating systems:
+        Arch Linux ARM,
+        Debian Linux,
+        Fedora,
+        FreeBSD,
+        Plan 9,
+        Raspbian OS,
+        RISC OS,
+        Slackware Linux</pre><p>
+</p><p></p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a id="_software_used_in_the_ardtweeno_system"></a>19.2. Software Used in the Ardtweeno System</h3></div></div></div><p>This section contains the list of software and frameworks which were used in the Ardtweeno system.</p><div class="itemizedlist"><p class="title"><strong>Programming Languages</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Asciidoc - Markup language perfectly suited to writing documentation <a class="xref" href="#asciidoc">[asciidoc]</a>
+</li><li class="listitem">
+C, C++, Wiring / Processing - Programming languages used by the Arduino IDE
+</li><li class="listitem">
+Javascript - The Javascript language
+</li><li class="listitem">
+node.js Server-side Javascript scripting language <a class="xref" href="#nodejs">[nodejs]</a>
+</li><li class="listitem">
+Ruby - The Ruby Programming language <a class="xref" href="#ruby">[ruby]</a>
+</li><li class="listitem">
+R - Mathematical programming language <a class="xref" href="#r-cran">[r-cran]</a>
+</li><li class="listitem">
+UML - Unified Modelling Language
+</li><li class="listitem">
+YAML - Yet Another Markup Language
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Frameworks</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+Sinatra - Micro Web application framework <a class="xref" href="#sinatra">[sinatra]</a>
+</li><li class="listitem">
+Test-Unit - Test Driven Development testing framework for ruby
+</li><li class="listitem">
+Rack-Test - Testing framework for web applications using the Rack middle-ware
+</li></ul></div><div class="itemizedlist"><p class="title"><strong>Services</strong></p><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">
+ArgoUML - UML Development Environment
+</li><li class="listitem">
+Git - Source control manager <a class="xref" href="#git">[git]</a>
+</li><li class="listitem">
+ino - CLI for generating Arduino firmwares <a class="xref" href="#ino-2012">[ino-2012]</a>
+</li><li class="listitem">
+MongoDB - Non SQL Database <a class="xref" href="#mongodb">[mongodb]</a>
+</li><li class="listitem">
+NGINX - Web Server and reverse proxy <a class="xref" href="#nginx">[nginx]</a>
+</li><li class="listitem">
+tty0tty - Linux Null Modem Emulator <a class="xref" href="#tty0tty">[tty0tty]</a>
+</li><li class="listitem">
+Twitter - twitter.com API <a class="xref" href="#twitter">[twitter]</a>
+</li><li class="listitem">
+X-CTU - XBEE firmware uploader <a class="xref" href="#xctu">[xctu]</a>
+</li></ul></div><p></p></div></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_future_work"></a>20. Future Work</h2></div></div></div><p>One of my main personal goals is to eventually participate in cutting edge research in a computing science field, ideally
+also become involved in the creation and development of new technology based on this research. In the coming months I intend
+on creating a research paper suitable for submission to a technology conference in Ireland. I think the opportunity to
+present my work at a local conference in Ireland would not only be an amazing experience but would help kick start my
+career as a researcher by gaining some initial publications. I hope to write a research paper detailing my work on the
+<span class="emphasis"><em>Ardtweeno</em></span> project and submit it to one of these conferences at the earliest opportunity. Another possibility I am currently
+considering is the pursuit of a MSc by research, there is a possibility the <span class="emphasis"><em>Ardtweeno</em></span> system might align with ongoing
+research projects at the <a class="xref" href="#tssg">[tssg]</a>. I would jump at the opportunity if this did occur.</p><p>There are a number of conferences in Ireland listed here <a class="xref" href="#wikicfp">[wikicfp]</a> which could possibly be interested in taking a paper
+from an undergraduate student. As I have quickly learned, the task of choosing which conferences to send a paper cannot be
+trivialised. I have to spend time researching the requirements for submitting a paper to each one.
+This is potentially beyond the scope of my project as far as marking is concerned so this will be placed on the backlog until
+the final report has been submitted for marking.</p><p>The space that I currently see Ardtweeno occupying is a platform as a service which may enable developers to produce home
+automation systems, very much like a locally running version of one of the cloud infrastructure systems detailed in the table
+below such as <a class="xref" href="#cosm">[cosm]</a> or <a class="xref" href="#nimbits">[nimbits]</a>. It has the ability to receive packets of information and then store them for later
+analysis and graphing much like these propriety systems mentioned. It also offers a REST API for data retrieval and manipulation.
+With the knowledge of what my system is capable of, along with looking at what is currently available on the market, I am
+confident the system is worth further research and development.</p><div class="table"><a id="idp1375804796"></a><p class="title"><strong>Table 6. Similar Services to Ardtweeno Currently Available</strong></p><div class="table-contents"><table summary="Similar Services to Ardtweeno Currently Available" cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /></colgroup><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Name</strong></span></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Open or Closed?</strong></span></p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><span class="strong"><strong>Featureset</strong></span></p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><a class="xref" href="#xively">[xively]</a> aka <a class="xref" href="#cosm">[cosm]</a>, Pachube</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Proprietry</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Very detailed</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><a class="xref" href="#nanocloudlogger">[nanocloudlogger]</a></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GPL3.0</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Minimal, API</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><a class="xref" href="#nimbits">[nimbits]</a></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>GPL3.0</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Very detailed</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p><a class="xref" href="#opensense">[opensense]</a></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Proprietry</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>Very detailed</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p><a class="xref" href="#thingspeak">[thingspeak]</a></p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>Proprietry</p></td><td style="" align="left" valign="top"><p>Very detailed</p></td></tr></tbody></table></div></div><br class="table-break" /><p>I believe the low cost and powerful nature of the hardware deployed in the project provides great potential to develop systems in this space.
+Eventually I hope to mature the system to the point where applications can be developed to take advantage of the Ardtweeno features
+while building smart home / commercial automation systems. With the eventual widespread adoption of <span class="emphasis"><em>IPV6</em></span> networking the <span class="emphasis"><em>Internet of Things</em></span> will
+almost certainly become the reality. I can see the <span class="emphasis"><em>Ardtweeno</em></span> with a little more development focusing on a strong set of initial features,
+could offer a valuable contribution to making this <span class="emphasis"><em>Internet of Things</em></span> possible.</p><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_conclusions"></a>21. Conclusions</h2></div></div></div><p>I am very happy in general with the overall <span class="emphasis"><em>Ardtweeno Application Gateway</em></span> system and how it has matured since
+September 2012. I feel I have achieved everything I initially set out to, due to meticulous planning, dedication
+and constant adherance to the schedule at all stages of the development cycle. The work flow which I designed at
+the start of September seems to have suited the project well.</p><p>I found developing the documentation in the <a class="xref" href="#asciidoc">[asciidoc]</a> markup language to suit me very well, the system which
+was put in place for splitting sections out into separate files especially suited this project in my opinion.
+I can already see future documentation being built from the sections I developed for the project deliverables
+such as the HTML installation documentation which will be stored on Github pages. I can very quickly pick
+and choose the essential sections which relate to the technical areas of the project, and using the build tool,
+generate the report output immediately. This system should scale well with multiple collaborators as the project
+documentation is under source control also.</p><p>I am delighted with my choice of picking the Ruby language with which I implemented the <span class="emphasis"><em>Ardtweeno</em></span> system, the
+simplicity and design of this language ensures every line of code is a joy to write. It was not always the case
+however, as I did run into some serious technical difficulties in October - December 2012, as I struggled to implement
+a basic SerialParser subsystem for retrieving packets from the mesh network. I had hoped to implement this subsystem in
+the Ruby language also, but due to an issue with threading and serial read time outs which appeared to be a manifestation
+of a low level bug within the standard library, I was forced to seek refuge in another language, I picked NodeJS
+for multiple reasons. I’d heard a lot of things from various people about the language, and saw it as an opportunity
+to try it out.</p><p>Unsurprisingly NodeJS presented its own problems, such as an issue where running the newly implemented
+SerialParser in headless mode resulted in the first packet received on the XBEE radio to be parsed successfully,
+while all subsequent packets failed to be correctly collected. When I ran the exact same system and monitored with
+the aid of debug statements the system functioned flawlessly for the most part. I have given up on developing
+a SerialParser system in NodeJS, one of the next major tasks in the project will to replace the SerialParser in a
+language such as C or C++. While it is not ideal, the NodeJS system will work in the interim.</p><p>I hope the <span class="emphasis"><em>Ardtweeno</em></span> system becomes a useful tool for users in the open source and open hardware community.
+To help see this goal become a reality, I have opened up the <code class="literal">Github</code> repository for the <span class="emphasis"><em>Ardtweeno Application Gateway</em></span>
+project and released it as an open source project under the <code class="literal">Creative Commons BY-NC 3.0</code> licence.
+By releasing the system as an open source project I hope to maximise the possibility of collaboration with other interested
+parties. There is a potential for many such parties which desire the features provided by <span class="emphasis"><em>Ardtweeno</em></span> who may not be in a position
+to either develop the entire system from scratch, or willing to pay for the services of some of the similar commercial products
+currently available.</p><p>However, should the system never gain a single collaborator I do still intend on continuing to develop the <span class="emphasis"><em>Ardtweeno</em></span>
+system, for my own amusement if nothing else. The system has always been designed first and foremost to be used for my
+own personal use in my home, should someone else find it somewhat useful is an added bonus.</p><p>A HTML version of this document is released at: <span class="emphasis"><em>http://davidkirwan.github.io/ardtweeno/</em></span> and the wiki for the <span class="emphasis"><em>Ardtweeno</em></span>
+system is available here: <span class="emphasis"><em>https://github.com/davidkirwan/ardtweeno/wiki</em></span></p><p></p></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_bibliography"></a>22. Bibliography:</h2></div></div></div><div class="bibliodiv"><div class="bibliomixed"><a id="idp1375831444"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="1-wire"></a>[1-wire] <span class="emphasis"><em>1-Wire Communication Protocol</em></span>, Maxim Integrated. 2012. <a class="ulink" href="http://www.maximintegrated.com/products/ibutton/software/tmex/" target="_top">http://www.maximintegrated.com/products/ibutton/software/tmex/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375832884"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="agile-modeling"></a>[agile-modeling] <span class="emphasis"><em>Introduction to UML 2 Deployment Diagrams</em></span>, Scott W. Ambler. 2012. <a class="ulink" href="http://www.agilemodeling.com/artifacts/deploymentDiagram.htm" target="_top">http://www.agilemodeling.com/artifacts/deploymentDiagram.htm</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375834332"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="arduino"></a>[arduino] <span class="emphasis"><em>Opensource electronics prototyping platform</em></span>, Arduino Team. 2012. <a class="ulink" href="http://www.arduino.cc/" target="_top">http://www.arduino.cc/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375835636"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="ardtweeno-github"></a>[ardtweeno-github] <span class="emphasis"><em>Ardtweeno Application Gateway - Git Repository</em></span>, David Kirwan. 2013. <a class="ulink" href="https://github.com/davidkirwan/ardtweeno" target="_top">https://github.com/davidkirwan/ardtweeno</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375837044"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="argouml"></a>[argouml] <span class="emphasis"><em>ArgoUML a leading open source UML modeling tool</em></span>, CollabNet, Inc. 2012. <a class="ulink" href="http://argouml.tigris.org/" target="_top">http://argouml.tigris.org/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375838356"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="asciidoc"></a>[asciidoc] <span class="emphasis"><em>Text based document generation</em></span>, Methods: Software. 2012. <a class="ulink" href="http://www.methods.co.nz/asciidoc/" target="_top">http://www.methods.co.nz/asciidoc/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375839732"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="asciidoc2html-pdf"></a>[asciidoc2html-pdf] <span class="emphasis"><em>Toolchain Wrapper for the Asciidoc Documentation System</em></span>, TSSG. 2013. <a class="ulink" href="https://github.com/TSSG/asciidoc2html-pdf" target="_top">https://github.com/TSSG/asciidoc2html-pdf</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375841148"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="breadboard-psu"></a>[breadboard-psu] <span class="emphasis"><em>Breadboard Power Supply 5V-3V</em></span>, Sparkfun, 2013. <a class="ulink" href="http://www.coolcomponents.co.uk/catalog/breadboard-power-supply-5v33v-p-806.html" target="_top">http://www.coolcomponents.co.uk/catalog/breadboard-power-supply-5v33v-p-806.html</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375842620"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="buildingmongo"></a>[buildingmongo] <span class="emphasis"><em>Building MongoDB on Raspberry Pi</em></span>, Chris Elsmore. 2012. <a class="ulink" href="http://elsmorian.com/post/24395639198/building-mongodb-on-raspberry-pi" target="_top">http://elsmorian.com/post/24395639198/building-mongodb-on-raspberry-pi</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375844076"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="codecoverage"></a>[codecoverage] <span class="emphasis"><em>SimpleCov a code coverage tool for ruby 1.9.x</em></span>, Christoph Olszowka. 2012 <a class="ulink" href="https://github.com/colszowka/simplecov" target="_top">https://github.com/colszowka/simplecov</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375845484"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="configuring-xbee"></a>[configuring-xbee] <span class="emphasis"><em>XBEE - Configuring the Radios</em></span>, hex705. 2008. <a class="ulink" href="http://hex705.wordpress.com/2008/11/07/xbee-configuring-the-radios/" target="_top">http://hex705.wordpress.com/2008/11/07/xbee-configuring-the-radios/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375846924"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="cosm"></a>[cosm] <span class="emphasis"><em>Cosm - Internet of Things Platform Connecting Devices and Apps for Real-Time Control and Data Storage</em></span>, Cosm. 2013. <a class="ulink" href="https://cosm.com/" target="_top">https://cosm.com/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375848292"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="eagle"></a>[eagle] <span class="emphasis"><em>Eagle Cad</em></span>, CadSoft. 2013. <a class="ulink" href="http://www.cadsoftusa.com/download-eagle/?language=en" target="_top">http://www.cadsoftusa.com/download-eagle/?language=en</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375849676"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="espeak"></a>[espeak] <span class="emphasis"><em>eSpeak text to speech</em></span>, Jonathan Duddington. 2012. <a class="ulink" href="http://espeak.sourceforge.net" target="_top">http://espeak.sourceforge.net</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375851052"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="eventmachine"></a>[eventmachine] <span class="emphasis"><em>Eventmachine</em></span>, Eventmachine. 2012. <a class="ulink" href="https://github.com/eventmachine/eventmachine" target="_top">https://github.com/eventmachine/eventmachine</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375852420"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="fio"></a>[fio] <span class="emphasis"><em>ArduinoBoardFio</em></span>, Arduino. 2013. <a class="ulink" href="http://arduino.cc/en/Main/ArduinoBoardFio" target="_top">http://arduino.cc/en/Main/ArduinoBoardFio</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375853772"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="git"></a>[git] <span class="emphasis"><em>--everything-is-local</em></span>, Git. 2012. <a class="ulink" href="http://git-scm.com/" target="_top">http://git-scm.com/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375855028"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="IEEE-2011"></a>[IEEE-2011] <span class="emphasis"><em>The Making of Arduino</em></span>, D Kushner. 2011. <a class="ulink" href="http://spectrum.ieee.org/geek-life/hands-on/the-making-of-arduino/0" target="_top">http://spectrum.ieee.org/geek-life/hands-on/the-making-of-arduino/0</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375856428"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="ino-2012"></a>[ino-2012] <span class="emphasis"><em>Ino is a command line toolkit for working with Arduino hardware</em></span>, Amperka, 2012. <a class="ulink" href="http://inotool.org/" target="_top">http://inotool.org/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375857756"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="jquery"></a>[jquery] <span class="emphasis"><em>jQuery write less, do more</em></span>, jQuery. 2013. <a class="ulink" href="http://jquery.com" target="_top">http://jquery.com</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375859012"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="mongodb"></a>[mongodb] <span class="emphasis"><em>Agile and Scalable</em></span>, 10gen, Inc. 2012. <a class="ulink" href="http://www.mongodb.org/" target="_top">http://www.mongodb.org/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375860268"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="nanocloudlogger"></a>[nanocloudlogger] <span class="emphasis"><em>NanoCloudLogger</em></span>, Mitja Felicijan. 2013. <a class="ulink" href="https://github.com/mitjafelicijan/NanoCloudLogger" target="_top">https://github.com/mitjafelicijan/NanoCloudLogger</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375861636"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="nimbits"></a>[nimbits] <span class="emphasis"><em>Nimbits</em></span> Nimbits Inc. 2013. <a class="ulink" href="http://www.nimbits.com/" target="_top">http://www.nimbits.com/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375862892"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="nginx"></a>[nginx] <span class="emphasis"><em>nginx - HTTP and Mail reverse proxy</em></span>, Igor Sysoev. 2012. <a class="ulink" href="http://nginx.org/en/" target="_top">http://nginx.org/en/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375864188"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="nodejs"></a>[nodejs] <span class="emphasis"><em>node.js event driven non-blocking I/O</em></span>, Joyent INC, 2012. <a class="ulink" href="http://nodejs.org/" target="_top">http://nodejs.org/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375865492"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="opensense"></a>[opensense] <span class="emphasis"><em>Feel, Act, Make sense</em></span>, Sen.se. 2013. <a class="ulink" href="http://open.sen.se/" target="_top">http://open.sen.se/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375866748"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="pir-motion"></a>[pir-motion] <span class="emphasis"><em>Pir Motion Sensor</em></span>, Sparkfun, 2013. <a class="ulink" href="http://www.coolcomponents.co.uk/catalog/infra-motion-sensor-p-312.html" target="_top">http://www.coolcomponents.co.uk/catalog/infra-motion-sensor-p-312.html</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375868164"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="r-cran"></a>[r-cran] <span class="emphasis"><em>The R Project for Statistical Computing</em></span>, R Foundation. 2012. <a class="ulink" href="http://www.r-project.org/" target="_top">http://www.r-project.org/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375869468"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="raphael-js"></a>[raphael-js] <span class="emphasis"><em>Raphael Reference</em></span>, Raphael.js. 2013. <a class="ulink" href="http://raphaeljs.com" target="_top">http://raphaeljs.com</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375870724"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="resistor-calc"></a>[resistor-calc] <span class="emphasis"><em>5 Band Resistor Calculator</em></span>, DIY Alarm Forum. 2013. <a class="ulink" href="http://www.diyalarmforum.com/5-band-resistor-calc/" target="_top">http://www.diyalarmforum.com/5-band-resistor-calc/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375872092"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="raspberrypi-2012"></a>[raspberrypi-2012] <span class="emphasis"><em>An ARM GNU/Linux box for $25. Take a byte!</em></span>, Raspberry Pi Foundation. 2012. <a class="ulink" href="http://www.raspberrypi.org" target="_top">http://www.raspberrypi.org</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375873436"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="raspberrypi-specs"></a>[raspberrypi-specs] <span class="emphasis"><em>Raspberry Pi - Wikipedia</em></span>, Wikimedia Inc. 2013. <a class="ulink" href="http://en.wikipedia.org/wiki/Raspberry_Pi" target="_top">http://en.wikipedia.org/wiki/Raspberry_Pi</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375874788"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="rest-api-dev"></a>[rest-api-dev] <span class="emphasis"><em>Light Web Services</em></span>, Rubyconf. 2008. <a class="ulink" href="http://rubyconf2008.confreaks.com/lightweight-web-services.html" target="_top">http://rubyconf2008.confreaks.com/lightweight-web-services.html</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375876188"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="rest-api-dev-2"></a>[rest-api-dev-2] <span class="emphasis"><em>Implementing a RESTful API with Ruby the right way</em></span>, lanyrd.com. 2011. <a class="ulink" href="http://lanyrd.com/2011/frozen-rails/sfgzx/" target="_top">http://lanyrd.com/2011/frozen-rails/sfgzx/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375877596"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="rest-api-testing"></a>[rest-api-testing] <span class="emphasis"><em>Ruby RestClient</em></span>, Adam Wiggins. 2012. <a class="ulink" href="https://github.com/adamwiggins/rest-client" target="_top">https://github.com/adamwiggins/rest-client</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375878948"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="ruby"></a>[ruby] <span class="emphasis"><em>A programmers best friend</em></span>, Ruby Community. 2012. <a class="ulink" href="http://www.ruby-lang.org/en/about/" target="_top">http://www.ruby-lang.org/en/about/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375880284"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="rubyonrails"></a>[rubyonrails] <span class="emphasis"><em>Web development that doesn’t hurt</em></span>, David Heinemeier Hansson. 2012. <a class="ulink" href="http://rubyonrails.org/" target="_top">http://rubyonrails.org/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375881644"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="sensor-networks"></a>[sensor-networks] <span class="emphasis"><em>Building Wireless Sensor Networks</em></span>, Robert Faludi. 2010. <a class="ulink" href="http://oreilly.com" target="_top">http://oreilly.com</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375882940"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="sinatra"></a>[sinatra] <span class="emphasis"><em>Sinatra</em></span>, Blake Mizerany, 2013. <a class="ulink" href="http://www.sinatrarb.com" target="_top">http://www.sinatrarb.com</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375884196"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="thingspeak"></a>[thingspeak] <span class="emphasis"><em>Internet of Things - ThingSpeak</em></span>, ThingSpeak. 2013. <a class="ulink" href="https://thingspeak.com/" target="_top">https://thingspeak.com/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375885492"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="tssg"></a>[tssg] <span class="emphasis"><em>Telecommunication Software Support Group</em></span>, TSSG. 2013. <a class="ulink" href="http://tssg.org" target="_top">http://tssg.org</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375886796"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="tty0tty"></a>[tty0tty] <span class="emphasis"><em>Linux Null Modem Emulator</em></span>, Luis Claudio Gambôa Lopes. 2012. <a class="ulink" href="http://sourceforge.net/projects/tty0tty/" target="_top">http://sourceforge.net/projects/tty0tty/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375888228"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="twitter"></a>[twitter] <span class="emphasis"><em>Build with twitter</em></span>, Twitter Inc. 2012. <a class="ulink" href="https://dev.twitter.com/" target="_top">https://dev.twitter.com/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375889484"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="typhoeus"></a>[typhoeus] <span class="emphasis"><em>Getting started with Typhoeus</em></span>, Typhoeus, 2012. <a class="ulink" href="http://typhoeus.github.com/articles/getting_started.html" target="_top">http://typhoeus.github.com/articles/getting_started.html</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375890908"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="userstory"></a>[userstory] <span class="emphasis"><em>User Story - Definition</em></span>, Wikipedia. 2012. <a class="ulink" href="http://en.wikipedia.org/wiki/User_story" target="_top">http://en.wikipedia.org/wiki/User_story</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375892260"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="wikicfp"></a>[wikicfp] <span class="emphasis"><em>WikiCFP : Call for Papers of Conferences, Workshops and Journals</em></span>, WikiCFP. 2013. <a class="ulink" href="http://www.wikicfp.com/cfp/servlet/tool.search?q=ireland&amp;year=t" target="_top">http://www.wikicfp.com/cfp/servlet/tool.search?q=ireland&amp;year=t</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375893820"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="xbee"></a>[xbee] <span class="emphasis"><em>Need wireless? Choose XBee</em></span>, Digi International Inc. 2012. <a class="ulink" href="http://www.digi.com/xbee/" target="_top">http://www.digi.com/xbee/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375895076"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="xbee-mesh-2012"></a>[xbee-mesh-2012] <span class="emphasis"><em>Mesh with XBEE</em></span>, xbee.wikispaces.com. 2012. <a class="ulink" href="http://xbee.wikispaces.com/Mesh+with+Xbee" target="_top">http://xbee.wikispaces.com/Mesh+with+Xbee</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375896468"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="xbee-pairing"></a>[xbee-pairing] <span class="emphasis"><em>XBEE Pairing Tutorial</em></span>, Jaycon Systems. 2013. <a class="ulink" href="http://www.jayconsystems.com/tutorial/xbee/" target="_top">http://www.jayconsystems.com/tutorial/xbee/</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375897820"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="xctu"></a>[xctu] <span class="emphasis"><em>X-CTU Software - Diagnostics, Utilities and MIBS</em></span>, Digi International Inc. 2013. <a class="ulink" href="http://www.digi.com/support/productdetail?pid=3352&amp;type=utilities" target="_top">http://www.digi.com/support/productdetail?pid=3352&amp;type=utilities</a>
+</span>
+</p></div><div class="bibliomixed"><a id="idp1375899396"></a><p class="bibliomixed">
+<span class="bibliomisc">
+<a id="xively"></a>[xively] <span class="emphasis"><em>Public Cloud for the Internet of Things</em></span>, Xively. 2013. <a class="ulink" href="https://xively.com" target="_top">https://xively.com</a>
+</span>
+</p></div></div></div></div></body></html>
