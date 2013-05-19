@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Ardtweeno Zone Statistics Graph</title>
+
+    <script type="text/javascript" src="/js/highstock.js"></script>
+    <script type="text/javascript" src="/js/highcharts.js"></script>
+                
+  </head>
+        
+  <body>
+<script>
+  $(document).ready(function() {
+  	<% ourGraphData.each_with_index do |i, index| %>
+  	
+	var chart<%= index %> = new Highcharts.Chart({
+
+	  chart: {
+		// Edit chart spacing
+		spacingBottom: 50,
+		spacingTop: 50,
+		spacingLeft: 50,
+		spacingRight: 50,
+		
+        // Explicitly tell the width and height of a chart
+		width: 640,
+		height: 480,
+		
+		renderTo: 'thestats<%= index %>',
+		type: 'column'
+	  },
+	  title: {
+		text: '<b>Ardtweeno Statistics for: <%= i[:name]%></b>',
+		y: -20
+	  },
+	  xAxis: {
+		categories: [
+          	'<%= i[:name]%>',
+		]
+	  },
+	  yAxis: {
+		title: {
+		  text: 'Packets per node'
+		}
+	  },
+	  series: [
+	    <% i[:nodes].each do |j| %>
+	    {
+		  name: '<%= j[:name] %>',
+		  data: [<%= j[:packets] %>]
+		},
+		<% end %>
+		],
+	  });      
+    <% end %>
+    });
+</script>
+<% ourGraphData.each_with_index do |i, index| %>
+<div id="thestats<%= index %>"></div>
+<% end %>    
+  </body>
+</html>

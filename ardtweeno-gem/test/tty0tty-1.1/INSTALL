@@ -1,0 +1,18 @@
+Installation:
+
+pts:
+   make         -To compile 
+   ./tty0tty    -To run 	
+
+
+module:
+   make        	      -To compile 
+   insmod tty0tty.ko  -To load module (using root or sudo)	
+
+
+this version is not auto installable
+
+
+Requirements:
+
+  for module build is necessary kernel-headers or kernel source

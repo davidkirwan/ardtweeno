@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Ardtweeno Application Gateway</title>
+	<link href="/main.css" media="screen" rel="stylesheet" type="text/css" />
+	
+	<link rel="stylesheet" href="/highlightjs/styles/monokai.css">
+	<script src="/highlightjs/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+	<body>
+		<div id="header">
+		  <div id="logo">Ardtweeno - Application Gateway</div>
+		
+		  <ul id="navigation">
+		  	<% if running == true %>
+		  	  <li><a href="">Status [<img title="Running" id="status" src="/glossy_green_button.svg" height="25" width="25"></img>]</a></li>
+		  	<% else %>
+		  	  <li><a href="">Status [<img title="Stopped" id="status" src="/glossy_red_button.svg" height="25" width="25"></img>]</a></li>
+		  	<% end %>
+		    <li><a href="http://brovakin.wordpress.com">News</a></li>
+		    <li><a href="http://github.com/dkirwan/ardtweeno">Source</a></li>
+		  </ul>
+		</div>
+		
+		<div id="content">
+		
+			<img id="sample" src="/raspberrypi.jpg" height="175" width="240"/>
+		
+			<p id="blurb">Ardtweeno is an application gateway which bridges an XBEE 802.15.4 radio mesh network and an Internet Protocol network. The system is designed as a PaaS (platform as a service) for the <a href="http://raspberrypi.org">Raspberry Pi</a> ARM platform.</p>
+		
+	    <div id="posts">
+              <h2>News Posts</h2>
+            <% unless postdata.nil? %>
+              <% postdata.each do |i| %>
+                <div id="post">
+                  <h3 id="post-title"><%= i[:posttitle]%></h3>
+                  <p id="post-content"><%= i[:postcontent] %></p>
+                  <% unless i[:postcode] == '' %>
+                    <pre><code id="post-code"><%= i[:postcode] %></code></pre>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+	    </div>
+
+
+      	<div id="footer">
+        	<hr/>
+        	<p id="licence">
+          	All content is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US">Attribution-NonCommercial 3.0 Unported</a>.<br /><br /><a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/88x31.png" /></a>
+        	</p>
+      	</div>
+      
+      </div>
+	</body>
+</html>

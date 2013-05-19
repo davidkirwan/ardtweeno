@@ -6,16 +6,11 @@ for configuration and data manipulation purposes which can be queried in order t
 and other forms of data reporting. Push notifications, twitter and dropbox integration is planned in later 
 releases.
 
-## Release Schedule
-While the system is still under development, ER1 (Minimum Viable Product) is now complete and waiting to be
-released. Development is currently focused on a sample web application which consumes the Ardtweeno API, and
-updating the documentation to reflect the latest system features to be implemented.
-
-I've decided to release the system on _github_ with ER2 towards the end of May 2013 during the student fair
-at the Waterford Institute of Technology.
+## Usage Instructions
+See the WIKI for information regarding configuration and installation, and here for usage instructions: [usage](http://davidkirwan.github.io/ardtweeno)
 
 ## Project Poster
-![Ardtweeno](http://davidkirwan.github.com/ardtweeno/ardtweeno-poster.png)
+![Ardtweeno](http://davidkirwan.github.io/ardtweeno/ardtweeno-poster.png)
 
 ## Project Licence
 The Ardtweeno Application Gateway is released under the Creative Commons Attribution-NonCommercial 3.0 Unported 

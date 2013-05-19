@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Ardtweeno Application Gateway</title>
+	<link href="/main.css" media="screen" rel="stylesheet" type="text/css" />
+</head>
+
+	<body>
+		<div id="header">
+		  <div id="logo">Ardtweeno - Application Gateway</div>
+		
+		  <ul id="navigation">
+		  	<% if running == true %>
+		  	  <li><a href="">Status [<img title="Running" id="status" src="/glossy_green_button.svg" height="25" width="25"></img>]</a></li>
+		  	<% else %>
+		  	  <li><a href="">Status [<img title="Stopped" id="status" src="/glossy_red_button.svg" height="25" width="25"></img>]</a></li>
+		  	<% end %>
+		    <li><a href="http://brovakin.wordpress.com">News</a></li>
+		    <li><a href="http://github.com/dkirwan/ardtweeno">Source</a></li>
+		  </ul>
+		</div>
+		
+		<div id="content">
+		
+		<form id="postform" action="/b97cb9ae44747ee263363463b7e56/create/post" method="post">
+		  <ul>
+			<li>Title:<br /><input id="title" name="title" type="text" /><br /></li>
+			<li>Content:<br /><textarea id="content" name="content" rows="4" cols="50"> </textarea><br /></li>
+			<li>Code:<br /><textarea id="code" name="code" rows="4" cols="50"> </textarea><br /></li>
+			<li><input id="submit" name="submit" type="submit" value="Submit" /><br /></li>
+		  </ul>
+		</form>
+		
+
+	 	
+      	<div id="footer">
+        	<hr/>
+        	<p id="licence">
+          		All content is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.<br /><br /><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>
+        	</p>
+      	</div>
+      	</div>
+	</body>
+</html>

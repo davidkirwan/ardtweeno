@@ -1,0 +1,494 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Tech Demo for the Ardtweeno Application Gateway</title>
+<link href="css/reset.css" rel="stylesheet" media="screen">
+<link href="css/style.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" type="text/css" href="fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+<div id="page">
+  <aside id="sidebar">
+    <nav><a class="logo" href="/gateway" id="nav-logo"><span>Go To The</span>Ardtweeno Application Gateway</a>
+      <ul>
+     	<li class="active" id="nav-1"><a href="#home">Home</a></li>
+        <li id="nav-2"><a href="#reports">Reports</a></li>
+        <li id="nav-3"><a href="#links">Links</a></li>
+		<li id="nav-4"><a href="#about">About</a></li>
+		<li id="nav-5"><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="bg_bottom"></div>
+    </nav>
+  </aside>
+  <div id="main-content">
+  	<a href="https://github.com/davidkirwan/ardtweeno"><img id="fork" src="images/fork.png" alt="" /></a>
+  	<section id="top"></section><!-- do not remove ;)-->
+    <section id="home" >
+      <header>
+      	<h2>
+      	</h2>
+      </header>
+    	
+      <div id="loader" class="loader"></div>
+      <div id="ps_container" class="ps_container"> <span class="ribbon"></span>
+        <div class="ps_image_wrapper"> 
+          <!-- First initial image --> 
+          <img src="images/1.png" alt="" /> </div>
+        <!-- Navigation items -->
+        <div class="ps_next"></div>
+        <div class="ps_prev"></div>
+        <!-- Dot list with thumbnail preview -->
+        <ul class="ps_nav">
+          <li class="selected"><a href="images/1.png" rel="images/thumbs/1.png">Image 1</a></li>
+          <li><a href="images/2.png" rel="images/thumbs/2.png">Image 2</a></li>
+          <li><a href="images/3.png" rel="images/thumbs/3.png">Image 3</a></li>
+          <li><a href="images/4.png" rel="images/thumbs/4.png">Image 4</a></li>
+          <li><a href="images/5.png" rel="images/thumbs/5.png">Image 5</a></li>
+          <li class="ps_preview">
+            <div class="ps_preview_wrapper"> 
+              <!-- Thumbnail comes here --> 
+            </div>
+            <!-- Little triangle --> 
+            <span></span> </li>
+        </ul>
+      </div>
+      <!--end ps_container-->
+	  
+      <div class="recent-work columns">
+        <h3>An Ardtwhat?!</h3>
+		<p>Ardtweeno is an IP - XBee Mesh Network Gateway. It bridges devices connected through a serial link such as XBee mesh network nodes, to devices over Internet Protocol (IP). 
+		It is designed as a platform as a service (PaaS) capable of being run on the Raspberry Pi Model B but can in fact be run on any Linux distribution which has access to the libraries 
+		and tools which are used in the system. Interation with the Ardtweeno is achieved by means of a HTTP REST API which offers a number of system administration features along with 
+		the posting and retrieval of data from the gateway, SSH access directly to the gateway is also available. I hope to release the software as an opensource project on Github later this 
+		year.</p>
+		
+		<p>Designs for a simple mesh network node are also bundled with Ardtweeno, along with the firmware to power a the Arduino FIO microcontroller. See the project wiki for more information.</p>
+		
+	    <div class="two-column">
+          <figure><a href="images/ardtweeno-poster.png" rel="recent_work" class="zoom"><img src="images/work_1.jpg" alt="Image"></a></figure>
+        </div>
+        <div class="two-column last">
+          <figure><a href="images/ardtweeno-gateway-http-interface.png" rel="recent_work" class="zoom"><img src="images/work_2.jpg" alt="Image"></a></figure>
+        </div>
+		
+		<p>Ardtweeno was developed by <a href="#about">David Kirwan</a> as part of a final year project for the <em>BSc (Hons) Applied Computing</em> at the <em>Waterford Institute 
+		of Technology.</em> I welcome collaboration from others, if you are interested in helping to continue development on this project please fork me on github and send a feature 
+		pull request! Alternatively if you are interested in using this system for commercial purposes please use the contact form at the bottom of the page in order to reach me. I'll 
+		be happy to licence the system for a reasonable price.</p>
+		
+      </div>	  
+	  
+      <div class="my-services columns">
+        <h3>Features</h3>
+        <div class="three-column">
+          <h4>Runs on the Pi</h4>
+          <p>The Ardtweeno gateway has been designed from the ground up to run as a PaaS for the Raspberry Pi Model B, and is built using a variety of opensource technologies such as Ruby,
+		  Sinatra (Ruby micro web application framework), NodeJS, jQuery, CSS3 and MongoDB.</p>
+        </div>
+        <div class="three-column">
+          <h4>Data Storage &amp; Retrieval</h4>
+          <p>All data retrieved from devices on the XBee mesh network is logged to a database to allow for later statistical analysis to be performed and graphs to be generated. A HTTP REST API is provided
+		  to make the task of retrieving data as painless as possible.</p>
+        </div>
+        <div class="three-column last">
+          <h4>Open Source / Open Hardware</h4>
+          <p>The core functionality of the Ardtweeno gateway is built using 100% Opensource software and commercially available off the shelf prototyping hardware such as the Arduino FIO and Raspberry Pi.
+		  The gateway itself is released under the Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) Licence</p>
+        </div>
+      </div>
+      
+      <div class="one-column columns testimony">
+        <div class="clearfix says">
+        <figure class="marginRight"><img src="images/david_small.png" alt="Image" /></figure>
+        <blockquote>
+          <p>The inspiration for Ardtweeno came from the desire to retrieve and store data from my Arduino Mega 1280 prototyping board over a network. I attempted to develop a simple
+		  solution using the Ethernet Shield with little success. Further research lead me to XBee radios and the serial interface they offer. It seemed like the perfect interface for my needs.
+		  With a few hours development I created the prototype which later grew with the addition of new features to become Ardtweeno.</p>
+          <cite>&mdash; <a href="#about">David Kirwan</a></cite> </blockquote>
+        </div>
+		
+      </div>
+    </section> <!--end section-->
+    
+    <section id="reports" class="clearfix">
+      <header>
+        <h2>Report Graphs</h2>
+      </header>
+	  
+	  <p>The following graphs are generated using data from the Ardtweeno gateway collected through the HTTP REST API which returns data in JSON format. These graphs are auto generated 
+	  periodically for demonstration purposes but can potentially be generated in real time using the <em>Highchart JS</em> graphing libraries or the graphing abilities of the <em>R</em> 
+	  statistical language for instance.</p>
+	  
+      <ul class="projects list">
+      	<li><figure><a href="images/report-1-large.png" rel="work"><img src="images/report-1-small.png" alt="Image" /></a>
+        <figcaption><a href="#">Visit Livesite<span>&nbsp;&rarr;</span></a></figcaption>
+        </figure>
+        </li>
+        <li><figure><a href="images/report-2-large.png" rel="work"><img src="images/report-2-small.png" alt="Image" /></a>
+        <figcaption><a href="#">Visit Livesite<span>&nbsp;&rarr;</span></a></figcaption>
+        </figure></li>
+        <li class="last"><figure><a href="images/report-3-large.png" rel="work"><img src="images/report-3-small.png" alt="Image" /></a>
+        <figcaption><a href="#">Visit Livesite<span>&nbsp;&rarr;</span></a></figcaption>
+        </figure></li><!-- three columns-->
+        
+        <li><figure><a href="images/report-4-large.png" rel="work"><img src="images/report-4-small.png" alt="Image" /></a>
+        <figcaption><a href="#">Visit Livesite<span>&nbsp;&rarr;</span></a></figcaption>
+        </figure></li>
+        <li><figure><a href="images/report-5-large.png" rel="work"><img src="images/report-5-small.png" alt="Image" /></a>
+        <figcaption><a href="#">Visit Livesite<span>&nbsp;&rarr;</span></a></figcaption>
+        </figure></li>
+        <li class="last"><figure><a href="images/report-6-large.png" rel="work"><img src="images/report-6-small.png" alt="Image" /></a>
+        <figcaption><a href="#">Visit Livesite<span>&nbsp;&rarr;</span></a></figcaption>
+        </figure></li>
+      </ul>
+
+	  
+    </section> <!--end section-->
+    <section id="links">
+      <header>
+        <h2>Links</h2>
+      </header>
+      
+	  <ul>
+		<li><a href="https://rubygems.org/gems/ardtweeno">Ardtweeno Gem</a></li>
+		<li><a href="https://github.com/davidkirwan/ardtweeno">Ardtweeno Github Repository</a></li>
+		<li><a href="https://github.com/davidkirwan/ardtweeno/issues">Ardtweeno Issue Tracker</a></li>
+		<li><a href="https://github.com/davidkirwan/ardtweeno/wiki">Ardtweeno Wiki</a></li>
+		
+	  </ul>
+	  
+    </section> <!--end section-->
+	
+	<section id="about" class="clearfix">
+      <header>
+        <h2>About the Developer</h2>
+      </header>
+      <figure class="marginRight"><img src="images/david_large.png" alt="Image" /></figure>
+        <p>Hi there I'm a 4th year undergraduate student at the Waterford Institute of Technology, Ireland. I've recently finished my internship at <a href="https://twitter.com/tssg_wit">@TSSG_WIT</a> 
+		where I worked as a software developer and researcher on the <a href="https://github.com/openRMC">OpenRMC</a> project. I'm very interested in open source, developing my own, or collaborating 
+		with others. I'm also interested in making things using digital eletronics prototyping systems such as the Arduino, Beagleboard or Raspberry Pi.</p>
+		<p>I was involved with the Waterford <a href="http://coderdojo.com/">Coderdojo</a> in 2012 and hope to participate once more as soon as my BSc degree is completed in May 2013. I am also looking
+		to get involved in the Irish makers scene. I hope to start a MSc program and possibly pursue a PhD degree in the future.</p>
+        
+		<div class="social_wrapper">
+        	<h3>Where to find me?</h3>
+            <ul class="social">
+                <li class="twitter"><a href="https://twitter.com/kirwan_david">Twitter</a></li>
+				<li class="linkedin"><a href="https://ie.linkedin.com/in/davidkirwan/">Linkedin</a></li>
+				<li class="github"><a href="https://github.com/davidkirwan">Github</a></li>
+            </ul>
+        </div>
+		
+       	<div class="clearfix"></div>
+        <h3>Skills</h3>
+        <ul class="skills">
+        	<li>Web Development: CSS, Django, HTML, JSP, Ruby on Rails, Sinatra, Spring</li>
+        	<li>Languages: C, C++, Cocoa, Java, JavaScript, Processing, Python, R, Ruby</li>
+			<li>Markup: Asciidoc, Markdown, YAML, JSON, XML + XSLT</li>
+			<li>App Development: iOS Dev, Android Dev, Rubymotion, Ruboto</li>
+			<li>Databases: MongoDB, MySQL, Oracle</li>
+			<li>Operating Systems: Linux, OSX, Raspberry Pi, Windows, Unix</li>
+        </ul>
+    </section> <!--end section-->
+	<section id="contact" class="clearfix">
+      <header>
+        <h2>Get in touch</h2>
+      </header>
+      
+      <form action="/contact" method="post">
+      	<p><input type="text" name="name"  value="Your Name" id="name" onblur="if (this.value == ''){this.value = 'Your Name'; }" onfocus="if (this.value == 'Your Name') {this.value = '';}" /></p>
+        <p><input type="text" name="email" value="Your Email" id="email"  onblur="if (this.value == ''){this.value = 'Your Email'; }" onfocus="if (this.value == 'Your Email') {this.value = '';}" /></p>
+        <p><input type="text" name="url" value="Your Site" id="url" onblur="if (this.value == ''){this.value = 'Your Site'; }" onfocus="if (this.value == 'Your Site') {this.value = '';}" /></p>
+        <p><textarea cols="20" rows="7" name="message" id="message" onblur="if (this.value == ''){this.value = 'Your Message'; }" onfocus="if (this.value == 'Your Message') {this.value = '';}" >Your Message</textarea></p>
+        <p><input type="submit" name="submit" value="Send Message" class="button" /></p>
+      </form>
+	  
+	  <div class="copyright">
+      	<!--<p><small>Original template designed by <a href="http://webdesigneraid.com/">WebDesignerAid.com</a></small></p>-->
+		<a href="http://creativecommons.org/licenses/by-nc/3.0/"><img src="images/BY-NC.png"></img></a>
+      </div><!--end copyright-->
+    </section> <!--end section-->
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/jquery-1.4.3.min.js"></script> 
+<script type="text/javascript" src="/js/jquery_003.js"></script> 
+<script type="text/javascript" src="/js/jquery.js"></script> 
+
+<!-- The JavaScript -->
+<script type="text/javascript">
+			/*
+			the images preload plugin.
+			*/
+			(function($) {
+				$.fn.preload = function(options) {
+					var opts 	= $.extend({}, $.fn.preload.defaults, options),
+						o		= $.meta ? $.extend({}, opts, this.data()) : opts;
+					return this.each(function() {
+						var $e	= $(this),
+							t	= $e.attr('rel'),
+							i	= $e.attr('href'),
+							l	= 0;
+						$('<img/>').load(function(i){
+							++l;
+							if(l==2) o.onComplete();
+						}).attr('src',i);	
+						$('<img/>').load(function(i){
+							++l;
+							if(l==2) o.onComplete();
+						}).attr('src',t);	
+					});
+				};
+				$.fn.preload.defaults = {
+					onComplete	: function(){return false;}
+				};
+			})(jQuery);
+		</script> 
+<script type="text/javascript">
+			$(function() {
+				//some elements..
+				var $ps_container		= $('#ps_container'),
+					$ps_image_wrapper 	= $ps_container.find('.ps_image_wrapper'),
+					$ps_next			= $ps_container.find('.ps_next'),
+					$ps_prev			= $ps_container.find('.ps_prev'),
+					$ps_nav				= $ps_container.find('.ps_nav'),
+					$tooltip			= $ps_container.find('.ps_preview'),
+					$ps_preview_wrapper = $tooltip.find('.ps_preview_wrapper'),
+					$links				= $ps_nav.children('li').not($tooltip),
+					total_images		= $links.length,
+					currentHovered		= -1,
+					current				= 0,
+					$loader				= $('#loader');
+				
+				/*check if you are using a browser*/	
+				var ie 				= false;
+				if ($.browser.msie) {
+					ie = true;//you are not!Anyway let's give it a try
+				}
+				if(!ie)
+					$tooltip.css({
+						opacity	: 0
+					}).show();
+					
+					
+				/*first preload images (thumbs and large images)*/
+				var loaded	= 0;
+				$links.each(function(i){
+					var $link 	= $(this);
+					$link.find('a').preload({
+						onComplete	: function(){
+							++loaded;
+							if(loaded == total_images){
+								//all images preloaded,
+								//show ps_container and initialize events
+								$loader.hide();
+								$ps_container.show();
+								//when mouse enters the pages (the dots),
+								//show the tooltip,
+								//when mouse leaves hide the tooltip,
+								//clicking on one will display the respective image	
+								$links.bind('mouseenter',showTooltip)
+									  .bind('mouseleave',hideTooltip)
+									  .bind('click',showImage);
+								//navigate through the images
+								$ps_next.bind('click',nextImage);
+								$ps_prev.bind('click',prevImage);
+							}
+						}
+					});
+				});
+				
+				function showTooltip(){
+					var $link			= $(this),
+						idx				= $link.index(),
+						linkOuterWidth	= $link.outerWidth(),
+						//this holds the left value for the next position
+						//of the tooltip
+						left			= parseFloat(idx * linkOuterWidth) - $tooltip.width()/2 + linkOuterWidth/2,
+						//the thumb image source
+						$thumb			= $link.find('a').attr('rel'),
+						imageLeft;
+					
+					//if we are not hovering the current one
+					if(currentHovered != idx){
+						//check if we will animate left->right or right->left
+						if(currentHovered != -1){
+							if(currentHovered < idx){
+								imageLeft	= 75;
+							}
+							else{
+								imageLeft	= -75;
+							}
+						}
+						currentHovered = idx;
+						
+						//the next thumb image to be shown in the tooltip
+						var $newImage = $('<img/>').css('left','0px')
+												   .attr('src',$thumb);
+						
+						//if theres more than 1 image 
+						//(if we would move the mouse too fast it would probably happen)
+						//then remove the oldest one (:last)
+						if($ps_preview_wrapper.children().length > 1)
+							$ps_preview_wrapper.children(':last').remove();
+						
+						//prepend the new image
+						$ps_preview_wrapper.prepend($newImage);
+						
+						var $tooltip_imgs		= $ps_preview_wrapper.children(),
+							tooltip_imgs_count	= $tooltip_imgs.length;
+							
+						//if theres 2 images on the tooltip
+						//animate the current one out, and the new one in
+						if(tooltip_imgs_count > 1){
+							$tooltip_imgs.eq(tooltip_imgs_count-1)
+										 .stop()
+										 .animate({
+											left:-imageLeft+'px'
+										  },150,function(){
+												//remove the old one
+												$(this).remove();
+										  });
+							$tooltip_imgs.eq(0)
+										 .css('left',imageLeft + 'px')
+										 .stop()
+										 .animate({
+											left:'0px'
+										  },150);
+						}
+					}
+					//if we are not using a "browser", we just show the tooltip,
+					//otherwise we fade it
+					//
+					if(ie)
+						$tooltip.css('left',left + 'px').show();
+					else
+					$tooltip.stop()
+							.animate({
+								left		: left + 'px',
+								opacity		: 1
+							},150);
+				}
+				
+				function hideTooltip(){
+					//hide / fade out the tooltip
+					if(ie)
+						$tooltip.hide();
+					else
+					$tooltip.stop()
+						    .animate({
+								opacity		: 0
+							},150);
+				}
+				
+				function showImage(e){
+					var $link				= $(this),
+						idx					= $link.index(),
+						$image				= $link.find('a').attr('href'),
+						$currentImage 		= $ps_image_wrapper.find('img'),
+						currentImageWidth	= $currentImage.width();
+					
+					//if we click the current one return
+					if(current == idx) return false;
+					
+					//add class selected to the current page / dot
+					$links.eq(current).removeClass('selected');
+					$link.addClass('selected');
+					
+					//the new image element
+					var $newImage = $('<img/>').css('left',currentImageWidth + 'px')
+											   .attr('src',$image);
+					
+					//if the wrapper has more than one image, remove oldest
+					if($ps_image_wrapper.children().length > 1)
+						$ps_image_wrapper.children(':last').remove();
+					
+					//prepend the new image
+					$ps_image_wrapper.prepend($newImage);
+					
+					//the new image width. 
+					//This will be the new width of the ps_image_wrapper
+					var newImageWidth	= $newImage.width();
+				
+					//check animation direction
+					if(current > idx){
+						$newImage.css('left',-newImageWidth + 'px');
+						currentImageWidth = -newImageWidth;
+					}	
+					current = idx;
+					//animate the new width of the ps_image_wrapper 
+					//(same like new image width)
+					$ps_image_wrapper.stop().animate({
+					    width	: newImageWidth + 'px'
+					},350);
+					//animate the new image in
+					$newImage.stop().animate({
+					    left	: '0px'
+					},350);
+					//animate the old image out
+					$currentImage.stop().animate({
+					    left	: -currentImageWidth + 'px'
+					},350);
+				
+					e.preventDefault();
+				}				
+				
+				function nextImage(){
+					if(current < total_images){
+						$links.eq(current+1).trigger('click');
+					}
+				}
+				function prevImage(){
+					if(current > 0){
+						$links.eq(current-1).trigger('click');
+					}
+				}
+			});
+        </script>
+        <script type="text/javascript" src="fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+<script type="text/javascript" src="fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript">
+
+		$(document).ready(function() {
+			
+			
+			$('.projects li figure a img').animate({'opacity' : 1}).hover(function() {
+				$(this).animate({'opacity' : .5});
+			}, function() {
+				$(this).animate({'opacity' : 1});
+			});
+			$('.zoom img').animate({'opacity' : 1}).hover(function() {
+				$(this).animate({'opacity' : .5});
+			}, function() {
+				$(this).animate({'opacity' : 1});
+			});
+
+			$("a[rel=work]").fancybox({
+				'transitionIn'		: 'elastic',
+				'transitionOut'		: 'elastic',
+				'titlePosition' 	: 'over',
+				'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+					return '<span id="fancybox-title-over">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+				}
+			});
+			$("a[rel=recent_work]").fancybox({
+				'transitionIn'		: 'elastic',
+				'transitionOut'		: 'elastic',
+				'titlePosition' 	: 'over',
+				'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+					return '<span id="fancybox-title-over">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+				}
+			});
+
+			
+		});
+	</script>
+</body>
+</html>

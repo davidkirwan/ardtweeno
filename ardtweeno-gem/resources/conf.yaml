@@ -1,0 +1,41 @@
+# Device the serial device to which the Ardtweeno SerialParser will connect
+dev: /dev/ttyUSB0
+speed: 9600
+
+# Administrator API Key
+adminkey: 1230aea77d7bd38898fec74a75a87738dea9f657
+
+# Settings for the Database
+db:
+  dbHost: localhost
+  dbPort: 27017
+  dbUser: herp
+  dbPass: 86ddd1420701a08d4a4380ca5d240ba7
+  dbName: ardtweeno
+  dbPacketsColl: packets
+  
+# Zone configuration
+zones:
+  -
+    zonename: testzone0 
+    zonekey: 455a807bb34b1976bac820b07c263ee81bd267cc
+    zonenodes:
+      - node0
+  -
+    zonename: testzone1
+    zonekey: 79a7c75758879243418fe2c87ec7d5d4e1451129
+    zonenodes:
+      - node1
+  
+  
+## Some spare unused hashes
+#f32b8561622c16cb0f758d2c0b4bdc3e651bbfc1
+#1b901dc0e9db739cc88a5568d201eb594742d1a2
+#0f3f3b500b694f515aa57f4ca13fc67b2f9f48d6
+#72b1a50b637f2051f1606c3997e80d33e36cba14
+#f7c98a41cc2705d9425b52d94ebd46296900d2aa
+#3dde6ae0f124c2446d7c50a6741a87e6ab0012ed
+#4ce7c012462a50256274bd38e3c12b720a99e4e0
+#b41143c153fdb15b5299c99bf451dc6a67fe2e36
+#78431dac18f37d437aa3c055d40d65d813a73143
+#8b785ee6da0a558f10db9da80e40df3fef44d43f

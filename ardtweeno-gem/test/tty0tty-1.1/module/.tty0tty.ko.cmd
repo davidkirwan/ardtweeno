@@ -1,0 +1,1 @@
+cmd_/home/david/Downloads/tty0tty-1.1/module/tty0tty.ko := ld -r -m elf_i386 -T /usr/src/linux-3.5.6-1-ARCH/scripts/module-common.lds --build-id  -o /home/david/Downloads/tty0tty-1.1/module/tty0tty.ko /home/david/Downloads/tty0tty-1.1/module/tty0tty.o /home/david/Downloads/tty0tty-1.1/module/tty0tty.mod.o

@@ -1,0 +1,129 @@
+html, body {
+        margin: 0;
+        padding: 0;
+}
+
+body {
+        background: #1E1C17;
+        color: #ccc;
+        font-family: 'Trebuchet MS', 'Lucida Grande', Arial, Helvetica, sans-serif;
+        line-height: 1.2em;
+}
+
+img {
+        border: 0;
+}
+
+#status {
+        position: relative;
+        top: 6px;
+}
+
+
+a {
+        text-decoration: underline;
+        color: #FCC240;
+        text-decoration: none;
+}
+a:hover {
+        color: #BF4B31;
+}
+
+h1, h2, h3 {
+        font-size: 1.8em;
+        margin: 1em 0 0.5em 0;
+        padding: 0 0 0.2em 0;
+        color: #666;
+}
+h2 {
+        font-size: 1.4em;
+}
+h3 {
+        font-size: 1.2em;
+}
+
+hr {
+        position: relative;
+        background: transparent;
+        background: #ccc;
+        height: 0px;
+        border: 1px solid #ccc;
+}
+
+code {
+        background: #CED6B4;
+        padding: 0.7em;
+        font-family: Monaco, monospace;
+        color: #1E1C17;
+        border: 2px solid #444;
+        display: block;
+}
+
+div#content {
+        position: relative;
+        margin: 2em 2em;
+}
+
+div#post {
+	padding: 0 0 2.5em 0;
+}
+
+#intro {
+	padding: 0 0 2.5em 0;
+}
+
+#content p {
+        max-width: 50em;
+}
+
+div#header {
+        position: relative;
+        height: 3em;
+        margin: 0;
+        background: #4D8B4D;
+        border-bottom: 3px solid #FCC240;
+        text-align: left;
+}
+#logo {
+        position: absolute;
+        top: 15px;
+        left: 1em;
+        color: #fff;
+        font-size: 200%;
+}
+
+ul#navigation {
+        font-size: 90%;
+        position: absolute;
+        bottom: 0;
+        right: 2em;
+}
+ul#navigation li {
+        list-style-type: none;
+        display: inline;
+        margin-right: 1em;
+}
+ul#navigation a {
+        color: #ccc;
+        text-decoration: none;
+}
+ul#navigation a:hover {
+        color: #fff;
+        border-bottom: 2px solid #fff;
+}
+
+p#blurb {
+        font-size: 120%;
+        color: #CED6B4;
+}
+
+img#me {
+        float: right;
+        margin-top: -1em;
+        margin-left: 2em;
+        border: 3px solid #444;
+}
+
+.clear {
+        clear: both;
+}

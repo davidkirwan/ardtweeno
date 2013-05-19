@@ -1,0 +1,184 @@
+## Version 0.2.5 Engineering Release 2 RC5
+- Updated gemspec in preparation for release of ER 2
+- Updated REST API to be more robust when printing news posts
+- Latest documentation build
+- Added documentation supporting the newly implemented watch list and push notifications 
+- Added EagleCAD schematics for Ardtweeno Nodes
+- Added latest project documentation and image assets
+
+## Version 0.2.4 Engineering Release 2 RC4
+- Removed debugging statements from REST API Sinatra app
+- Updated Gemfile with a new dependency Typhoeus 
+- Implemented push notification system 
+- Implemented testing scheme for the push notifications 
+- Implemented system for placing an Ardtweeno::Node in a watchlist 
+- Implemented testing scheme for watchlist 
+- Implemented test script to add a Node to a watchlist
+- Removed debug statements from rescue blocks
+
+## Version 0.2.3 Engineering Release 2 RC3
+- Slightly edited output from topology generator 
+- Removed some debug statements from punchcard generator code
+- Added image assets for documentation 
+- Updated project documentation to the latest versions
+- Removing debug statements
+- Implemented node punchcard graph generator
+- CHANGELOG updated to contain 0.2.2 featureset
+
+## Version 0.2.2 Engineering Release 2 RC2
+- Implemented tests to cover the post creation system
+- Implemented manual post update system 
+- Added code highlighting to code blocks in posts
+- Added skeleton page for manually adding posts 
+- Implemented skeleton API functionality for adding posts 
+- Updated CSS
+
+## Version 0.2.1 Engineering Release 2 RC2
+- Latest codebase for the Ardtweeno project
+- Updated Arduino FIO firmware sketch for node1 to light led on detection of movement
+- Added new firmware for node1 movement sensor platform
+- Resolved issue with params not being passed correctly between methods
+- Implemented multiple zone statistics graphs being produced by the tech-demo
+- Added skeleton framework for handling contact form submits
+- Implemented statistics graph displaying on front of tech-demo - Removed a lot of unneeded javascript
+- Updated node sensor graph view to now correctly display the name of the node being graphed - Added link to return to the previous view from the node sensor graph view - Added a number of javascript libraries which will possibly be used later
+- Sensor graphs produced through /data/:node now use the last 60 packet data
+- Updated the node.js serialparser script to buffer fragmented data input better
+- Updated Arduino FIO firmware
+
+## Version 0.2.0 Engineering Release 2 RC1
+- Updated tech demo to return 503 Service Unavailable should the gateway be unavailable
+- Deleted nodejs compiled modules 
+- Updated Ardtweeno RESTAPI to the latest codebase 
+- Updated project documentation sections: API Spec, Iteration Plan and Project Backlog to the latest versions 
+- Built latest version of the documentation 
+- Fixed issue with the Twitter section of the tech demo being unaccessible through the sidebar menu
+- Implemented graph view 
+- Implemented tech demo graphing code
+- Fleshed out node graphing skeleton code
+- Skeleton implementation of node graphs
+- Refactored tech-demo packets api call
+- Altered the api calls to the packets interface to retrieve the last 5 packets in the tech-demo
+- Updated project sections bibliography, iteration plan and backlog
+- Implemented dynamic generation of topology graph being loaded into the topology section of the tech-demo app 
+- Deleted proof of concept topology generator script
+
+## Version 0.1.13 Minimum Viable Product Engineering Release 1 RC13
+- Updated README.md to include screenshot of the Topology Generator
+- Implemented dynamic topology graph generator using data pulled from the Ardtweeno API
+- Skeleton implementation of /gateway/topology in the tech-demo application
+- Updated project documentation section iteration plan to latest version
+- Updated tech demo with sample Raphael.js code for constructing a network topology graph
+- Implemented tests for /api/:version/system/status API calls
+- Implemented query for nodes - Implemented query for packets - Modified layout of control panel
+
+## Version 0.1.12 Minimum Viable Product Engineering Release 1 RC12
+- Updated sample Arduino FIO sketch
+- Implemented simple query for the zones api
+- Updated documentation sections api specification and iteration plan
+- Implemented gateway control panel system
+- Implemented addition to the rest api to include system status
+- Implemented basic ajax calls in the gateway control panel
+- Extending tech demo with control panel interface to control the gateway
+- Added CSS styling for URLS in the links section of the Ardtweeno Tech Demo
+- Updated tech-demo style to ensure forkme ribbon is in the correct place
+- Updated image assets used in tech-demo
+- Implemented Skeleton Tech Demo web app for the Ardtweeno system
+
+## Version 0.1.11 Minimum Viable Product Engineering Release 1 RC11
+- Implemented basic system for writing packets to the MongoDB Database
+- Implemented skeleton code to handle the database connection and recover from connection errors
+- Fixed bug with sorting of the packets being returned by the retrieve_packets REST API function
+- Added latest information on API specification documentation
+- Updated documentation to latest revisions
+
+
+## Version 0.1.10 Minimum Viable Product Engineering Release 1 RC10
+- Added API implementation and tests for zones 
+- Added /api/v1/zones and /api/v1/zones/:zonename
+- Skeleton implementation of zones
+- Implemented /api/v1/system/config interface 
+- Implemented tests for the system/config hook 
+- Updated layout of the conf.yaml file to incorporate future zones data
+- Implemented testing suite for nodes filtering parameters
+- Implemented Ardtweeno::API functions to handle RESTAPI calls to filter nodes data
+
+
+## Version 0.1.9 Minimum Viable Product Engineering Release 1 RC9
+- Implemented /api/v1/nodes REST API target 
+- Implemented Ardtweeno::API functions to handle nodes lookup 
+- Implemented test suite to test newly added API nodes functions 
+- Resolved previously unknown bug with newly constructed nodes not being passed initial parameters correctly
+- Updated project documentation to latest revisions
+
+
+## Version 0.1.8 Minimum Viable Product Engineering Release 1 RC8
+- Implemented REST API tests for date, hour and minute API calls
+- Implemented tests for the seqNo API calls
+- Implemented API handling of seqno, date, minute and hour 
+- Implemented internal testing of seqno, date, minute and hour API features
+- Updated CHANGELOG file permissions to 644
+- Added latest version of the section-iteration-plan documentation file
+- Removed resources/rest-api from the repo as it has now been successfully integrated elsewhere in the system
+
+
+## Version 0.1.7 Minimum Viable Product Engineering Release 1 RC7
+- Refactored RESTAPI system to ensure it can be executed directly from the gem root directory using the foreman Procfile launcher
+- Updated Ardtweeno gemspec
+- Updated image assets - Updated section-iteration-plan to latest revision
+
+
+## Version 0.1.6 Minimum Viable Product Engineering Release 1 RC6
+- Added rack-test, test-unit and removed simplecov gem requirements from Gemfile 
+- Added empty bin folder to fix issues with gem build failing on Mac Ruby 1.8.7
+- Updated require statements in the serialparser.rb
+- Updated gemspec to remove the bin folder
+- Added timing measurement functions to the API lookup function
+- Updated documentation section-iteration-plan and section-api-specification
+- Updated RESTAPI to ensure the rufus-scheduler continues to operate after being moved over to the foreman system
+- Updated REST API routes to best practices, API calls are now formatted like: /api/{version}/{target} 
+- Updated the node.js serialparser implementation to work with the new REST API routes 
+- Fixed issues with the REST API tests failing
+- Updated presentation-assets - Updated section-iteration-plan documentation to latest revision
+- Updated INSTALL instructions to the latest revision
+
+
+## Version 0.1.5 Minimum Viable Product Engineering Release 1 RC5
+- Added bundler configuration file for the REST API 
+- Added foreman configuration file for launching the REST API 
+- Renamed resources/rest-api/ardtweeno.rb -> web.rb to allow execution on the heroku.com paas
+- Updated image assets being used in project poster 
+- Updated documentation section-iteration-plan to latest revision
+- Updated ardtweeno rest-api app scheduling to run serialisation every hour
+
+## Version 0.1.4 Minimum Viable Product Engineering Release 1 RC4
+- Implemented MVP functionality to write packets to ~/.ardtweeno/packetdb.yaml 
+- Updated Gemfile dependency list to latest revision
+
+## Version 0.1.3 Minimum Viable Product Engineering Release 1 RC3
+- Updated Rakefile with exception handling to fail gracefully should a system not have bundler installed
+- Added exception handling to packet storage calls
+- Implemented the basic function structure for flushing packet data to disk - Updated dependencies to include rufus-scheduler
+- Updated CHANGELOG to the latest revision
+
+## Version 0.1.2 Minimum Viable Product Engineering Release 1 RC2
+- Added section-mvp-installation 
+- Updated section-minimum-system-requirements 
+- Updated section-project-deliverables
+- Switched method of handling dependencies to Bundler, added support files to enable change 
+- Updated INSTALL instructions
+- Updated section-iteration-plan and section-api-specification to latest revisions
+
+## Version 0.1.1 Minimum Viable Product Engineering Release 1 RC1
+- Fixed issue with resultset transformation prioritisation, resultset sorting now performed last thing as intended
+- Updated README.md
+
+## Version 0.1.0
+- MVP featureset implemented
+
+## Version 0.0.2
+- Fixed typo in gemspec description
+
+## Version 0.0.1
+- Placeholder gem in place
+

@@ -1,0 +1,29 @@
+source "http://rubygems.org"
+
+# The Ardtweeno Application Gateway
+gem "ardtweeno"
+
+# Utility
+gem "rake"
+gem "nokogiri"
+gem "rack", ">= 1.1"
+gem "foreman"
+gem "json"
+gem "typhoeus", ">= 0.6.3"
+
+# For the Database
+gem "mongo", ">= 1.6.2"
+gem "bson_ext", ">= 1.6.2"
+
+# For Testing
+gem "rack-test"
+gem "test-unit"
+gem "rspec", :require => "spec"
+
+# For the SerialParser 
+gem "serialport", ">= 1.1.0"
+
+# For the HTTP REST API
+gem "sinatra", ">= 1.3.3"
+gem "thin", ">= 1.5.0"
+gem "rufus-scheduler", ">= 2.0"

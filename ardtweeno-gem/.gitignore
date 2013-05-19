@@ -1,0 +1,5 @@
+pkg/
+coverage/
+*.gem
+Gemfile.lock
+resources/node_modules/

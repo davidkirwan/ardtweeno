@@ -1,0 +1,29 @@
+require 'rubygems'
+
+begin
+  require 'bundler'
+rescue Exception => e
+  puts 'bundler gem not found, please install bundler and try again.'
+  exit
+end
+
+
+
+Bundler::GemHelper.install_tasks
+
+task :default => 'menu'
+
+task :menu do
+  puts welcomeMsg = <<-MSG
+rake build    # Build ardtweeno-x.x.x.gem into the pkg directory
+rake install  # Build and install ardtweeno-x.x.x.gem into system gems
+rake test     # Run the unit testing suite on this gem.
+MSG
+end
+
+desc "Run the unit testing suite on this gem."
+task :test do
+  
+  require "./test/test_helper.rb"
+
+end

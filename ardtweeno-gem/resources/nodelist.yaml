@@ -1,0 +1,26 @@
+- 
+  name: node0
+  key: 500d81aafe637717a52f8650e54206e64da33d27
+  description: This node has a temperature sensor
+  version: 0.2.1
+  sensors:
+    - Temperature
+-
+  name: node1
+  key: f937c37e949d9efa20d2958af309235c73ec039a
+  description: This node has a movement sensor
+  version: 0.2.1
+  sensors:
+    - Movement
+    
+  
+  
+ 
+#node2 : 2dbf44a68b77b15bfa5bc3d66c97892a57402bbe
+#node3 : a46fe0c4dab0453f5d86bed6206040880f59393e
+#node4 : 9da30539af3639c600c6256f7691750a581c36c2
+#node5 : b0a69b1f9fe82d6c149179ce48e22f9c8411afe3
+#node6 : 74e5a4bcab7355b8cab7df73d07747cd85c925e7
+#node7 : c03e55d15602a33922858e97664ea33f368ef5de
+#node8 : c65b8681a4eec1d41b1ba1b013535f1c96d943ab
+#node9 : 0785284586ef5810b80560319ef24968e897f7ce
