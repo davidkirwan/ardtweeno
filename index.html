@@ -1,2 +1,435 @@
-First Pages Commit
+<!doctype html>
+<html lang="en">
 
+	<head>
+		<meta charset="utf-8">
+
+		<title>Ardtweeno</title>
+
+		<meta name="description" content="An overview of the Ardtweeno - Application Gateway">
+		<meta name="author" content="David Kirwan">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<!-- Title Slide -->
+				<section data-state="soothe">
+					<h1>Ardtweeno</h1>
+					<h3>802.15.4 - IP Network Gateway</h3>
+					<p>
+						<small>David Kirwan - 00346128</small>
+						<small>Supervisor: Eamonn de Leastar</small>
+					</p>
+					<img width="480" height="320" src="images/ardtweeno-gource-27-04-2013.png" alt="Fin">
+				</section>
+
+
+				<!-- Introduction -->
+				<section>
+
+					<section>
+						<h2>Ardtweeno Introduction</h2>
+						<p>
+							The Ardtweeno system is a distributed sensor mesh network gateway, which bridges devices connected through a serial link to devices over Internet Protocol (IP). It is designed as a PaaS suitable for running on the Raspberry Pi.
+						</p>
+					</section>
+
+					<section>
+						<h2>Ardtweeno features</h2>
+						<p>
+							Ardtweeno offers the following features
+							<ul>
+								<li>collect and store data received from the mesh network</li>
+								<li>triggers which react to data coming from specific nodes</li>
+								<li>open source software</li>
+								<li>low cost commercially available hardware</li>
+								<li>simple design for self sufficient modular sensor platforms</li>
+								<li>API</li>
+							</ul>
+						</p>
+					</section>
+
+					<section>
+						<h2>Ardtweeno API</h2>
+						<p>
+							The Ardtweeno API has the following features
+							<ul>
+								<li>store / retrieve packet data</li>
+								<li>retrieve node data</li>
+								<li>retrieve zone data</li>
+								<li>add nodes to a watchlist</li>
+								<li>perform administration functions</li>
+							</ul>
+						</p>
+					</section>
+
+					<section>
+						<h2>What's inside?</h2>
+						<p>
+							Ardtweeno makes use of some of the following technologies
+							<img width="480" height="320" src="images/ardtweeno-whats-inside.png" alt="Ardtweeno Logos">
+						</p>
+					</section>
+				</section>
+
+
+				<!-- Introduce the API -->
+				<section>
+
+					<section>
+						<h2>Ardtweeno Gateway Frontend</h2>
+						<p>
+							When directly connected to the Ardtweeno Gateway, users are greeted with the following screen. It shows a basic interface including URI's to the gateway git repository, my blog and a simple indicator to tell if the SerialParser subsystem is running or not.
+						</p>
+						<img width="480" height="320" src="images/ardtweeno-gateway-frontend.png" alt="Ardtweeno Frontend">
+					</section>
+
+					<section>
+						<h2>Ardtweeno API</h2>
+						<p>
+							The HTTP front end acts as the API for the Ardtweeno system, which the SerialParser subsystem uses in order to post data to the gateway.
+						</p>
+						<img width="480" height="320" src="images/ardtweeno-api-design.png" alt="Ardtweeno API Design">
+					</section>
+
+				</section>
+
+
+				<!-- Accessing the API -->
+				<section>
+
+					<section>
+						<h2>Posting Packets</h2>
+						<p>
+							The following Ruby code demonstrates how easy it is to post packet data to the Ardtweeno gateway through the API
+						</p>
+						<pre>
+                            <!-- <code contenteditable> -->
+                            <code>
+require 'rubygems'
+require 'typhoeus'
+
+packet = '{"data":[25.5, 999, 10.2], "key":"abcXYZ123etc"}'
+apikey = 'abc33fssfe'
+
+Typhoeus::Request.post("http://ardtweeno-hostname/packets", 
+:body => {:payload => packet, :key => apikey}) 
+                            </code>
+                        </pre>
+					</section>
+
+					<section>
+						<h2>Retrieving Packets</h2>
+						<p>
+							The following Ruby code demonstrates how easy it is to retrieve packet data from the Ardtweeno gateway through the API
+						</p>
+						<pre>
+                            <!-- <code contenteditable> -->
+                            <code>
+require 'rubygems'
+require 'typhoeus'
+
+apikey = 'abc33fssfe'
+
+paramsToSend = {:key => apikey}
+
+packets = Typhoeus::Request.get("http://localhost:4567/api/v1/packets", 
+:body=> paramsToSend).body 
+                            </code>
+                        </pre>
+					</section>
+
+					<section>
+						<h2>Retrieving Nodes</h2>
+						<p>
+							The following Ruby code demonstrates how easy it is to retrieve node data from the Ardtweeno gateway through the API
+						</p>
+						<pre>
+                            <!-- <code contenteditable> -->
+                            <code>
+require 'rubygems'
+require 'typhoeus'
+
+apikey = 'abc33fssfe'
+
+paramsToSend = {:key => apikey}
+
+nodes = Typhoeus::Request.get("http://localhost:4567/api/v1/nodes", 
+:body=> paramsToSend).body 
+                            </code>
+                        </pre>
+					</section>
+
+					<section>
+						<h2>Retrieving Zones</h2>
+						<p>
+							The following Ruby code demonstrates how easy it is to retrieve zone data from the Ardtweeno gateway through the API
+						</p>
+						<pre>
+                            <!-- <code contenteditable> -->
+                            <code>
+require 'rubygems'
+require 'typhoeus'
+
+apikey = 'abc33fssfe'
+
+paramsToSend = {:key => apikey}
+
+zones = Typhoeus::Request.get("http://localhost:4567/api/v1/zones", 
+:body=> paramsToSend).body 
+                            </code>
+                        </pre>
+					</section>
+
+					<section>
+						<h2>Retrieving Ardtweeno Gateway Status</h2>
+						<p>
+							The following Ruby code demonstrates how to retrieve the Ardtweeno status through the API
+						</p>
+						<pre>
+                            <!-- <code contenteditable> -->
+                            <code>
+require 'rubygems'
+require 'typhoeus'
+
+apikey = 'abc33fssfe'
+
+paramsToSend = {:key => apikey}
+
+zones = Typhoeus::Request.get("http://localhost:4567/api/v1/system/status", 
+:body=> paramsToSend).body 
+                            </code>
+                        </pre>
+					</section>
+
+					<section>
+						<h2>Retrieving Ardtweeno Config</h2>
+						<p>
+							The following Ruby code demonstrates how easy it is to retrieve the Ardtweeno Gateway Configuration through the API
+						</p>
+						<pre>
+                            <!-- <code contenteditable> -->
+                            <code>
+require 'rubygems'
+require 'typhoeus'
+
+apikey = 'abc33fssfe'
+
+paramsToSend = {:key => apikey}
+
+zones = Typhoeus::Request.get("http://localhost:4567/api/v1/system/config", 
+:body=> paramsToSend).body 
+                            </code>
+                        </pre>
+					</section>
+
+
+					<section>
+						<h2>Starting the Ardtweeno Gateway</h2>
+						<p>
+							The following Ruby code demonstrates how to start the Ardtweeno SerialParser subsystem through the API
+						</p>
+						<pre>
+                            <!-- <code contenteditable> -->
+                            <code>
+require 'rubygems'
+require 'typhoeus'
+
+apikey = 'abc33fssfe'
+
+paramsToSend = {:key => apikey}
+
+zones = Typhoeus::Request.get("http://localhost:4567/api/v1/system/start", 
+:body=> paramsToSend).body 
+                            </code>
+                        </pre>
+					</section>
+
+					<section>
+						<h2>Stopping the Ardtweeno Gateway</h2>
+						<p>
+							The following Ruby code demonstrates how to stop the Ardtweeno SerialParser subsystem through the API
+						</p>
+						<pre>
+                            <!-- <code contenteditable> -->
+                            <code>
+require 'rubygems'
+require 'typhoeus'
+
+apikey = 'abc33fssfe'
+
+paramsToSend = {:key => apikey}
+
+zones = Typhoeus::Request.get("http://localhost:4567/api/v1/system/stop", 
+:body=> paramsToSend).body 
+                            </code>
+                        </pre>
+					</section>
+
+					<section>
+						<h2>Restart the Ardtweeno Gateway</h2>
+						<p>
+							The following Ruby code demonstrates how to restart the Ardtweeno gateway through the API
+						</p>
+						<pre>
+                            <!-- <code contenteditable> -->
+                            <code>
+require 'rubygems'
+require 'typhoeus'
+
+apikey = 'abc33fssfe'
+
+paramsToSend = {:key => apikey}
+
+zones = Typhoeus::Request.get("http://localhost:4567/api/v1/system/restart", 
+:body=> paramsToSend).body 
+                            </code>
+                        </pre>
+					</section>
+
+					<section>
+						<h2>Add 'node2' to a Watchlist</h2>
+						<p>
+							The following Ruby code demonstrates how to add a node2 to a watchlist through the API
+						</p>
+						<pre>
+                            <!-- <code contenteditable> -->
+                            <code>
+require 'rubygems'
+require 'typhoeus'
+require 'json' 
+
+
+body = {:key=> "1230aea77d7bd38898fec74a75a87738dea9f657", 
+                :notifyURL=>"", 
+                :method=>"POST", 
+                :timeout=>"60"}
+
+puts Typhoeus::Request.post("http://localhost:4567/api/v1/watch/node2", :body=>body) 
+                            </code>
+                        </pre>
+					</section>
+
+				</section>
+
+
+				<!-- Why would you use Ardtweeno? -->
+				<section>
+
+					<section>
+						<h2>Uses for Ardtweeno?</h2>
+						<p>
+							The space that I currently see Ardtweeno occupying is a platform as a service on top of which developers can produce home automation systems, very much like a locally running version of Xively or perhaps Nimbits. Ardtweeno has the ability to receive packets of information, then store them for later analysis and graphing much like these propriety systems mentioned.
+						</p>
+					</section>
+
+					<section>
+						<h2>Ardtweeno Tech Demonstration</h2>
+						<p>
+							I have constructed a number of basic systems using data gathered by the Ardtweeno gateway, such as the following punchcard graph which details the number of times the movement sensor platform picked up activity in my sitting room
+						</p>
+						<img width="480" height="320" src="images/ardtweeno-punchcard-node1.png" alt="Ardtweeno Punchcard Graph">
+					</section>
+
+					<section>
+						<h2>Ardtweeno Tech Demonstration</h2>
+						<p>
+							This topology graph which parses the data retrieved through the API and dynamically constructs a topology of the network
+						</p>
+						<img width="480" height="320" src="images/ardtweeno-topology.png" alt="Ardtweeno Topology Graph">
+					</section>
+
+					<section>
+						<h2>Ardtweeno Tech Demonstration</h2>
+						<p>
+							There are various other types of graphs and charts built using highcharts.js
+						</p>
+						<img width="480" height="320" src="images/node0-live-data.png" alt="Ardtweeno Spline Graph">
+					</section>
+
+					<section>
+						<h2>Ardtweeno Tech Demonstration</h2>
+						<p>
+							To see these and more, see the tech-demo Sinatra web application bundled with the Ardtweeno system
+						</p>
+						<img width="480" height="320" src="images/node0-live-data.png" alt="Ardtweeno Spline Graph">
+					</section>
+
+				</section>
+
+				<!-- Demo the practical side -->
+				<section>
+					<h2>Onto the Practical!</h2>
+					<p>
+						<small>Built using reveal.js</small>
+					</p>
+					<img width="480" height="320" src="images/fin.png" alt="Fin">
+				</section>
+
+				<!-- End of Presentation Slides -->
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<a class="fork-reveal"  href="https://github.com/davidkirwan/ardtweeno">
+		<img style="position: absolute; top: 0; right: 0; border: 0;" src="images/fork.png" alt="Fork me on GitHub">
+		</a>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'concave', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
