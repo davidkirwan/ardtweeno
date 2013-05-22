@@ -10,7 +10,8 @@ To first download the dependencies run the following:
 
     bundle install
 
-To launch on port 5000 simply
+Edit the YAML file _config.yaml_ to match the correct network settings for the Ardtweeno Gateway then to
+launch on port 5000 simply run:
 
     foreman start -p 5000
 
