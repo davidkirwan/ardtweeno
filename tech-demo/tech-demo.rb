@@ -48,6 +48,7 @@ class ArdtweenoDemo < Sinatra::Base
   
   # URI to the ardtweeno gateway
   set :ardtweenouri, @confdata["gateway"]["url"]
+  set :ardtweenoport, @confdata["gateway"]["port"]
   
     
 #########################################################################################################
@@ -61,7 +62,7 @@ class ArdtweenoDemo < Sinatra::Base
     key = "1230aea77d7bd38898fec74a75a87738dea9f657"
     
     begin
-      response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/system/status", :body=> {:key => key}).body
+      response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/system/status", :body=> {:key => key}).body
       response = JSON.parse(response)
     rescue
       throw :halt, [ 503, "503 Service Currently Unavailable" ]
@@ -146,20 +147,20 @@ class ArdtweenoDemo < Sinatra::Base
 
     begin
       if(params[:system] == "config")
-        response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/system/config", :body=> {:key => key}).body
+        response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/system/config", :body=> {:key => key}).body
         settings.log.debug response
         
         response = JSON.pretty_generate(JSON.parse(response))
       elsif(params[:system] == "start")
-        response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/system/start", :body=> {:key => key}).body
+        response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/system/start", :body=> {:key => key}).body
         settings.log.debug response
             
       elsif(params[:system] == "stop")
-        response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/system/stop", :body=> {:key => key}).body
+        response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/system/stop", :body=> {:key => key}).body
         settings.log.debug response
         
       elsif(params[:system] == "restart")
-        response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/system/reboot", :body=> {:key => key}).body
+        response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/system/reboot", :body=> {:key => key}).body
         settings.log.debug response
         
       end
@@ -177,7 +178,7 @@ class ArdtweenoDemo < Sinatra::Base
     key = "1230aea77d7bd38898fec74a75a87738dea9f657"
     
     begin
-      response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/zones", :body=> {:key => key}).body
+      response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/zones", :body=> {:key => key}).body
       settings.log.debug response
       
       response = JSON.pretty_generate(JSON.parse(response))
@@ -196,7 +197,7 @@ class ArdtweenoDemo < Sinatra::Base
     params[:key] = key
 
     begin
-      response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/nodes", :body=> params).body
+      response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/nodes", :body=> params).body
       settings.log.debug response
       
       unless params[:nopretty] then response = JSON.pretty_generate(JSON.parse(response)); end
@@ -217,7 +218,7 @@ class ArdtweenoDemo < Sinatra::Base
     paramsToSend = {:key => key, :length => length, :sort => "desc"}
     
     begin
-      response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/packets", :body=> paramsToSend).body
+      response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/packets", :body=> paramsToSend).body
       response = JSON.parse(response)
       settings.log.debug response
       
@@ -231,7 +232,7 @@ class ArdtweenoDemo < Sinatra::Base
           offset = total - 5
           
           paramsToSend = {:key => key, :length => length, :sort => "desc", :offset => offset}
-          response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/packets", :body=> paramsToSend).body
+          response = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/packets", :body=> paramsToSend).body
           response = JSON.parse(response)
           settings.log.debug response
           
@@ -257,8 +258,8 @@ class ArdtweenoDemo < Sinatra::Base
     zonelist = Array.new
     
     begin
-      zones = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/zones", :body=> paramsToSend).body
-      nodes = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/nodes", :body=> paramsToSend).body
+      zones = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/zones", :body=> paramsToSend).body
+      nodes = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/nodes", :body=> paramsToSend).body
       
       zones = JSON.parse(zones)
       nodes = JSON.parse(nodes)      
@@ -404,7 +405,7 @@ class ArdtweenoDemo < Sinatra::Base
     begin
       settings.log.debug "Node name: " + params["node"]
       
-      nodes = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/nodes", :body=> paramsToSend).body
+      nodes = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/nodes", :body=> paramsToSend).body
       
       settings.log.debug nodes
       
@@ -438,7 +439,7 @@ class ArdtweenoDemo < Sinatra::Base
     
     params[:offset] = theOffset
     params[:length] = 60
-    packets = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/packets", :body=> params).body
+    packets = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/packets", :body=> params).body
     packets = JSON.parse(packets)
     
     time = ""
@@ -473,7 +474,7 @@ class ArdtweenoDemo < Sinatra::Base
     params[:key] = key
     
     begin
-      zones = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/zones", :body=> params).body
+      zones = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/zones", :body=> params).body
       zones = JSON.parse(zones)
       
       settings.log.debug "Number of Zones being managed: #{zones["zones"].size.to_s}"
@@ -533,7 +534,7 @@ class ArdtweenoDemo < Sinatra::Base
         
         #settings.log.debug theParams.inspect
         
-        nodes = Typhoeus::Request.get("http://#{settings.ardtweenouri}:4567/api/v1/packets", :body=> theParams).body
+        nodes = Typhoeus::Request.get("http://#{settings.ardtweenouri}:#{settings.ardtweenoport}/api/v1/packets", :body=> theParams).body
         nodes = JSON.parse(nodes)
         
         #settings.log.debug nodes["found"]
