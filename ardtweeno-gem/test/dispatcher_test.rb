@@ -101,6 +101,11 @@ class DispatcherTest < Test::Unit::TestCase
       @dispatch.store('{"data":[23.5,997.5,65]}')
     end
     
+    # Raises Ardtweeno InvalidData if we send valid JSON but empty data
+    assert_raise Ardtweeno::InvalidData do
+      @dispatch.store('{"data":[],"key":"abcdef0"}')
+    end
+    
     # Raises Ardtweeno NodeNotAuthorised if valid JSON, valid Packet but unauthorised node key
     assert_raise Ardtweeno::NodeNotAuthorised do
       @dispatch.store('{"data":[23.5,997.5,65],"key":"500d81aafe637717a52f8650e54206e64da33d27"}')

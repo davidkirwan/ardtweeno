@@ -243,9 +243,11 @@ module Ardtweeno
         @log.debug "Payload recieved, processing.."
         payload = JSON.parse(origionalPayload)
           
-        if payload["data"].nil? then raise Ardtweeno::InvalidData, "Packet missing data" end
+        if payload["data"].nil? then raise Ardtweeno::InvalidData, "Packet missing data"; end
         @log.debug "Payload contains a :data key, continuing.."
-        if payload["key"].nil? then raise Ardtweeno::InvalidData, "Packet missing key" end
+        if payload["data"].empty? then raise Ardtweeno::InvalidData, "Packet data empty"; end
+        @log.debug "Payload data is not empty, continuing.."
+        if payload["key"].nil? then raise Ardtweeno::InvalidData, "Packet missing key"; end
         @log.debug "Payload contains a :key key, continuing.."
           
         @log.debug "Searching for the corresponding Ardtweeno::Node in the system.."
