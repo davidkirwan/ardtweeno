@@ -33,9 +33,8 @@ class RESTAPITest < Test::Unit::TestCase
   # Check root redirects to /home successfully
   def test_root
     get "/"
-    follow_redirect!
     
-    assert_equal("http://example.org/home", last_request.url)
+    assert_equal("http://example.org/", last_request.url)
     assert last_response.ok?
   end
   
@@ -54,7 +53,7 @@ class RESTAPITest < Test::Unit::TestCase
          params={"title"=>'Test Title', "content"=>'Test Content', "code"=>'Test Code'}
     follow_redirect!
     
-    assert_equal("http://example.org/home", last_request.url)
+    assert_equal("http://example.org/", last_request.url)
     assert last_response.ok?
     
   end
@@ -74,6 +73,15 @@ class RESTAPITest < Test::Unit::TestCase
     get "/home"
     
     assert last_response.body.include?("Ardtweeno is an application gateway which bridges")
+    assert last_response.ok?
+  end
+  
+  
+  # Test /status
+  def test_status
+    get "/status"
+    
+    assert last_response.body.include?("System Status")
     assert last_response.ok?
   end
 
@@ -236,10 +244,10 @@ class RESTAPITest < Test::Unit::TestCase
   
   # Test the system status command
   def test_system_status
-    get "/api/v1/system/status", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    get "/api/v1/system/status"
     assert last_response.ok?
     
-    result = {:running=>@dispatcher.running?}.to_json
+    result = @dispatcher.status?.to_json
     
     assert_equal(result, last_response.body)
   end

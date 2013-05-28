@@ -1,9 +1,9 @@
 $stdout.sync = true
 ####################################################################################################
 # @author       David Kirwan <davidkirwanirl@gmail.com>
-# @description  Ardtweeno Application Gateway HTTP REST API Sinatra Script
+# @description  Ardtweeno Application Gateway HTTP REST API Sinatra Web App
 #
-# @date         08-02-2013
+# @date         26-05-2013
 ####################################################################################################
 ##### Require statements
 require 'rubygems'
@@ -23,6 +23,8 @@ class RESTAPI < Sinatra::Base
   
   # Posts Array
   set :posts, Array.new
+  thePosts = YAML.load(File.open('posts.yaml'))
+  unless thePosts["posts"].nil? or thePosts["posts"].empty? then settings.posts = thePosts["posts"]; end
     
   # Create the logger instance
   set :log, Logger.new(STDOUT)
@@ -42,7 +44,7 @@ class RESTAPI < Sinatra::Base
   
 #########################################################################################################  
 
-  
+
   settings.scheduler.every '60m' do
       
     begin
@@ -60,19 +62,25 @@ class RESTAPI < Sinatra::Base
 
     
   get '/' do
-    redirect '/home'
+    running = @@theDispatcher.running?
+
+    erb :index, :locals => {:running => running}
   end
-    
+  
     
   get '/home' do
-    running = @@theDispatcher.running?
     theposts = settings.posts
 
     if theposts.length >= 5
       theposts = theposts[(theposts.length - 5), theposts.length]
     end
 
-    erb :home, :locals => {:running => running, :postdata => theposts.reverse}
+    erb :home, :locals => {:postdata => theposts.reverse}
+  end
+  
+  
+  get '/status' do
+    erb :status
   end
   
   
@@ -91,9 +99,17 @@ class RESTAPI < Sinatra::Base
     unless params["content"].nil? then thePost[:postcontent] = params["content"]; end
     unless params["code"].nil? then thePost[:postcode] = params["code"]; end 
     
-    settings.posts << thePost
+    unless params["posts"].nil? then
+      if params["posts"] == 'makepost'
+        settings.posts << thePost
+
+        f = File.open("posts.yaml", "w")
+        f.write({"posts"=>settings.posts}.to_yaml)
+        f.close
+      end
+    end
     
-    redirect '/home'
+    redirect '/'
   end
       
       
@@ -249,13 +265,17 @@ class RESTAPI < Sinatra::Base
 
 
   get '/api/v1/system/status' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    # Considering making this api target public to avoid having to store API keys in the highcarts.js
+    # graphs..
+    #throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
     settings.log.debug "The system status hook has been called, reading the host configuration"
 
     begin
-      return {:running=>@@theDispatcher.running?}.to_json
+      return @@theDispatcher.status?().to_json
+      
     rescue Exception => e
-      throw :halt, [ 500, "500 Internal Server Error" ]
+      raise e
+      #throw :halt, [ 500, "500 Internal Server Error" ]
     end
 
   end

@@ -14,6 +14,11 @@ img {
         border: 0;
 }
 
+.preloader{
+        display:block;
+        margin:120px auto;
+}
+
 #status {
         position: relative;
         top: 6px;
@@ -59,12 +64,23 @@ code {
         display: block;
 }
 
+div#footer{
+        position: relative;
+        margin: 0 2em;
+}
+
 div#content {
         position: relative;
-        margin: 2em 2em;
+        margin: 2em;
+        padding: 0 0 1em 0;
+}
+
+div#loadgraph {
+	margin: 0 2.5em 2em;
 }
 
 div#post {
+	margin-right: 2em;
 	padding: 0 0 2.5em 0;
 }
 
@@ -117,13 +133,52 @@ p#blurb {
         color: #CED6B4;
 }
 
-img#me {
+img#mainpic {
         float: right;
-        margin-top: -1em;
         margin-left: 2em;
+        margin-bottom:2em;
         border: 3px solid #444;
 }
 
 .clear {
         clear: both;
+}
+
+
+UL.mytabs {
+        position: relative;
+        z-index: 2;
+}
+UL.mytabs, UL.mytabs LI {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        float: left;
+}
+UL.mytabs LI { padding: 0 5px; }
+UL.mytabs LI A {
+        float: left;
+        padding: 7px;
+        border: 1px solid #CCCCCC;
+        border-bottom: 1px solid #E0E0E0;
+        background: #F0F0F0;
+        text-decoration: none;
+        color: #333333;
+        height: 22px;
+}
+UL.mytabs LI A:HOVER, UL.mytabs LI.current A {
+        background: #4d8b4d;    
+}
+UL.mytabs LI.current A {
+        font-weight: bold;
+        font-size: 14px;
+        border-bottom: 1px solid #FFFFFF;
+}
+.mytabs-container {
+        position: relative;
+        z-index: 1;
+        clear: both;
+        border: 1px solid #E0E0E0;
+        padding: 10px;
+        top: -1px;
 }

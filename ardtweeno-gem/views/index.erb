@@ -8,10 +8,7 @@
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   
   <link rel="stylesheet" href="/highlightjs/styles/monokai.css">
-  <script type="text/javascript" src="/jquery-2.0.1.min.js"></script>
-  <script type="text/javascript" src="/main.js"></script>
-  <script src="/highlightjs/highlight.pack.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
+  
 </head>
   <body>
     <div id="header">
@@ -28,19 +25,16 @@
         <li><a href="http://donttase.me/linkedin">LinkedIn</a></li>
       </ul>
     </div>
-		
-	<div id="content">
-		
-	  <form id="postform" action="/b97cb9ae44747ee263363463b7e56/create/post" method="post">
-		<ul>
-		  <li>Title:<br /><input id="title" name="title" type="text" /><br /></li>
-		  <li>Content:<br /><textarea id="content" name="content" rows="4" cols="50"></textarea><br /></li>
-		  <li>Code:<br /><textarea id="code" name="code" rows="4" cols="50"></textarea><br /></li>
-          <li>Add to News Posts: <input type="radio" name="posts" value="makepost" checked><br></li>
-		  <li><input id="submit" name="submit" type="submit" value="Submit" /><br /></li>
-	    </ul>
-	  </form>
-    
+
+    <div id="content">    
+      <ul class="mytabs" id="tabs">
+        <li class="current"><a href="/home">Home</a></li>
+        <li><a href="/status">Status</a></li>
+      </ul>
+      <div class="mytabs-container" id="tabs-container">
+        <img src="/img/ajax_preloader.gif" width="64" height="64" class="preloader" />
+      </div>
+
     </div>
     
     <div id="footer">
@@ -50,5 +44,11 @@
       </p>
     </div>
   
+    <script type="text/javascript" src="/jquery-1.8.2.min.js"></script>
+  	<!--<script type="text/javascript" src="/jquery-2.0.1.min.js"></script>-->
+  	<script src="/highcharts.js"></script>
+  	<script type="text/javascript" src="/main.js"></script>
+  	<script src="/highlightjs/highlight.pack.js"></script>
+  	<script>hljs.initHighlightingOnLoad();</script>
   </body>
 </html>
