@@ -397,7 +397,7 @@ module Ardtweeno
     
     
     ##
-    # Ardtweeno::Dispatcher#status returns the system status of the Ardtweeno Gateway host
+    # Ardtweeno::Dispatcher#status? returns the system status of the Ardtweeno Gateway host
     #
     # * *Args*    :
     #   - ++ ->   
@@ -406,78 +406,90 @@ module Ardtweeno
     # * *Raises* :
     #    
     def status?()
-      @log.debug "Ardtweeno::Dispatcher#status executing"
+      @log.debug "Ardtweeno::Dispatcher#status? executing"
       begin
-        # Get CPU      
-        begin # Checking for multi-core CPU
-          cpuinfo = File.read('/proc/cpuinfo')
-          coreinfo = cpuinfo.scan(/cpu cores\s+:\s+\d+/)
-        
-          tempVal = coreinfo[0]
-          numOfCores = tempVal.scan(/\d+/)[0].to_i
-          numOfThreadsPerCore = coreinfo.size / numOfCores
-          maxLoad = (numOfThreadsPerCore * numOfCores).to_f
-        
-          @log.debug "Found #{numOfCores} cores with #{numOfThreadsPerCore} threads per core"
-          @log.debug "Max desirable cpu load: #{maxLoad}"
-        
-        rescue Exception => e
-          @log.debug "Unable to find cpu core info in /proc/cpuinfo, assuming system has a single core"
-          maxLoad = 1.0
-        end
-      
-        # Get Avgload
-        begin
-          loadavg = File.read('/proc/loadavg')
-          loads = loadavg.scan(/\d+.\d+/)
-          onemin = loads[0]
-          fivemin = loads[1]
-          fifteenmin = loads[2]
+        unless Ardtweeno.options[:test] ||= false
+          # Get CPU      
+          begin # Checking for multi-core CPU
+            cpuinfo = File.read('/proc/cpuinfo')
+            coreinfo = cpuinfo.scan(/cpu cores\s+:\s+\d+/)
           
-          @log.debug "LoadAvg are as follows: 1min #{onemin}, 5min #{fivemin}, 15min #{fifteenmin}"
+            tempVal = coreinfo[0]
+            numOfCores = tempVal.scan(/\d+/)[0].to_i
+            numOfThreadsPerCore = coreinfo.size / numOfCores
+            maxLoad = (numOfThreadsPerCore * numOfCores).to_f
           
-          loadval = (onemin.to_f / maxLoad)
-          currentLoadPercentage = loadval * 100
+            @log.debug "Found #{numOfCores} cores with #{numOfThreadsPerCore} threads per core"
+            @log.debug "Max desirable cpu load: #{maxLoad}"
           
-          @log.debug "Currently running at #{'%.2f' % currentLoadPercentage}% of max load"
+          rescue Exception => e
+            @log.debug "Unable to find cpu core info in /proc/cpuinfo, assuming system has a single core"
+            maxLoad = 1.0
+          end
         
-        rescue Exception => e
-          @log.debug "Some issue accessing /proc/loadavg"
-          onemin, fivemin, fifteenmin = 0, 0, 0
-        end
-        
-        # Get MEM Usage
-        begin
-          memhash = Hash.new
-          meminfo = File.read('/proc/meminfo')
-          meminfo.each_line do |i| 
-            key, val = i.split(':')
-            if val.include?('kB') then val = val.gsub(/\s+kB/, ''); end
-            memhash["#{key}"] = val.strip
+          # Get Avgload
+          begin
+            loadavg = File.read('/proc/loadavg')
+            loads = loadavg.scan(/\d+.\d+/)
+            onemin = loads[0]
+            fivemin = loads[1]
+            fifteenmin = loads[2]
+            
+            @log.debug "LoadAvg are as follows: 1min #{onemin}, 5min #{fivemin}, 15min #{fifteenmin}"
+            
+            loadval = (onemin.to_f / maxLoad)
+            currentLoadPercentage = loadval * 100
+            
+            @log.debug "Currently running at #{'%.2f' % currentLoadPercentage}% of max load"
+          
+          rescue Exception => e
+            @log.debug "Some issue accessing /proc/loadavg"
+            onemin, fivemin, fifteenmin = 0, 0, 0
           end
           
-          totalMem = memhash["MemTotal"].to_i
-          freeMem = memhash["MemFree"].to_i + memhash["Buffers"].to_i + memhash["Cached"].to_i
-          usedMem = totalMem - freeMem
+          # Get MEM Usage
+          begin
+            memhash = Hash.new
+            meminfo = File.read('/proc/meminfo')
+            meminfo.each_line do |i| 
+              key, val = i.split(':')
+              if val.include?('kB') then val = val.gsub(/\s+kB/, ''); end
+              memhash["#{key}"] = val.strip
+            end
+            
+            totalMem = memhash["MemTotal"].to_i
+            freeMem = memhash["MemFree"].to_i + memhash["Buffers"].to_i + memhash["Cached"].to_i
+            usedMem = totalMem - freeMem
+            
+            @log.debug "Total Memory: #{totalMem} (100%)"
+            @log.debug "Used Memory: #{usedMem} (#{'%.2f' % ((usedMem / totalMem.to_f) * 100)}%)"
+            @log.debug "Free Memory: #{freeMem} (#{'%.2f' % ((freeMem / totalMem.to_f) * 100)}%)"
+          rescue Exception => e
+            @log.debug "Some issue accessing /proc/meminfo"
+            usedMem, totalMem = 0, 0
+          end
           
-          @log.debug "Total Memory: #{totalMem} (100%)"
-          @log.debug "Used Memory: #{usedMem} (#{'%.2f' % ((usedMem / totalMem.to_f) * 100)}%)"
-          @log.debug "Free Memory: #{freeMem} (#{'%.2f' % ((freeMem / totalMem.to_f) * 100)}%)"
-        rescue Exception => e
-          @log.debug "Some issue accessing /proc/meminfo"
-          usedMem, totalMem = 0, 0
+          thecpuload = '%.2f' % currentLoadPercentage
+          thememload = '%.2f' % ((usedMem / totalMem.to_f) * 100)
+                  
+          theResponse = {:running=>@running,
+                           :cpuload=>thecpuload,
+                           :memload=>thememload}
+          
+          @log.debug theResponse.inspect
+          
+          return theResponse
+          
+        else # When in testing mode, return blank data
+          theResponse = {:running=>@running,
+                           :cpuload=>0.0,
+                           :memload=>0.0}
+                           
+          @log.debug theResponse.inspect                 
+                           
+          return theResponse
         end
         
-        thecpuload = '%.2f' % currentLoadPercentage
-        thememload = '%.2f' % ((usedMem / totalMem.to_f) * 100)
-                
-        theResponse = {:running=>@running,
-                         :cpuload=>thecpuload,
-                         :memload=>thememload}
-        
-        @log.debug theResponse.inspect
-        
-        return theResponse
       rescue Exception => e
       
       end  

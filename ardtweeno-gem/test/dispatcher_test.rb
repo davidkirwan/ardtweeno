@@ -49,6 +49,13 @@ class DispatcherTest < Test::Unit::TestCase
 
   end
   
+  # Test to ensure the Ardtweeno::Dispatcher#status? is operating correctly
+  def test_status
+    
+  
+  end
+  
+  
   # Test to ensure the Ardtweeno::Dispatcher#running? is operating correctly
   def test_running
     assert_equal(false, @dispatch.running?)
