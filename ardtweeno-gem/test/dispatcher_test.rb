@@ -51,8 +51,10 @@ class DispatcherTest < Test::Unit::TestCase
   
   # Test to ensure the Ardtweeno::Dispatcher#status? is operating correctly
   def test_status
+    running = @dispatch.running?
+    response = {:running=>running, :cpuload=>0.0, :memload=>0.0}.to_json
     
-  
+    assert_equal(@dispatch.status?.to_json, response)
   end
   
   
