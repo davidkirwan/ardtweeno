@@ -5,7 +5,7 @@ require 'rake'
 Gem::Specification.new do |s|
   s.name        = 'ardtweeno'
   s.version     = '0.2.5'
-  s.date        = '2013-05-19'
+  s.date        = '2013-06-04'
   s.summary     = 'Serial Device / IP Network Gateway designed as a PaaS to be run on the Raspberry Pi, exposes Sinatra API'
   s.description = <<-DESCRIPTION
 Ardtweeno - Application Gateway bridges device connected through a serial link to devices connected 
@@ -32,5 +32,14 @@ for more information see: http://creativecommons.org/licenses/by-nc/3.0/
 INSTALL
 
   s.license   = 'CC BY-NC 3.0'
+  
   s.add_dependency('bundler', '>= 1.2.3')
+  s.add_dependency('mongo', '>= 1.6.2')
+  s.add_dependency('bson_ext', '>= 1.6.2')
+  s.add_dependency('sinatra', '>= 1.3.3')
+  s.add_dependency('thin', '>= 1.5.0')
+  s.add_dependency('rufus-scheduler', '>= 2.0.0')
+  s.add_dependency('typhoeus', '>= 0.6.3')
+  s.add_dependency('sinatra', '>= 1.3.3')
+  
 end
