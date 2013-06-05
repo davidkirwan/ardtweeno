@@ -1,3 +1,10 @@
+####################################################################################################
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
+# @description  Ardtweeno dispatcher test fixtures
+#
+# @date         05-06-2013
+####################################################################################################
+
 require 'rubygems'
 require 'test/unit'
 require 'rack/test'

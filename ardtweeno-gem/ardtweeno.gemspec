@@ -25,7 +25,7 @@ DESCRIPTION
                       'test/**/*'].to_a
   s.homepage    = 'http://rubygems.org/gems/ardtweeno'
   s.executables = ['']
-  s.required_ruby_version = '>= 1.8.7'
+  s.required_ruby_version = '>= 2.0.0'
   s.post_install_message = <<-INSTALL
 This software is released under the Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0) licence.
 for more information see: http://creativecommons.org/licenses/by-nc/3.0/

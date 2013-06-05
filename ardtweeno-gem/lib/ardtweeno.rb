@@ -1,8 +1,8 @@
 ####################################################################################################
-# @author       David Kirwan <davidkirwanirl@gmail.com>
-# @description  Ardtweeno Mesh Network Application Gateway
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
+# @description  Ardtweeno Gateway
 #
-# @date         15-05-2013
+# @date         05-06-2013
 ####################################################################################################
 
 require 'rubygems'
