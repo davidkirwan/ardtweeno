@@ -30,7 +30,7 @@ class ParserTest < Test::Unit::TestCase
     
     @modem = fork do
       Signal.trap("SIGTERM") { `killall tty0tty`; exit }
-      `test/tty0tty-1.1/pts/tty0tty`
+      `test/debug/tty0tty-1.1/pts/tty0tty`
     end
     
     sleep(1)

@@ -1,12 +1,16 @@
-#require 'simplecov'
-#SimpleCov.start
+####################################################################################################
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
+# @description  Ardtweeno Gateway test helper
+#
+# @date         05-06-2013
+####################################################################################################
 
 #require the Ardtweeno codebase
 require File.join(File.dirname(__FILE__), '../lib/ardtweeno.rb')
 
 # Require the test suite
 Dir.glob("./test/*_test.rb").each do |file|
-  unless file.include? "parser_test.rb" then require file; end
+  require file
 end
 
 # Require the mock
