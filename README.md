@@ -1,7 +1,7 @@
 # Ardtweeno - Application Gateway
-Ardtweeno is an application gateway which bridges an XBEE/Zigbee 802.15.4 radio mesh network and an Internet 
+Ardtweeno is an application gateway which bridges a Serial Device and an Internet 
 Protocol network. The system is designed as a PaaS (platform as a service) for the Raspberry Pi ARM platform.
-All data received on the mesh network interface is stored to a MongoDB database if one is available otherwise
+All data received on the serial interface is stored to a MongoDB database if one is available otherwise
 stores the data in system RAM. The gateway exposes a HTTP REST API for configuration and data manipulation 
 purposes which can be queried in order to build statistics, graphs and other forms of data reporting. Push 
 notifications, twitter and dropbox integration is planned in later releases.

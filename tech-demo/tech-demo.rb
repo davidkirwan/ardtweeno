@@ -58,6 +58,11 @@ class ArdtweenoDemo < Sinatra::Base
     erb :index
   end
   
+  
+  get '/push/:node' do |node|
+    `espeak "Movement detected on #{node}"`
+  end
+  
   get '/gateway' do    
     key = "1230aea77d7bd38898fec74a75a87738dea9f657"
     
