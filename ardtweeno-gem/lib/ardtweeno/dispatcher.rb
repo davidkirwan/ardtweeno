@@ -307,7 +307,8 @@ module Ardtweeno
               serialparser = Ardtweeno::SerialParser.new(dev, speed, 100, {:log=>@log, :level=>@log.level})
             rescue Exception => e
               @log.fatal "Ardtweeno::Dispatcher#start Fatal Error constructing the SerialParser:"
-              @log.fatal e
+              @running = false
+              return false
             end
                       
             @parser = Thread.new do
@@ -318,12 +319,12 @@ module Ardtweeno
                 end
                 
               rescue Exception => e
-                @log.debug e
+                @log.debug e.message
                 serialparser.close
+                @running = false
                 @parser.kill
                 @parser = nil
-                @running = false
-                return false
+                
               end
             end
             
@@ -366,12 +367,12 @@ module Ardtweeno
         unless Ardtweeno.options[:test]        
           unless @running == false
             
-            @log.debug "Dispatcher#stop has been called shutting system down.."
-            
             @parser.kill
             @parser = nil
             
             @running = false
+            @log.debug "Dispatcher#stop has been called shutting system down.."
+            
             return true
             
           end
@@ -526,8 +527,7 @@ module Ardtweeno
     #   -
     # * *Raises* :
     #
-    private
-    def bootstrap()
+    def bootstrap
       
       # Read in the configuration files
       begin
@@ -684,6 +684,8 @@ module Ardtweeno
       end
     end
     
+    
+    private :bootstrap, :calculateMemLoad, :calculateAvgLoad, :calculateCPUCores
     
   end
 end

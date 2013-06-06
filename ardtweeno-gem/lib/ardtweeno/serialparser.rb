@@ -20,7 +20,7 @@ module Ardtweeno
   #
   class SerialParser
     
-    attr_accessor :sp, :log
+    attr_accessor :sp, :log, :testing
     
     ##
     # Ardtweeno::SerialParser#new constructor for the Ardtweeno system
@@ -35,8 +35,14 @@ module Ardtweeno
     def initialize(dev, speed, timeout, options={})
       @log = options[:log] ||= Logger.new(STDOUT)
       @log.level = options[:level] ||= Logger::WARN
+      @testing = options[:testing] ||= false
       
-      @log.debug "Creating instance of Ardtweeno::SerialParser"
+      if @testing
+        @log.debug "Creating instance of Ardtweeno::SerialParser for testing"
+      else
+        @log.debug "Creating instance of Ardtweeno::SerialParser"
+      end
+      
       begin
         @sp = SerialPort.new(dev, speed)
         @sp.read_timeout = timeout
@@ -76,23 +82,21 @@ module Ardtweeno
     # * *Raises* :
     #   -         
     #     
-    def listen(key)
-      @log.debug "Ardtweeno::SerialParser.listen executing with #{key}"
-      
-      sleep(5)
-      @log.debug "********Packet received, posting!********"
-      
-=begin
+    def listen(key)      
       data = ""
       1.upto(10) do |i|
         data += read()
-        if valid_json?(data) 
-          postToAPI(data)
+        if valid_json?(data)
+          @log.debug "Posting to the API"
+          @log.debug "#{data}"
+          begin
+            return postToAPI(data, key)
+          rescue Exception => e
+            raise e
+          end
           break
         end
-        
       end
-=end
     end
     
     
@@ -134,6 +138,33 @@ module Ardtweeno
     end
     
     
+    
+    ##
+    # Ardtweeno::SerialParser#postToAPI posts a packet of data to the Ardtweeno gateway
+    #
+    # * *Args*    :
+    #   - ++ ->   JSON String
+    # * *Returns* :
+    #   -         true || false
+    # * *Raises* :
+    #   -         
+    #
+    def postToAPI(data, key)
+      body = {:key => key, :payload=>data}
+      
+      unless @testing        
+        begin
+          Typhoeus::Request.post("http://localhost:4567/api/v1/packets", :body=> body)
+        rescue Exception => e
+          raise e
+        end
+      else
+        return body
+      end
+    end
+    
+    
+    private :postToAPI
     
   end
 end

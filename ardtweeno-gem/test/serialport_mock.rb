@@ -1,8 +1,8 @@
 ####################################################################################################
-# @author       David Kirwan <davidkirwanirl@gmail.com>
-# @description  Mock for a serial port
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
+# @description  Ardtweeno serial device mock
 #
-# @date         15-10-2012
+# @date         05-06-2013
 ####################################################################################################
 
 # Imports
@@ -36,7 +36,7 @@ class SerialDeviceMock
   end
   
   def close
-    @log.debug "Closing SerialPort device"
+    @log.debug "Closing SerialPortMock device"
     @sp.close
   end
   
