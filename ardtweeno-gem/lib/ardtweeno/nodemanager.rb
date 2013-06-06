@@ -207,8 +207,8 @@ module Ardtweeno
         
         watch = { :node=>node, 
                   :notifyURL=> params[:notifyURL],
-                  :method=>"POST", 
-                  :timeout=>"60" 
+                  :method=>params[:method], 
+                  :timeout=>params[:timeout] 
                 }
         
         @log.debug "Adding watch: " + watch.inspect
