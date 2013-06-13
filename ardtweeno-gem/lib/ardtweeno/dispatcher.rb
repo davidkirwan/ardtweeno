@@ -201,28 +201,45 @@ module Ardtweeno
     # Ardtweeno::Dispatcher#addWatch method to add a watch on a node
     #
     # * *Args*    :
-    #   - ++ ->     params Hash
+    #   - ++ ->     params Hash containing: {:node String name of the node,
+    #                                        :notifyURL String URL to post a push notification to 
+    #                                        :method String either GET or PUSH to indicate HTTP methods
+    #                                        :timeout Fixnum the timeout in seconds between push notifications }
     # * *Returns* :
     #   -           
     # * *Raises* :
-    #    
+    #             Ardtweeno::InvalidWatch if params do not adhere to specification
+    #             Ardtweeno::AlreadyWatched if node is already on a watchlist
+    #
     def addWatch(params)
       begin
         apitimer = Time.now
         
-        if params.has_key? "node" and 
-           params.has_key? "notifyURL" and 
-           params.has_key? "method" and
-           params.has_key? "timeout"
-             
+        if params.has_key? :node and 
+           params.has_key? :notifyURL and 
+           params.has_key? :method and
+           params.has_key? :timeout
+          
+          
+          unless params[:method] == "GET" or params[:method] == "POST"
+            raise Ardtweeno::InvalidWatch, "Invalid Parameters"
+          end
+          
+          unless params[:timeout] >= 0
+            raise Ardtweeno::InvalidWatch, "Invalid Parameters"
+          end
+          
           @log.debug "Watch API call seems valid, passing to NodeManager"
           @nodeManager.addWatch(params)
         else
-          raise Exception, "Invalid Parameters"
+          raise Ardtweeno::InvalidWatch, "Invalid Parameters"
         end
         
         @log.debug "Duration: #{Time.now - apitimer} seconds"
-      rescue Exception => e
+        
+      rescue Ardtweeno::AlreadyWatched => e
+        raise e, "This node already has a watch associated with it"
+      rescue Ardtweeno::InvalidWatch => e
         raise e
       end
     end 

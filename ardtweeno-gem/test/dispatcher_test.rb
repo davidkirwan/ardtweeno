@@ -42,6 +42,36 @@ class DispatcherTest < Test::Unit::TestCase
       
       @dispatch.nodeManager = @nodemanager
       
+      @watchList = Hash.new
+      
+      @validwatch = {:node=>"node1",
+                     :notifyURL=>"http://192.168.1.2:5000/push/node1", 
+                     :method=>"GET", 
+                     :timeout=>60}
+                            
+      @nonode = {:notifyURL=>"http://192.168.1.2:5000/push/node1", 
+                 :method=>"GET", 
+                 :timeout=>60}
+                            
+      @nomethod = {:node=>"node1",
+                   :notifyURL=>"http://192.168.1.2:5000/push/node1",
+                   :timeout=>60}
+      
+      @notimeout = {:node=>"node1",
+                    :notifyURL=>"http://192.168.1.2:5000/push/node1", 
+                    :method=>"GET"}
+      
+      @invalidtimeout = {:node=>"node1",
+                         :notifyURL=>"http://192.168.1.2:5000/push/node1", 
+                         :method=>"GET", 
+                         :timeout=>-60}
+      
+      @invalidmethod = {:node=>"node1",
+                        :notifyURL=>"http://192.168.1.2:5000/push/node1", 
+                        :method=>"POSTSS", 
+                        :timeout=>60}
+      
+      
     rescue Exception => e
       puts e.message
       puts e.backtrace
@@ -130,6 +160,38 @@ class DispatcherTest < Test::Unit::TestCase
     # Valid Packet
     assert_equal(true, @dispatch.store('{"data":[23.5,997.5,65],"key":"abcdef0"}'))
     
+  end
+
+
+  # Test to ensure we can add a watch to a node correctly
+  def test_add_watch
+    
+    assert_true(@dispatch.addWatch(@validwatch))
+    
+    assert_raise Ardtweeno::AlreadyWatched do
+      @dispatch.addWatch(@validwatch)  
+    end
+    
+    assert_raise Ardtweeno::InvalidWatch do
+      @dispatch.addWatch(@nonode)  
+    end
+    
+    assert_raise Ardtweeno::InvalidWatch do
+      @dispatch.addWatch(@nomethod)  
+    end
+    
+    assert_raise Ardtweeno::InvalidWatch do
+      @dispatch.addWatch(@notimeout)  
+    end
+    
+    assert_raise Ardtweeno::InvalidWatch do
+      @dispatch.addWatch(@invalidtimeout)  
+    end
+
+    assert_raise Ardtweeno::InvalidWatch do
+      @dispatch.addWatch(@invalidmethod)  
+    end
+
   end
   
 

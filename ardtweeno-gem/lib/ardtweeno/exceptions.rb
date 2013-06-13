@@ -30,4 +30,10 @@ module Ardtweeno
   class SerialDeviceNotFound < Exception
   end
   
+  class InvalidWatch < Exception  
+  end
+  
+  class AlreadyWatched < Exception
+  end
+  
 end

@@ -178,8 +178,8 @@ module Ardtweeno
       
       @watchlist.each do |i|
         
-        @log.debug "Comparing " + i[:node].node + " and " + node.node
-        if i[:node].node == node.node 
+        @log.debug "Comparing " + i[:node] + " and " + node.node
+        if i[:node] == node.node 
           return true
         end
       end
@@ -205,7 +205,11 @@ module Ardtweeno
         node = search({:node=>params[:node]})
         @log.debug "Found Node: " + node.inspect
         
-        watch = { :node=>node, 
+        if watched?(node)
+          raise Ardtweeno::AlreadyWatched
+        end
+        
+        watch = { :node=>params[:node], 
                   :notifyURL=> params[:notifyURL],
                   :method=>params[:method], 
                   :timeout=>params[:timeout] 
@@ -214,7 +218,9 @@ module Ardtweeno
         @log.debug "Adding watch: " + watch.inspect
         
         @watchlist << watch
-        
+      
+      rescue Ardtweeno::AlreadyWatched => e
+        raise e
       rescue Ardtweeno::NotInNodeList => e
         raise e
       rescue Exception => e
@@ -238,7 +244,7 @@ module Ardtweeno
         node = search({:node=>node})
         
         @watchlist.each do |i|
-          if i[:node] == node
+          if i[:node] == node.node
             @watchlist.delete(i)
           end
         end
