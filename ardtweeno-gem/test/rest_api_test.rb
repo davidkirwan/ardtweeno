@@ -32,6 +32,28 @@ class RESTAPITest < Test::Unit::TestCase
     
     @dispatcher.nodeManager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})
     
+    confdata = {"dev"=>"/dev/pts/2",
+                  "speed"=>9600,
+                  "adminkey"=>"1230aea77d7bd38898fec74a75a87738dea9f657",
+                  "db"=>{"dbHost"=>"localhost",
+                         "dbPort"=>27017,
+                         "dbUser"=>"david",
+                         "dbPass"=>"86ddd1420701a08d4a4380ca5d240ba7",
+                         "dbName"=>"ardtweeno",
+                         "dbPacketsColl"=>"packets"
+                         },
+                  "zones"=>[{"zonename"=>"testzone0",
+                             "zonekey"=>"455a807bb34b1976bac820b07c263ee81bd267cc",
+                             "zonenodes"=>["node0","node1"]
+                             },
+                             {"zonename"=>"testzone1",
+                              "zonekey"=>"79a7c75758879243418fe2c87ec7d5d4e1451129",
+                              "zonenodes"=>["node2","node3"]
+                             }]
+                  }
+                  
+    @dispatcher.confdata = confdata
+    
     3.times do |i|
       @dispatcher.store('{"data":[23.5,997.5,65],"key":"abcdef1"}')
     end
