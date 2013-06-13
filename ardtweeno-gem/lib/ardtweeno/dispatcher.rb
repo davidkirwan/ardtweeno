@@ -522,7 +522,8 @@ module Ardtweeno
     
     
     ##
-    # Ardtweeno::Dispatcher#config returns the configuration as read in from the DB
+    # Ardtweeno::Dispatcher#config returns the configuration as read in from the confg.yaml configuration 
+    # file
     #
     # * *Args*    :
     #   - ++ ->   

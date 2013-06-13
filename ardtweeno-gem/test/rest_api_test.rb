@@ -21,7 +21,20 @@ class RESTAPITest < Test::Unit::TestCase
     today = DateTime.now
     theDate = today.year.to_s() + "-" + "%02d" % today.month.to_s() + "-" + "%02d" % today.day.to_s()
     
+    Ardtweeno.setup({:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG})
     @dispatcher = Ardtweeno::Dispatcher.instance
+    
+    @nodeList = Array.new
+    
+    5.times do |i|
+      @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}")
+    end
+    
+    @dispatcher.nodeManager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})
+    
+    3.times do |i|
+      @dispatcher.store('{"data":[23.5,997.5,65],"key":"abcdef1"}')
+    end
     
     # Default values
     @date = theDate
@@ -116,7 +129,6 @@ class RESTAPITest < Test::Unit::TestCase
   end
 
 
-
   # Test retrieval of packets
   def test_retrieve_nodes
     get "/api/v1/nodes", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
@@ -182,6 +194,12 @@ class RESTAPITest < Test::Unit::TestCase
   
   # Test post of packets
   def test_post_packets
+    
+    # Get initial number of packets in the system
+    get "/api/v1/packets", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    json = JSON.parse(last_response.body)
+    initialNo = json["total"].to_i
+    
     # Add a packet
     post "/api/v1/packets", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657",
                              :payload=>'{"key":"abcdef1", "data":[50.0]}'}
@@ -190,8 +208,8 @@ class RESTAPITest < Test::Unit::TestCase
     # Test to ensure it was added successfully
     get "/api/v1/packets", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     json = JSON.parse(last_response.body)
-    assert_equal(1, json["found"])
-    assert_equal(1, json["total"])
+    assert_equal(initialNo + 1, json["found"])
+    assert_equal(initialNo + 1, json["total"])
     
     # Add another packet
     post "/api/v1/packets", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657",
@@ -201,8 +219,8 @@ class RESTAPITest < Test::Unit::TestCase
     # Test to once again check if it was added successfully
     get "/api/v1/packets", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     json = JSON.parse(last_response.body)
-    assert_equal(2, json["found"])
-    assert_equal(2, json["total"])
+    assert_equal(initialNo + 2, json["found"])
+    assert_equal(initialNo + 2, json["total"])
     
   end
   
