@@ -29,9 +29,6 @@ class RESTAPI < Sinatra::Base
   #set :level, Logger::WARN
   
   # Options hash
-  
-  puts ENV['RACK_ENV']
-  
   unless ENV['RACK_ENV'] == 'test'
     set :environment, :production
     set :options, {:log => settings.log, :level => settings.level}
