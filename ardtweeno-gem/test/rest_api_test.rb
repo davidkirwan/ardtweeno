@@ -1,10 +1,10 @@
+ENV['RACK_ENV'] = 'test'
+
 require 'rubygems' # Require the REST API Sinatra app
 require File.expand_path(File.dirname(__FILE__) + "/../lib/ardtweeno/restapi.rb")
 require 'test/unit'
 require 'rack/test'
 require 'date'
-
-ENV['RACK_ENV'] = 'test'
 
 
 class RESTAPITest < Test::Unit::TestCase
@@ -15,13 +15,27 @@ class RESTAPITest < Test::Unit::TestCase
     RESTAPI
   end
   
+  attr_accessor :dispatch, :confdata
   
   def setup
     # Create a DateTime instance
     today = DateTime.now
     theDate = today.year.to_s() + "-" + "%02d" % today.month.to_s() + "-" + "%02d" % today.day.to_s()
+
     
     @dispatcher = Ardtweeno::Dispatcher.instance
+    
+    @nodeList = Array.new
+    
+    5.times do |i|
+      @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}")
+    end
+    
+    @dispatcher.nodeManager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})
+    
+    3.times do |i|
+      @dispatcher.store('{"data":[23.5,997.5,65],"key":"abcdef1"}')
+    end
     
     # Default values
     @date = theDate
@@ -33,9 +47,8 @@ class RESTAPITest < Test::Unit::TestCase
   # Check root redirects to /home successfully
   def test_root
     get "/"
-    follow_redirect!
     
-    assert_equal("http://example.org/home", last_request.url)
+    assert_equal("http://example.org/", last_request.url)
     assert last_response.ok?
   end
   
@@ -43,18 +56,20 @@ class RESTAPITest < Test::Unit::TestCase
   # Check manual create post page loads
   def test_create_post
     
-    # Check the form loads ok
-    get "/b97cb9ae44747ee263363463b7e56/create/post"
+    postURI = @dispatcher.getPostsURI
     
-    assert_equal("http://example.org/b97cb9ae44747ee263363463b7e56/create/post", last_request.url)
+    # Check the form loads ok
+    get "/#{postURI}/create/post"
+    
+    assert_equal("http://example.org/#{postURI}/create/post", last_request.url)
     assert last_response.ok?
     
     # Add a post to the system
-    post "/b97cb9ae44747ee263363463b7e56/create/post", 
+    post "/#{postURI}/create/post", 
          params={"title"=>'Test Title', "content"=>'Test Content', "code"=>'Test Code'}
     follow_redirect!
     
-    assert_equal("http://example.org/home", last_request.url)
+    assert_equal("http://example.org/", last_request.url)
     assert last_response.ok?
     
   end
@@ -76,12 +91,22 @@ class RESTAPITest < Test::Unit::TestCase
     assert last_response.body.include?("Ardtweeno is an application gateway which bridges")
     assert last_response.ok?
   end
+  
+  
+  # Test /status
+  def test_status
+    get "/status"
+    
+    assert last_response.body.include?("System Status")
+    assert last_response.ok?
+  end
 
 
   # Test retrieval of zones
   def test_retrieve_zones
     get "/api/v1/zones", params={:zonename=>"testzone0", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     json = JSON.parse(last_response.body)
+    
     assert_equal(1, json["found"])
     assert_equal(2, json["total"])
     
@@ -106,7 +131,6 @@ class RESTAPITest < Test::Unit::TestCase
     assert_equal(2, json["total"])
 
   end
-
 
 
   # Test retrieval of packets
@@ -174,6 +198,12 @@ class RESTAPITest < Test::Unit::TestCase
   
   # Test post of packets
   def test_post_packets
+    
+    # Get initial number of packets in the system
+    get "/api/v1/packets", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    json = JSON.parse(last_response.body)
+    initialNo = json["total"].to_i
+    
     # Add a packet
     post "/api/v1/packets", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657",
                              :payload=>'{"key":"abcdef1", "data":[50.0]}'}
@@ -182,8 +212,8 @@ class RESTAPITest < Test::Unit::TestCase
     # Test to ensure it was added successfully
     get "/api/v1/packets", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     json = JSON.parse(last_response.body)
-    assert_equal(1, json["found"])
-    assert_equal(1, json["total"])
+    assert_equal(initialNo + 1, json["found"])
+    assert_equal(initialNo + 1, json["total"])
     
     # Add another packet
     post "/api/v1/packets", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657",
@@ -193,8 +223,8 @@ class RESTAPITest < Test::Unit::TestCase
     # Test to once again check if it was added successfully
     get "/api/v1/packets", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     json = JSON.parse(last_response.body)
-    assert_equal(2, json["found"])
-    assert_equal(2, json["total"])
+    assert_equal(initialNo + 2, json["found"])
+    assert_equal(initialNo + 2, json["total"])
     
   end
   
@@ -236,10 +266,10 @@ class RESTAPITest < Test::Unit::TestCase
   
   # Test the system status command
   def test_system_status
-    get "/api/v1/system/status", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    get "/api/v1/system/status"
     assert last_response.ok?
     
-    result = {:running=>@dispatcher.running?}.to_json
+    result = @dispatcher.status?.to_json
     
     assert_equal(result, last_response.body)
   end

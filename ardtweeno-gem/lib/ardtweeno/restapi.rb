@@ -1,9 +1,9 @@
 $stdout.sync = true
 ####################################################################################################
 # @author       David Kirwan <davidkirwanirl@gmail.com>
-# @description  Ardtweeno Application Gateway HTTP REST API Sinatra Script
+# @description  Ardtweeno Application Gateway HTTP REST API Sinatra Web App
 #
-# @date         08-02-2013
+# @date         14-06-2013
 ####################################################################################################
 ##### Require statements
 require 'rubygems'
@@ -14,15 +14,13 @@ require 'rufus/scheduler'
 
 class RESTAPI < Sinatra::Base
 
-  ##### Variables
+  ##### Sinatra Variables
   enable :static, :sessions, :logging
-  set :environment, :production
   set :root, File.join(File.dirname(__FILE__) + '/../../')
-  set :public_folder, Proc.new {File.join(root, '/public')}
-  set :views, Proc.new {File.join(root, '/views')}
+  set :public_folder, File.join(root, '/public')
+  set :views, File.join(root, '/views')
   
-  # Posts Array
-  set :posts, Array.new
+  #############################################################################################
     
   # Create the logger instance
   set :log, Logger.new(STDOUT)
@@ -31,7 +29,34 @@ class RESTAPI < Sinatra::Base
   #set :level, Logger::WARN
   
   # Options hash
-  set :options, {:log => settings.log, :level => settings.level}
+  unless ENV['RACK_ENV'] == 'test'
+    set :environment, :production
+    set :options, {:log => settings.log, :level => settings.level}
+  else
+    set :environment, :test
+    @confdata = {"dev"=>"/dev/pts/2",
+                  "speed"=>9600,
+                  "newsURI"=>"b97cb9ae44747ee263363463b7e56",
+                  "adminkey"=>"1230aea77d7bd38898fec74a75a87738dea9f657",
+                  "db"=>{"dbHost"=>"localhost",
+                         "dbPort"=>27017,
+                         "dbUser"=>"david",
+                         "dbPass"=>"86ddd1420701a08d4a4380ca5d240ba7",
+                         "dbName"=>"ardtweeno",
+                         "dbPacketsColl"=>"packets"
+                         },
+                  "zones"=>[{"zonename"=>"testzone0",
+                             "zonekey"=>"455a807bb34b1976bac820b07c263ee81bd267cc",
+                             "zonenodes"=>["node0","node1"]
+                             },
+                             {"zonename"=>"testzone1",
+                              "zonekey"=>"79a7c75758879243418fe2c87ec7d5d4e1451129",
+                              "zonenodes"=>["node2","node3"]
+                             }]
+                  }
+    
+    set :options, {:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG, :confdata=>@confdata}
+  end
   
   # Rufus-scheduler object
   set :scheduler, Rufus::Scheduler.start_new
@@ -40,9 +65,15 @@ class RESTAPI < Sinatra::Base
   Ardtweeno.setup(settings.options)
   @@theDispatcher = Ardtweeno::Dispatcher.instance
   
+  # Posts Array
+  set :posts, @@theDispatcher.getPosts
+  
+  # Posts URI
+  set :newsURI, @@theDispatcher.getPostsURI
+  
 #########################################################################################################  
 
-  
+
   settings.scheduler.every '60m' do
       
     begin
@@ -60,29 +91,35 @@ class RESTAPI < Sinatra::Base
 
     
   get '/' do
-    redirect '/home'
+    running = @@theDispatcher.running?
+
+    erb :index, :locals => {:running => running}
   end
-    
+  
     
   get '/home' do
-    running = @@theDispatcher.running?
     theposts = settings.posts
 
     if theposts.length >= 5
       theposts = theposts[(theposts.length - 5), theposts.length]
     end
 
-    erb :home, :locals => {:running => running, :postdata => theposts.reverse}
+    erb :home, :locals => {:postdata => theposts.reverse}
   end
   
   
-  get '/b97cb9ae44747ee263363463b7e56/create/post' do
+  get '/status' do
+    erb :status
+  end
+  
+  
+  get "/#{settings.newsURI}/create/post" do
     running = @@theDispatcher.running?
     erb :createpost, :locals => {:running => running}
   end
   
   
-  post '/b97cb9ae44747ee263363463b7e56/create/post' do
+  post "/#{settings.newsURI}/create/post" do
     settings.log.debug params.inspect
     
     thePost = Hash.new
@@ -91,9 +128,15 @@ class RESTAPI < Sinatra::Base
     unless params["content"].nil? then thePost[:postcontent] = params["content"]; end
     unless params["code"].nil? then thePost[:postcode] = params["code"]; end 
     
-    settings.posts << thePost
+    unless params["posts"].nil? then
+      if params["posts"] == 'makepost'
+        settings.posts << thePost
+
+        @@theDispatcher.savePosts(settings.posts)
+      end
+    end
     
-    redirect '/home'
+    redirect '/'
   end
       
       
@@ -249,13 +292,17 @@ class RESTAPI < Sinatra::Base
 
 
   get '/api/v1/system/status' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    # Considering making this api target public to avoid having to store API keys in the highcarts.js
+    # graphs..
+    #throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
     settings.log.debug "The system status hook has been called, reading the host configuration"
 
     begin
-      return {:running=>@@theDispatcher.running?}.to_json
+      return @@theDispatcher.status?().to_json
+      
     rescue Exception => e
-      throw :halt, [ 500, "500 Internal Server Error" ]
+      raise e
+      #throw :halt, [ 500, "500 Internal Server Error" ]
     end
 
   end

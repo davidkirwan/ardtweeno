@@ -149,6 +149,15 @@ class NodeManagerTest < Test::Unit::TestCase
                             :method=>"POST"
                           })
     
+    assert_raise Ardtweeno::AlreadyWatched do
+      # Attempt to add a second watch
+      @nodemanager.addWatch({ :node=>"node6", 
+                            :notifyURL=>"http://example.com", 
+                            :timeout=>"60", 
+                            :method=>"POST"
+                          })
+    end
+    
     assert_nothing_raised do
       assert_equal(true, @nodemanager.watched?(@init[0]))  
     end

@@ -1,3 +1,40 @@
+## Version 0.3.0
+- Incorrectly assert_true against method which does not return true or false - Refs #16
+- System now passes mock confdata into the options hash should the ENV['RACK_ENV'] == 'test' - Fixes #16
+- The URI to the form which can add news posts to the front page is now configurable in the ~/.ardtweeno/conf.yaml file 
+- The system reads the variable newsURI and exposes the URI like eg: /b97cb9ae44747ee263363463b7e56/create/post - Refs #3
+- Front page news posts are now serialised to ~/.ardtweeno/posts.yaml - Refs #3
+- RESTAPI test fixtures were not correctly reading the mock configuration data - Fixes #15
+- Refactored RESTAPI test fixtures to now use mock configuration data as intended - Fixes #15
+- Fleshed out implementation for adding nodes to a watchlist 
+- Added test fixtures for Ardtweeno::Dispatcher#addWatch and the Ardtweeno::NodeManager#addWatch 
+- Added exceptions Ardtweeno::InvalidWatch and Ardtweeno::AlreadyWatched - Fixes #12
+- Fixed bug in the skeleton implementation for the /api/v1/watch/node it now respects the parameters passed to it - Refs #12
+- Updated README and ardtweeno-gem/README with latest changes
+- Finished basic implementation and integration of the Ardtweeno::SerialParser subsystem 
+- Added test fixtures for Ardtweeno::SerialParser subsystem - Fixes #9
+- Updated test/test_helper.rb to no longer ignore the parser_test.rb
+- Removed node.js SerialParser subsystem
+- Updated minimum Ruby version to 2.0.0p0 in the gemspec 
+- Added Twitter Bootstrap CSS and JS libraries 
+- Added skeleton implementation of the Ardtweeno::SerialParser subsystem 
+- Modified Ardtweeno::Dispatcher #start and #stop to interface with the SerialParser 
+- Refactored the Ardtweeno::Dispatcher#status? to be cleaner and easier to maintain in future
+- Added runtime dependencies to the gemspec. Fixes #14
+- Added tests to cover Ardtweeno::Dispatcher#status?
+- While running tests, Ardtweeno::Dispatcher#status? now returns mock data
+- Refactored the gateway front end to allow tabbed content. fixes #11 - Implemented front end news story serialisation. Will be finished alongside refs #3 - Fleshed out functionality of /api/v1/system/status to include system load information. fixes #8 - Removed need for authentication to access /api/v1/system/status - Added a status tab on the front end which contains a highcharts graph showing gateway system load
+- Fixes #7 Added check for packets containing empty data, now correctly raises Ardtweeno::InvalidData
+- Updated main README.md
+- Updated README.md for the tech-demo
+- Broke out Ardtweeno Gateway port for the tech-demo to this config file
+- fixes #1 - breaks out hard coded URI's to a configuration file bundled with the tech-demo application
+- Added README.md for tech-demo directory
+- Added README.md for the arduino-fio-code directory
+- Added README.md to eaglecad directory
+- Added eagle-cad schematics for two sample Ardtweeno Sample Mesh Network Nodes
+- Typo in blog URI on Ardtweeno Gateway home view
+
 ## Version 0.2.5 Engineering Release 2 RC5
 - Updated gemspec in preparation for release of ER 2
 - Updated REST API to be more robust when printing news posts

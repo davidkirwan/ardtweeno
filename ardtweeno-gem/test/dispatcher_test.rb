@@ -1,3 +1,10 @@
+####################################################################################################
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
+# @description  Ardtweeno dispatcher test fixtures
+#
+# @date         14-06-2013
+####################################################################################################
+
 require 'rubygems'
 require 'test/unit'
 require 'rack/test'
@@ -12,18 +19,41 @@ class DispatcherTest < Test::Unit::TestCase
 
   include Rack::Test::Methods
   
-  attr_accessor :dispatch
+  attr_accessor :dispatch, :confdata
   
   
   # Test suite fixtures
   def setup
     
     begin
+            
+      @confdata = {"dev"=>"/dev/pts/2",
+                  "speed"=>9600,
+                  "newsURI"=>"b97cb9ae44747ee263363463b7e56",
+                  "adminkey"=>"1230aea77d7bd38898fec74a75a87738dea9f657",
+                  "db"=>{"dbHost"=>"localhost",
+                         "dbPort"=>27017,
+                         "dbUser"=>"david",
+                         "dbPass"=>"86ddd1420701a08d4a4380ca5d240ba7",
+                         "dbName"=>"ardtweeno",
+                         "dbPacketsColl"=>"packets"
+                         },
+                  "zones"=>[{"zonename"=>"testzone0",
+                             "zonekey"=>"455a807bb34b1976bac820b07c263ee81bd267cc",
+                             "zonenodes"=>["node0","node1"]
+                             },
+                             {"zonename"=>"testzone1",
+                              "zonekey"=>"79a7c75758879243418fe2c87ec7d5d4e1451129",
+                              "zonenodes"=>["node2","node3"]
+                             }]
+                  }
+      
       # Inform the Ardtweeno::Dispatcher we are in testing mode so do not run the bootstrap()
       # method as we will be creating instances of all required classes in the fixtures then
       # injecting them into the dispatcher
-      Ardtweeno.setup({:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG})
+      Ardtweeno.setup({:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG, :confdata=>@confdata})
       @dispatch = Ardtweeno::Dispatcher.instance
+      
       
       @nodeList = Array.new
       
@@ -34,6 +64,36 @@ class DispatcherTest < Test::Unit::TestCase
       @nodemanager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})
       
       @dispatch.nodeManager = @nodemanager
+      
+      @watchList = Hash.new
+      
+      @validwatch = {:node=>"node1",
+                     :notifyURL=>"http://192.168.1.2:5000/push/node1", 
+                     :method=>"GET", 
+                     :timeout=>60}
+                            
+      @nonode = {:notifyURL=>"http://192.168.1.2:5000/push/node1", 
+                 :method=>"GET", 
+                 :timeout=>60}
+                            
+      @nomethod = {:node=>"node1",
+                   :notifyURL=>"http://192.168.1.2:5000/push/node1",
+                   :timeout=>60}
+      
+      @notimeout = {:node=>"node1",
+                    :notifyURL=>"http://192.168.1.2:5000/push/node1", 
+                    :method=>"GET"}
+      
+      @invalidtimeout = {:node=>"node1",
+                         :notifyURL=>"http://192.168.1.2:5000/push/node1", 
+                         :method=>"GET", 
+                         :timeout=>-60}
+      
+      @invalidmethod = {:node=>"node1",
+                        :notifyURL=>"http://192.168.1.2:5000/push/node1", 
+                        :method=>"POSTSS", 
+                        :timeout=>60}
+      
       
     rescue Exception => e
       puts e.message
@@ -48,6 +108,15 @@ class DispatcherTest < Test::Unit::TestCase
   def teardown
 
   end
+  
+  # Test to ensure the Ardtweeno::Dispatcher#status? is operating correctly
+  def test_status
+    running = @dispatch.running?
+    response = {:running=>running, :cpuload=>0.0, :memload=>0.0}.to_json
+    
+    assert_equal(@dispatch.status?.to_json, response)
+  end
+  
   
   # Test to ensure the Ardtweeno::Dispatcher#running? is operating correctly
   def test_running
@@ -101,6 +170,11 @@ class DispatcherTest < Test::Unit::TestCase
       @dispatch.store('{"data":[23.5,997.5,65]}')
     end
     
+    # Raises Ardtweeno InvalidData if we send valid JSON but empty data
+    assert_raise Ardtweeno::InvalidData do
+      @dispatch.store('{"data":[],"key":"abcdef0"}')
+    end
+    
     # Raises Ardtweeno NodeNotAuthorised if valid JSON, valid Packet but unauthorised node key
     assert_raise Ardtweeno::NodeNotAuthorised do
       @dispatch.store('{"data":[23.5,997.5,65],"key":"500d81aafe637717a52f8650e54206e64da33d27"}')
@@ -109,6 +183,46 @@ class DispatcherTest < Test::Unit::TestCase
     # Valid Packet
     assert_equal(true, @dispatch.store('{"data":[23.5,997.5,65],"key":"abcdef0"}'))
     
+  end
+
+
+  # Test to ensure we can add a watch to a node correctly
+  def test_add_watch
+    
+    assert_nothing_raised do
+      @dispatch.addWatch(@validwatch)
+    end
+    
+    assert_raise Ardtweeno::AlreadyWatched do
+      @dispatch.addWatch(@validwatch)  
+    end
+    
+    assert_raise Ardtweeno::InvalidWatch do
+      @dispatch.addWatch(@nonode)  
+    end
+    
+    assert_raise Ardtweeno::InvalidWatch do
+      @dispatch.addWatch(@nomethod)  
+    end
+    
+    assert_raise Ardtweeno::InvalidWatch do
+      @dispatch.addWatch(@notimeout)  
+    end
+    
+    assert_raise Ardtweeno::InvalidWatch do
+      @dispatch.addWatch(@invalidtimeout)  
+    end
+
+    assert_raise Ardtweeno::InvalidWatch do
+      @dispatch.addWatch(@invalidmethod)  
+    end
+
+  end
+  
+  
+  # Test to ensure the Ardtweeno::Dispatcher#getPostsURI is working correctly
+  def test_get_posts_URI
+    assert_equal(@dispatch.getPostsURI, "b97cb9ae44747ee263363463b7e56")
   end
   
 

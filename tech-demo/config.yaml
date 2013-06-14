@@ -1,0 +1,3 @@
+gateway:
+  url: localhost
+  port: 4567

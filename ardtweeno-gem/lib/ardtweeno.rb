@@ -1,8 +1,8 @@
 ####################################################################################################
-# @author       David Kirwan <davidkirwanirl@gmail.com>
-# @description  Ardtweeno Mesh Network Application Gateway
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
+# @description  Ardtweeno Gateway
 #
-# @date         15-05-2013
+# @date         05-06-2013
 ####################################################################################################
 
 require 'rubygems'
@@ -35,11 +35,11 @@ module Ardtweeno
     Ardtweeno::CONFIGPATH = ENV['HOME'] + "/.ardtweeno" unless defined? Ardtweeno::CONFIGPATH
     Ardtweeno::DBPATH = Ardtweeno::CONFIGPATH + "/conf.yaml" unless defined? Ardtweeno::DBPATH
     Ardtweeno::NODEPATH = Ardtweeno::CONFIGPATH + "/nodelist.yaml" unless defined? Ardtweeno::NODEPATH
+    Ardtweeno::POSTPATH = Ardtweeno::CONFIGPATH + "/posts.yaml" unless defined? Ardtweeno::POSTPATH
         
-    # Class Variables
+    # Global Variables
     @@seqCount = 0 unless defined? @@seqCount
-    @@options = {} unless defined? @@options
-    
+    @@options = {} unless defined? @@options    
     
     
     ##
@@ -81,12 +81,15 @@ module Ardtweeno
     
     
     # Setup the system for the first time
-    def setup(options={})
-      @@options = options
+    def setup(theoptions={})
+      @@options = theoptions
       
       @log = @@options[:log] ||= Logger.new(STDOUT)
       @log.level = @@options[:level] ||= Logger::DEBUG
       
+      if @@options[:test]
+        @log.debug "Ardtweeno is running test mode"
+      end    
       
       @log.debug "Checking to see if the configuration folder exists."
       resourceDir = Ardtweeno::CONFIGPATH
@@ -101,10 +104,13 @@ module Ardtweeno
           FileUtils.mkdir(resourceDir)
           dbpath = File.expand_path(File.dirname(__FILE__) + '/../resources/conf.yaml')
           nodepath = File.expand_path(File.dirname(__FILE__) + '/../resources/nodelist.yaml')
+          postpath = File.expand_path(File.dirname(__FILE__) + '/../resources/posts.yaml')
           FileUtils.cp(dbpath, resourceDir)
           FileUtils.cp(nodepath, resourceDir)
+          FileUtils.cp(postpath, resourceDir)
           @log.debug "Successfully copied ~/.ardtweeno/conf.yaml"
           @log.debug "Successfully copied ~/.ardtweeno/nodelist.yaml"
+          @log.debug "Successfully copied ~/.ardtweeno/posts.yaml"
         rescue Exception => e
           @log.fatal e.message
           @log.fatal e.backtrace

@@ -13,17 +13,39 @@ class APITest < Test::Unit::TestCase
 
   include Rack::Test::Methods
   
-  attr_accessor :dispatch, :nodelist, :nodemanager, :params, :date, :hour, :minute
+  attr_accessor :dispatch, :nodelist, :params, :date, :hour, :minute, :confdata
   
   
   # Test suite fixtures
   def setup
     
     begin
+      
+      @confdata = {"dev"=>"/dev/pts/2",
+                  "speed"=>9600,
+                  "newsURI"=>"b97cb9ae44747ee263363463b7e56",
+                  "adminkey"=>"1230aea77d7bd38898fec74a75a87738dea9f657",
+                  "db"=>{"dbHost"=>"localhost",
+                         "dbPort"=>27017,
+                         "dbUser"=>"david",
+                         "dbPass"=>"86ddd1420701a08d4a4380ca5d240ba7",
+                         "dbName"=>"ardtweeno",
+                         "dbPacketsColl"=>"packets"
+                         },
+                  "zones"=>[{"zonename"=>"testzone0",
+                             "zonekey"=>"455a807bb34b1976bac820b07c263ee81bd267cc",
+                             "zonenodes"=>["node0","node1"]
+                             },
+                             {"zonename"=>"testzone1",
+                              "zonekey"=>"79a7c75758879243418fe2c87ec7d5d4e1451129",
+                              "zonenodes"=>["node2","node3"]
+                             }]
+                  }
+      
       # Inform the Ardtweeno::Dispatcher we are in testing mode so do not run the bootstrap()
       # method as we will be creating instances of all required classes in the fixtures then
       # injecting them into the dispatcher
-      Ardtweeno.setup({:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG})
+      Ardtweeno.setup({:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG, :confdata=>@confdata})
       @dispatch = Ardtweeno::Dispatcher.instance
       
       
@@ -42,9 +64,9 @@ class APITest < Test::Unit::TestCase
         @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}", {:version=>"0.5.0"})
       end
       
-      @nodemanager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})
+      nodemanager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})
       
-      @dispatch.nodeManager = @nodemanager
+      @dispatch.nodeManager = nodemanager
       
       @params = { :empty=> {},
                   :withnode=> {:node=>"node1"},
@@ -96,13 +118,13 @@ class APITest < Test::Unit::TestCase
   
   # Test the retrievezones method
   def test_retrievezones
-    results = @dispatch.retrieve_zones(@params[:withzonename])
+    results = Ardtweeno::API.retrievezones(@confdata, @params[:withzonename])
     assert_equal(1, results[:zones].size)
     
-    results = @dispatch.retrieve_zones(@params[:withoutzonename])
+    results = Ardtweeno::API.retrievezones(@confdata, @params[:withoutzonename])
     assert_equal(0, results[:zones].size)
     
-    results = @dispatch.retrieve_zones(@params[:empty])
+    results = Ardtweeno::API.retrievezones(@confdata, @params[:empty])
     assert_equal(2, results[:zones].size)
     
   end

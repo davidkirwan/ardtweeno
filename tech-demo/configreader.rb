@@ -37,7 +37,7 @@ module Ardtweeno
       # Saves the database to disk
       def save(newData, path, options={})
         @log = options[:log] ||= Logger.new(STDOUT)
-        @log.level = options[:level] ||= Logger::DEBUG
+        @log.level = Logger::DEBUG
         
         @data = newData
         
