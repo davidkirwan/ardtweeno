@@ -16,7 +16,6 @@ class RESTAPI < Sinatra::Base
 
   ##### Sinatra Variables
   enable :static, :sessions, :logging
-  set :environment, :production
   set :root, File.join(File.dirname(__FILE__) + '/../../')
   set :public_folder, File.join(root, '/public')
   set :views, File.join(root, '/views')
@@ -30,7 +29,37 @@ class RESTAPI < Sinatra::Base
   #set :level, Logger::WARN
   
   # Options hash
-  set :options, {:log => settings.log, :level => settings.level}
+  
+  puts ENV['RACK_ENV']
+  
+  unless ENV['RACK_ENV'] == 'test'
+    set :environment, :production
+    set :options, {:log => settings.log, :level => settings.level}
+  else
+    set :environment, :test
+    @confdata = {"dev"=>"/dev/pts/2",
+                  "speed"=>9600,
+                  "newsURI"=>"b97cb9ae44747ee263363463b7e56",
+                  "adminkey"=>"1230aea77d7bd38898fec74a75a87738dea9f657",
+                  "db"=>{"dbHost"=>"localhost",
+                         "dbPort"=>27017,
+                         "dbUser"=>"david",
+                         "dbPass"=>"86ddd1420701a08d4a4380ca5d240ba7",
+                         "dbName"=>"ardtweeno",
+                         "dbPacketsColl"=>"packets"
+                         },
+                  "zones"=>[{"zonename"=>"testzone0",
+                             "zonekey"=>"455a807bb34b1976bac820b07c263ee81bd267cc",
+                             "zonenodes"=>["node0","node1"]
+                             },
+                             {"zonename"=>"testzone1",
+                              "zonekey"=>"79a7c75758879243418fe2c87ec7d5d4e1451129",
+                              "zonenodes"=>["node2","node3"]
+                             }]
+                  }
+    
+    set :options, {:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG, :confdata=>@confdata}
+  end
   
   # Rufus-scheduler object
   set :scheduler, Rufus::Scheduler.start_new

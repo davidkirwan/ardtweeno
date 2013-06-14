@@ -37,10 +37,9 @@ module Ardtweeno
     Ardtweeno::NODEPATH = Ardtweeno::CONFIGPATH + "/nodelist.yaml" unless defined? Ardtweeno::NODEPATH
     Ardtweeno::POSTPATH = Ardtweeno::CONFIGPATH + "/posts.yaml" unless defined? Ardtweeno::POSTPATH
         
-    # Class Variables
+    # Global Variables
     @@seqCount = 0 unless defined? @@seqCount
-    @@options = {} unless defined? @@options
-    
+    @@options = {} unless defined? @@options    
     
     
     ##
@@ -82,12 +81,15 @@ module Ardtweeno
     
     
     # Setup the system for the first time
-    def setup(options={})
-      @@options = options
+    def setup(theoptions={})
+      @@options = theoptions
       
       @log = @@options[:log] ||= Logger.new(STDOUT)
       @log.level = @@options[:level] ||= Logger::DEBUG
       
+      if @@options[:test]
+        @log.debug "Ardtweeno is running test mode"
+      end    
       
       @log.debug "Checking to see if the configuration folder exists."
       resourceDir = Ardtweeno::CONFIGPATH

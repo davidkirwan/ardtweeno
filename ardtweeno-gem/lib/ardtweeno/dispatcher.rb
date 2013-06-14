@@ -43,11 +43,11 @@ module Ardtweeno
       @running = false
       @parser = nil
       
-      unless Ardtweeno.options[:test] ||= false
+      if Ardtweeno.options[:test]
+        @confdata = Ardtweeno.options[:confdata]
+      else
         @log.debug "Calling bootstrap()"
         bootstrap()
-      else
-        @confdata = Ardtweeno.options[:confdata] ||= nil
       end
     end
 

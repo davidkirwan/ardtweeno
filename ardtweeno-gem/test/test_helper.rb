@@ -8,6 +8,8 @@
 #require the Ardtweeno codebase
 require File.join(File.dirname(__FILE__), '../lib/ardtweeno.rb')
 
+ENV['RACK_ENV'] = 'test'
+
 # Require the test suite
 Dir.glob("./test/*_test.rb").each do |file|
   require file

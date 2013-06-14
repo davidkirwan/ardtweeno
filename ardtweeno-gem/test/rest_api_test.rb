@@ -1,10 +1,10 @@
+ENV['RACK_ENV'] = 'test'
+
 require 'rubygems' # Require the REST API Sinatra app
 require File.expand_path(File.dirname(__FILE__) + "/../lib/ardtweeno/restapi.rb")
 require 'test/unit'
 require 'rack/test'
 require 'date'
-
-ENV['RACK_ENV'] = 'test'
 
 
 class RESTAPITest < Test::Unit::TestCase
@@ -15,34 +15,14 @@ class RESTAPITest < Test::Unit::TestCase
     RESTAPI
   end
   
+  attr_accessor :dispatch, :confdata
   
   def setup
     # Create a DateTime instance
     today = DateTime.now
     theDate = today.year.to_s() + "-" + "%02d" % today.month.to_s() + "-" + "%02d" % today.day.to_s()
+
     
-    @confdata = {"dev"=>"/dev/pts/2",
-                  "speed"=>9600,
-                  "newsURI"=>"b97cb9ae44747ee263363463b7e56",
-                  "adminkey"=>"1230aea77d7bd38898fec74a75a87738dea9f657",
-                  "db"=>{"dbHost"=>"localhost",
-                         "dbPort"=>27017,
-                         "dbUser"=>"david",
-                         "dbPass"=>"86ddd1420701a08d4a4380ca5d240ba7",
-                         "dbName"=>"ardtweeno",
-                         "dbPacketsColl"=>"packets"
-                         },
-                  "zones"=>[{"zonename"=>"testzone0",
-                             "zonekey"=>"455a807bb34b1976bac820b07c263ee81bd267cc",
-                             "zonenodes"=>["node0","node1"]
-                             },
-                             {"zonename"=>"testzone1",
-                              "zonekey"=>"79a7c75758879243418fe2c87ec7d5d4e1451129",
-                              "zonenodes"=>["node2","node3"]
-                             }]
-                  }
-    
-    Ardtweeno.setup({:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG, :confdata=>@confdata})
     @dispatcher = Ardtweeno::Dispatcher.instance
     
     @nodeList = Array.new
@@ -76,7 +56,7 @@ class RESTAPITest < Test::Unit::TestCase
   # Check manual create post page loads
   def test_create_post
     
-    postURI = @confdata["newsURI"]
+    postURI = @dispatcher.getPostsURI
     
     # Check the form loads ok
     get "/#{postURI}/create/post"
@@ -127,7 +107,6 @@ class RESTAPITest < Test::Unit::TestCase
     get "/api/v1/zones", params={:zonename=>"testzone0", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     json = JSON.parse(last_response.body)
     
-    puts json.inspect
     assert_equal(1, json["found"])
     assert_equal(2, json["total"])
     
