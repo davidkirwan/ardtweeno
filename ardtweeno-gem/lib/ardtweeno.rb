@@ -2,7 +2,7 @@
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Ardtweeno Gateway
 #
-# @date         05-06-2013
+# @date         14-06-2013
 ####################################################################################################
 
 require 'rubygems'
@@ -31,7 +31,7 @@ module Ardtweeno
     
     
     # Constants
-    Ardtweeno::VERSION = "0.2.5" unless defined? Ardtweeno::VERSION
+    Ardtweeno::VERSION = "0.3.0" unless defined? Ardtweeno::VERSION
     Ardtweeno::CONFIGPATH = ENV['HOME'] + "/.ardtweeno" unless defined? Ardtweeno::CONFIGPATH
     Ardtweeno::DBPATH = Ardtweeno::CONFIGPATH + "/conf.yaml" unless defined? Ardtweeno::DBPATH
     Ardtweeno::NODEPATH = Ardtweeno::CONFIGPATH + "/nodelist.yaml" unless defined? Ardtweeno::NODEPATH
