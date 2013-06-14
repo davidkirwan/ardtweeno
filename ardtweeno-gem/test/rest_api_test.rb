@@ -126,6 +126,8 @@ class RESTAPITest < Test::Unit::TestCase
   def test_retrieve_zones
     get "/api/v1/zones", params={:zonename=>"testzone0", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     json = JSON.parse(last_response.body)
+    
+    puts json.inspect
     assert_equal(1, json["found"])
     assert_equal(2, json["total"])
     
