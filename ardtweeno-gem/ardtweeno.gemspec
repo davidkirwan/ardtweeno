@@ -4,7 +4,7 @@ require 'rake'
 
 Gem::Specification.new do |s|
   s.name        = 'ardtweeno'
-  s.version     = '0.3.0'
+  s.version     = '0.3.1'
   s.date        = '2013-06-14'
   s.summary     = 'Serial Device / IP Network Gateway designed as a PaaS to be run on the Raspberry Pi, exposes Sinatra API'
   s.description = <<-DESCRIPTION
@@ -40,7 +40,6 @@ INSTALL
   s.add_dependency('thin', '>= 1.5.0')
   s.add_dependency('rufus-scheduler', '>= 2.0.0')
   s.add_dependency('typhoeus', '>= 0.6.3')
-  s.add_dependency('sinatra', '>= 1.3.3')
   s.add_dependency('foreman', '>= 0.63.0')
   
 end
