@@ -3,7 +3,7 @@ $stdout.sync = true
 # @author       David Kirwan <davidkirwanirl@gmail.com>
 # @description  Ardtweeno Application Gateway HTTP REST API Sinatra Web App
 #
-# @date         26-05-2013
+# @date         14-06-2013
 ####################################################################################################
 ##### Require statements
 require 'rubygems'
@@ -14,12 +14,14 @@ require 'rufus/scheduler'
 
 class RESTAPI < Sinatra::Base
 
-  ##### Variables
+  ##### Sinatra Variables
   enable :static, :sessions, :logging
   set :environment, :production
   set :root, File.join(File.dirname(__FILE__) + '/../../')
   set :public_folder, File.join(root, '/public')
   set :views, File.join(root, '/views')
+  
+  #############################################################################################
     
   # Create the logger instance
   set :log, Logger.new(STDOUT)
@@ -39,6 +41,9 @@ class RESTAPI < Sinatra::Base
   
   # Posts Array
   set :posts, @@theDispatcher.getPosts
+  
+  # Posts URI
+  set :newsURI, @@theDispatcher.getPostsURI
   
 #########################################################################################################  
 
@@ -82,13 +87,13 @@ class RESTAPI < Sinatra::Base
   end
   
   
-  get '/b97cb9ae44747ee263363463b7e56/create/post' do
+  get "/#{settings.newsURI}/create/post" do
     running = @@theDispatcher.running?
     erb :createpost, :locals => {:running => running}
   end
   
   
-  post '/b97cb9ae44747ee263363463b7e56/create/post' do
+  post "/#{settings.newsURI}/create/post" do
     settings.log.debug params.inspect
     
     thePost = Hash.new

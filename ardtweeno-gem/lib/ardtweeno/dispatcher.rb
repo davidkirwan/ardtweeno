@@ -2,7 +2,7 @@
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Ardtweeno dispatcher system
 #
-# @date         05-06-2013
+# @date         14-06-2013
 ####################################################################################################
 
 # Imports
@@ -46,6 +46,8 @@ module Ardtweeno
       unless Ardtweeno.options[:test] ||= false
         @log.debug "Calling bootstrap()"
         bootstrap()
+      else
+        @confdata = Ardtweeno.options[:confdata] ||= nil
       end
     end
 
@@ -519,6 +521,21 @@ module Ardtweeno
         return false
       end
     end
+    
+    
+    ##
+    # Ardtweeno::Dispatcher#getPostsURI returns the front page news URI ~/.ardtweeno/conf.yaml 
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -          String which makes up the news post URI ie "/randomhash/create/post"
+    # * *Raises* :
+    #
+    def getPostsURI()
+      return @confdata["newsURI"]
+    end
+    
     
     
     ##

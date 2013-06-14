@@ -21,19 +21,9 @@ class RESTAPITest < Test::Unit::TestCase
     today = DateTime.now
     theDate = today.year.to_s() + "-" + "%02d" % today.month.to_s() + "-" + "%02d" % today.day.to_s()
     
-    Ardtweeno.setup({:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG})
-    @dispatcher = Ardtweeno::Dispatcher.instance
-    
-    @nodeList = Array.new
-    
-    5.times do |i|
-      @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}")
-    end
-    
-    @dispatcher.nodeManager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})
-    
-    confdata = {"dev"=>"/dev/pts/2",
+    @confdata = {"dev"=>"/dev/pts/2",
                   "speed"=>9600,
+                  "newsURI"=>"b97cb9ae44747ee263363463b7e56",
                   "adminkey"=>"1230aea77d7bd38898fec74a75a87738dea9f657",
                   "db"=>{"dbHost"=>"localhost",
                          "dbPort"=>27017,
@@ -51,8 +41,17 @@ class RESTAPITest < Test::Unit::TestCase
                               "zonenodes"=>["node2","node3"]
                              }]
                   }
-                  
-    @dispatcher.confdata = confdata
+    
+    Ardtweeno.setup({:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG, :confdata=>@confdata})
+    @dispatcher = Ardtweeno::Dispatcher.instance
+    
+    @nodeList = Array.new
+    
+    5.times do |i|
+      @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}")
+    end
+    
+    @dispatcher.nodeManager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})
     
     3.times do |i|
       @dispatcher.store('{"data":[23.5,997.5,65],"key":"abcdef1"}')
@@ -77,14 +76,16 @@ class RESTAPITest < Test::Unit::TestCase
   # Check manual create post page loads
   def test_create_post
     
-    # Check the form loads ok
-    get "/b97cb9ae44747ee263363463b7e56/create/post"
+    postURI = @confdata["newsURI"]
     
-    assert_equal("http://example.org/b97cb9ae44747ee263363463b7e56/create/post", last_request.url)
+    # Check the form loads ok
+    get "/#{postURI}/create/post"
+    
+    assert_equal("http://example.org/#{postURI}/create/post", last_request.url)
     assert last_response.ok?
     
     # Add a post to the system
-    post "/b97cb9ae44747ee263363463b7e56/create/post", 
+    post "/#{postURI}/create/post", 
          params={"title"=>'Test Title', "content"=>'Test Content', "code"=>'Test Code'}
     follow_redirect!
     
