@@ -189,7 +189,9 @@ class DispatcherTest < Test::Unit::TestCase
   # Test to ensure we can add a watch to a node correctly
   def test_add_watch
     
-    assert_true(@dispatch.addWatch(@validwatch))
+    assert_nothing_raised do
+      @dispatch.addWatch(@validwatch)
+    end
     
     assert_raise Ardtweeno::AlreadyWatched do
       @dispatch.addWatch(@validwatch)  
