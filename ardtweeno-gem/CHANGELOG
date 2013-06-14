@@ -1,3 +1,7 @@
+## Version 0.3.1
+- Fixed runtime dependency added twice in gemspec. - Fixes #17
+- Release 0.3.0 merged to origin/master
+
 ## Version 0.3.0
 - Incorrectly assert_true against method which does not return true or false - Refs #16
 - System now passes mock confdata into the options hash should the ENV['RACK_ENV'] == 'test' - Fixes #16
