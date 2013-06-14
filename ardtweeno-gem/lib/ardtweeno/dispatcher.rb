@@ -24,7 +24,7 @@ module Ardtweeno
     
     include Singleton
     
-    attr_accessor :nodeManager, :parser, :confdata, :nodedata, :db, :auth, :coll, :log, :running
+    attr_accessor :nodeManager, :parser, :confdata, :nodedata, :db, :auth, :coll, :log, :running, :posts
     
     
     ##
@@ -522,6 +522,39 @@ module Ardtweeno
     
     
     ##
+    # Ardtweeno::Dispatcher#getPosts returns the front page news posts loaded from ~/.ardtweeno/posts.yaml 
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -          Array of Hash containing post data
+    # * *Raises* :
+    #
+    def getPosts()
+      unless @posts.nil? or @posts.empty?
+        return @posts["posts"]
+      else
+        return Array.new
+      end
+    end
+    
+    
+    ##
+    # Ardtweeno::Dispatcher#savePosts saves a post to ~/.ardtweeno/posts.yaml 
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -          
+    # * *Raises* :
+    #
+    def savePosts(newPosts)
+      @posts["posts"] = newPosts
+      Ardtweeno::ConfigReader.save(@posts, Ardtweeno::POSTPATH)
+    end
+    
+    
+    ##
     # Ardtweeno::Dispatcher#config returns the configuration as read in from the confg.yaml configuration 
     # file
     #
@@ -553,6 +586,7 @@ module Ardtweeno
         
         @confdata = Ardtweeno::ConfigReader.load(Ardtweeno::DBPATH)
         @nodedata = Ardtweeno::ConfigReader.load(Ardtweeno::NODEPATH)
+        @posts = Ardtweeno::ConfigReader.load(Ardtweeno::POSTPATH)
 
       rescue Exception => e
         @log.fatal e.message

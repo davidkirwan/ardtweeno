@@ -35,6 +35,7 @@ module Ardtweeno
     Ardtweeno::CONFIGPATH = ENV['HOME'] + "/.ardtweeno" unless defined? Ardtweeno::CONFIGPATH
     Ardtweeno::DBPATH = Ardtweeno::CONFIGPATH + "/conf.yaml" unless defined? Ardtweeno::DBPATH
     Ardtweeno::NODEPATH = Ardtweeno::CONFIGPATH + "/nodelist.yaml" unless defined? Ardtweeno::NODEPATH
+    Ardtweeno::POSTPATH = Ardtweeno::CONFIGPATH + "/posts.yaml" unless defined? Ardtweeno::POSTPATH
         
     # Class Variables
     @@seqCount = 0 unless defined? @@seqCount
@@ -101,10 +102,13 @@ module Ardtweeno
           FileUtils.mkdir(resourceDir)
           dbpath = File.expand_path(File.dirname(__FILE__) + '/../resources/conf.yaml')
           nodepath = File.expand_path(File.dirname(__FILE__) + '/../resources/nodelist.yaml')
+          postpath = File.expand_path(File.dirname(__FILE__) + '/../resources/posts.yaml')
           FileUtils.cp(dbpath, resourceDir)
           FileUtils.cp(nodepath, resourceDir)
+          FileUtils.cp(postpath, resourceDir)
           @log.debug "Successfully copied ~/.ardtweeno/conf.yaml"
           @log.debug "Successfully copied ~/.ardtweeno/nodelist.yaml"
+          @log.debug "Successfully copied ~/.ardtweeno/posts.yaml"
         rescue Exception => e
           @log.fatal e.message
           @log.fatal e.backtrace

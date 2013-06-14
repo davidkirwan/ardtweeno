@@ -18,13 +18,8 @@ class RESTAPI < Sinatra::Base
   enable :static, :sessions, :logging
   set :environment, :production
   set :root, File.join(File.dirname(__FILE__) + '/../../')
-  set :public_folder, Proc.new {File.join(root, '/public')}
-  set :views, Proc.new {File.join(root, '/views')}
-  
-  # Posts Array
-  set :posts, Array.new
-  thePosts = YAML.load(File.open('posts.yaml'))
-  unless thePosts["posts"].nil? or thePosts["posts"].empty? then settings.posts = thePosts["posts"]; end
+  set :public_folder, File.join(root, '/public')
+  set :views, File.join(root, '/views')
     
   # Create the logger instance
   set :log, Logger.new(STDOUT)
@@ -41,6 +36,9 @@ class RESTAPI < Sinatra::Base
   # Setup the system for use
   Ardtweeno.setup(settings.options)
   @@theDispatcher = Ardtweeno::Dispatcher.instance
+  
+  # Posts Array
+  set :posts, @@theDispatcher.getPosts
   
 #########################################################################################################  
 
@@ -103,9 +101,7 @@ class RESTAPI < Sinatra::Base
       if params["posts"] == 'makepost'
         settings.posts << thePost
 
-        f = File.open("posts.yaml", "w")
-        f.write({"posts"=>settings.posts}.to_yaml)
-        f.close
+        @@theDispatcher.savePosts(settings.posts)
       end
     end
     
