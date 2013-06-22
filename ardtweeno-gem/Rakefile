@@ -1,4 +1,4 @@
-require 'rubygems'
+require 'fileutils'
 
 begin
   require 'bundler'
@@ -22,8 +22,20 @@ MSG
 end
 
 desc "Run the unit testing suite on this gem."
-task :test do
+task :test => :tty0tty do
   
   require "./test/test_helper.rb"
 
+end
+
+# Build the tty0tty binary before running tests
+task :tty0tty => :clean_tty0tty do
+  thePath = File.dirname(__FILE__) + "/test/debug/tty0tty-1.1/pts/"
+  sh "gcc -Wall -O2 -D_GNU_SOURCE #{thePath}tty0tty.c -o #{thePath}tty0tty"
+end
+
+# Clean the build before compiling
+task :clean_tty0tty do
+  thePath = File.dirname(__FILE__) + "/test/debug/tty0tty-1.1/pts/"
+  sh "rm -rf #{thePath}tty0tty #{thePath}*.o #{thePath}core"
 end

@@ -5,7 +5,6 @@
 # @date         14-06-2013
 ####################################################################################################
 
-require 'rubygems'
 require 'logger'
 require 'fileutils'
 require 'ardtweeno/serialparser'
