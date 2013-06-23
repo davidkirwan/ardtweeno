@@ -127,6 +127,19 @@ class RESTAPI < Sinatra::Base
   end
   
   
+  get '/graph/v1/punchcard/:node' do |node|
+    #begin
+      theData, theDays = @@theDispatcher.constructPunchcard(params)
+      
+    #rescue Exception => e
+      #throw :halt, [ 500, e ]
+      #throw :halt, [ 500, "500 Internal Server Error" ]
+    #end
+
+    erb :punchcard, :locals => {:node=>params[:node], :ourGraphData=>theData, :ourGraphDays=>theDays}
+  end
+  
+  
   get "/#{settings.newsURI}/create/post" do
     running = @@theDispatcher.running?
     erb :createpost, :locals => {:running => running}

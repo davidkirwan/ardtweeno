@@ -19,6 +19,10 @@ img {
         margin:120px auto;
 }
 
+#punchcard-holder {
+	background-color: #F0F0F0;
+}
+
 #topology-canvas {
 	background-color: #F0F0F0;
 }

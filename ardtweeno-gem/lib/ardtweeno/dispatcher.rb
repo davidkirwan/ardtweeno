@@ -51,7 +51,26 @@ module Ardtweeno
     end
 
 
-
+    
+    ##
+    # Ardtweeno::Dispatcher#constructPunchcard method for constructing the punchcard graph
+    #
+    # * *Args*    :
+    #   - ++ ->     
+    # * *Returns* :
+    #   -           Array data containing the 168 hourly packet totals for the last week,
+    #               Array of strings containing the names of the last 7 days
+    # * *Raises* :
+    #             
+    #
+    def constructPunchcard(params)
+      theData, theDays = Ardtweeno::API.buildPunchcard(@nodeManager.nodeList, params)
+      
+      return theData, theDays
+    end
+    
+    
+    
     ##
     # Ardtweeno::Dispatcher#constructTopology method for constructing the topology graph
     #

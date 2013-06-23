@@ -542,7 +542,9 @@ module Ardtweeno
       # * *Raises* :
       #
       def parseTopology(zones, nodes)
-                     
+        @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
+        @log.level = Ardtweeno.options[:level] ||= Logger::DEBUG
+        
         zonelist = Array.new
         
         begin      
@@ -592,7 +594,9 @@ module Ardtweeno
       #             
       #
       def buildTopology(topology)
-      
+        @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
+        @log.level = Ardtweeno.options[:level] ||= Logger::DEBUG
+        
         @log.debug "Number of Zones: #{topology.count.to_s}"
         response = ""           # Will hold our response
         offset = 0              # Offset 
@@ -627,7 +631,7 @@ module Ardtweeno
             # Print the node
             response += "var node = thepaper.path('M 100 #{100 + offset} " +
                                 "l 0 -50 l 50 0 l 0 50 l -50 0').attr(" +
-                                "{fill: 'red', 'href':'/gateway/data/#{j[:name]}'});\n"
+                                "{fill: 'red', 'href':'/graph/v1/punchcard/#{j[:name]}'});\n"
             
             # Print the node name
             response += "var nodetitle = thepaper.text(125, #{40 + offset}, '#{j[:name]}');"
@@ -637,8 +641,7 @@ module Ardtweeno
             if i[:nodes].count > 1 
               unless (jndex + 1) == i.count
                 response += "var nextnode1 = thepaper.path('M 75 #{75 + offset} l 0 " +
-                            "#{(j[:sensorlist].count * 100) + 75} " +
-                            "l 25 0');"
+                            "#{(j[:sensorlist].count * 100) + 75} l 25 0');"
               end
             end
             
@@ -698,6 +701,70 @@ module Ardtweeno
         end
         return count
       end
+      
+      
+      
+      ##
+      # Ardtweeno::API#buildPunchcard generate the data used in the Punchcard graph
+      #
+      # * *Args*    :
+      #   - ++ ->     Array of Ardtweeno::Node, Hash params
+      # * *Returns* :
+      #   -           Array Fixnum, 168 data hourly packet total values for last week,
+      #               Array String previous 7 day names 
+      # * *Raises* :
+      #             
+      #
+      def buildPunchcard(nodeList, params)
+        @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
+        @log.level = Ardtweeno.options[:level] ||= Logger::WARN
+        
+        theParams = Hash.new
+        theParams[:node] = params[:node]
+        
+        data = Array.new
+        days = Array.new
+        
+        today = DateTime.now
+                
+        theStartDay = today - 6
+
+        theStart = "%02d" % theStartDay.day
+        @log.debug theStart
+        @log.debug "%02d" % theStartDay.month
+        @log.debug theStartDay.year
+              
+        theEnd = "%02d" % today.day
+        @log.debug "From #{theStart} to #{theEnd}"
+        
+        
+        (theStart..theEnd).each do |i|
+          theDay = theStartDay.strftime('%a')
+          days << theDay
+          @log.debug theDay
+           
+          (0..23).each do |j|
+            theDate = theStartDay.year.to_s + "-" + "%02d" % theStartDay.month.to_s + "-"
+            
+            theParams[:hour] = "%02d" % j
+            theParams[:date] = theDate + i
+            
+            #@log.debug theParams.inspect
+            
+            nodes = Ardtweeno::API.retrievepackets(nodeList, theParams)
+            
+            #@log.debug nodes["found"]
+            data << nodes[:found].to_i
+          end
+          
+          theStartDay += 1
+        end
+        
+        @log.debug days.inspect
+        
+        return data, days.reverse
+      end
+      
       
       
       private :countSensors
