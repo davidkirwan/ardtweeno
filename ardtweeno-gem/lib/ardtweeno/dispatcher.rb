@@ -2,18 +2,17 @@
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Ardtweeno dispatcher system
 #
-# @date         14-06-2013
+# @date         23-06-2013
 ####################################################################################################
 
 # Imports
-require 'rubygems'
 require 'serialport'
 require 'logger'
 require 'yaml'
 require 'json'
 require 'singleton'
-require 'ardtweeno'
 require 'mongo'
+require 'ardtweeno'
 
 module Ardtweeno
   
@@ -50,6 +49,32 @@ module Ardtweeno
         bootstrap()
       end
     end
+
+
+
+    ##
+    # Ardtweeno::Dispatcher#constructTopology method for constructing the topology graph
+    #
+    # * *Args*    :
+    #   - ++ ->     Hash params, not really used for the moment
+    # * *Returns* :
+    #   -           String containing the Raphael.js code to generate the graph
+    # * *Raises* :
+    #             
+    #
+    def constructTopology(params=nil)
+      apitimer = Time.now
+      
+      nodes = Ardtweeno::API.retrievenodes(@nodeManager.nodeList, params)
+      zones = Ardtweeno::API.retrievezones(@confdata, params)
+      
+      topology = Ardtweeno::API.parseTopology(zones, nodes)
+      result = Ardtweeno::API.buildTopology(topology)
+      
+      @log.debug "Duration: #{Time.now - apitimer} seconds"
+      return result
+    end
+
 
 
     ##
@@ -140,6 +165,7 @@ module Ardtweeno
     end
     
 
+
     ##
     # Ardtweeno::Dispatcher#retrieve_zones method for retrieving zone data from the system
     #
@@ -198,6 +224,7 @@ module Ardtweeno
       return result
     end    
     
+
     
     ##
     # Ardtweeno::Dispatcher#addWatch method to add a watch on a node
@@ -246,6 +273,7 @@ module Ardtweeno
       end
     end 
     
+
     
     ##
     # Ardtweeno::Dispatcher#store stores a packet retrieved by the API into the system
@@ -301,6 +329,7 @@ module Ardtweeno
       
       return true 
     end  
+
     
     
     ##
@@ -369,6 +398,7 @@ module Ardtweeno
       return false
       
     end
+
     
     
     ##
@@ -411,9 +441,11 @@ module Ardtweeno
       return false
 
     end
+
+
     
     ##
-    # Ardtweeno::Dispatcher#reboot which reboots the Ardtweeno Gateway host
+    # Ardtweeno::Dispatcher#reboot which flushes data then reboots the Ardtweeno Gateway host
     #
     # * *Args*    :
     #   - ++ ->   
@@ -425,13 +457,11 @@ module Ardtweeno
       @log.debug "Dispatcher#reboot has been called, restarting the gateway host.."
       
       cmd = 'ls -l' #'sudo reboot'
+      sh "#{cmd}"
       
-      rebootFork = fork do
-        Signal.trap("SIGTERM") { exit }
-        `#{cmd}`
-      end
     end
     
+
     
     ##
     # Ardtweeno::Dispatcher#status? returns the system status of the Ardtweeno Gateway host
@@ -498,6 +528,7 @@ module Ardtweeno
     end
     
 
+
     ##
     # Ardtweeno::Dispatcher#authenticate? Checks the API key provided with that in the DB
     #
@@ -522,6 +553,7 @@ module Ardtweeno
       end
     end
     
+
     
     ##
     # Ardtweeno::Dispatcher#getPostsURI returns the front page news URI ~/.ardtweeno/conf.yaml 
@@ -554,6 +586,7 @@ module Ardtweeno
         return Array.new
       end
     end
+
     
     
     ##
@@ -569,6 +602,7 @@ module Ardtweeno
       @posts["posts"] = newPosts
       Ardtweeno::ConfigReader.save(@posts, Ardtweeno::POSTPATH)
     end
+
     
     
     ##
@@ -584,6 +618,7 @@ module Ardtweeno
     def config()
       return @confdata
     end
+
 
 
     ##
@@ -669,7 +704,7 @@ module Ardtweeno
         raise e
       end
       
-      
+            
     end # End of the bootstrap()
 
 
@@ -700,6 +735,7 @@ module Ardtweeno
         return usedMem, totalMem
       end
     end
+    
     
     def calculateAvgLoad(maxLoad)
       begin

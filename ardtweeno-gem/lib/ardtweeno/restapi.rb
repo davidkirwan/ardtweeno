@@ -114,11 +114,13 @@ class RESTAPI < Sinatra::Base
   
   
   get '/topology' do
+    settings.log.debug params.inspect
     
     begin
-      theResponse = 'alert("Coming soon!");'
-    rescue Exception => e
+      theResponse = @@theDispatcher.constructTopology(params)
       
+    rescue Exception => e
+      throw :halt, [ 500, "500 Internal Server Error" ]
     end
     
     erb :topology, :locals => {:theTopology=>theResponse}

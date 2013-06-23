@@ -1,12 +1,11 @@
 ####################################################################################################
-# @author       David Kirwan <davidkirwanirl@gmail.com>
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  API class for the Ardtweeno system
 #
-# @date         21-02-2013
+# @date         23-06-2013
 ####################################################################################################
 
 # Imports
-require 'rubygems'
 require 'logger'
 require 'yaml'
 require 'json'
@@ -18,7 +17,6 @@ module Ardtweeno
     class << self
     
       attr_accessor :log
-
 
 
       ##
@@ -533,10 +531,177 @@ module Ardtweeno
 
 
       
+      ##
+      # Ardtweeno::API#parseTopology method to construct the topology Hash used in API#buildTopology
+      #
+      # * *Args*    :
+      #   - ++ ->   Hash zones containing raw data from API#retrievezones, 
+      #             Hash nodes containing raw data from API#retrievenodes
+      # * *Returns* :
+      #   -         
+      # * *Raises* :
+      #
+      def parseTopology(zones, nodes)
+                     
+        zonelist = Array.new
+        
+        begin      
+          
+          zones[:zones].each do |i|
+            zonename = i[:zonename]
+            nodelist = Array.new
+            
+            i[:nodes].each do |j|
+              nodename = j
+              sensorlist = Array.new
+              
+              nodes[:nodes].each do |k|
+                if nodename == k[:name]
+                  sensorlist = k[:sensors]
+                end
+              end
+              
+              nodelist << {:name=> nodename, :sensorlist=> sensorlist}
+            end
+            
+            zonelist << {:zonename=>zonename, :nodes=>nodelist}
+          end
+          
+          response = zonelist
+          
+        rescue Exception => e
+          @log.debug e
+          return e
+        end
+        
+        @log.debug response.inspect
+        return response
+        
+      end
+      
+      
+      
+      ##
+      # Ardtweeno::API#buildTopology method for constructing the topology graph
+      #
+      # * *Args*    :
+      #   - ++ ->     Hash containing structured topology data
+      # * *Returns* :
+      #   -           String containing the Raphael.js code to generate the graph
+      # * *Raises* :
+      #             
+      #
+      def buildTopology(topology)
+      
+        @log.debug "Number of Zones: #{topology.count.to_s}"
+        response = ""           # Will hold our response
+        offset = 0              # Offset 
+        totalsensorcount = countSensors(topology)    
+        @log.debug "Total Sensor Count: " + totalsensorcount.to_s
+        
+        # Canvas height
+        defaultheight = 700
+        height = 100 + (totalsensorcount * 100)
+        if height <= defaultheight
+          height = defaultheight 
+          @log.debug "Height less than defaultheight, setting canvas height to 700"
+        end
+        @log.debug "Canvas height: " + height.to_s
+      
+        # Set up the Canvas
+        response += "var thepaper = new Raphael(document.getElementById('topology-canvas'), " +
+                                        "500, #{height});\n"
+                                        
+        # Draw the graph
+        topology.each_with_index do |i, index|
+          
+          # Initial hookup line
+          response += "var hookup1 = thepaper.path('M 50 #{75 + offset} l 50 0');\n"
+          
+          # Print the Zone name
+          response += "var zonetitle = thepaper.text(50, #{20+ offset}, '#{i[:zonename]}').attr({'font-size':20});"
+          
+          # Print the sensors
+          i[:nodes].each_with_index do |j, jndex|
+            
+            # Print the node
+            response += "var node = thepaper.path('M 100 #{100 + offset} " +
+                                "l 0 -50 l 50 0 l 0 50 l -50 0').attr(" +
+                                "{fill: 'red', 'href':'/gateway/data/#{j[:name]}'});\n"
+            
+            # Print the node name
+            response += "var nodetitle = thepaper.text(125, #{40 + offset}, '#{j[:name]}');"
+            
+            
+            # Print the link to next node
+            if i[:nodes].count > 1 
+              unless (jndex + 1) == i.count
+                response += "var nextnode1 = thepaper.path('M 75 #{75 + offset} l 0 " +
+                            "#{(j[:sensorlist].count * 100) + 75} " +
+                            "l 25 0');"
+              end
+            end
+            
+            # Print the sensors
+            j[:sensorlist].each_with_index do |k, kndex|
+              # Sensor 1 in each node is drawn slightly differently
+              if kndex == 0 
+                response += "var theline = thepaper.path('M 150 #{75 + offset} l 100 0');\n"
+                response += "var thecircle = thepaper.circle(270, #{ 75 + offset}" +
+                            ", 20).attr({fill:'green'});\n"
+                
+                # Print sensortitle
+                response += "var sensor1Title = thepaper.text(350, #{75 + offset}, '#{k}');"
+                
+                offset += 75
+              else              
+              # Sensors beyond first
+                response += "var theline = thepaper.path('M 200 #{offset} l 0 75 l 50 0');"
+                response += "var thecircle = thepaper.circle(270, #{ 75 + offset}, 20).attr({fill:'green'});\n"
+                
+                # Print sensortitle
+                response += "var sensor1Title = thepaper.text(350, #{75 + offset}, '#{k}');"
+                
+                offset += 75
+              end
+              
+            end
+            offset += 100
+          end
+        
+        end    
+  
+        return response
+      end
+      
+      
+      ##
+      # Ardtweeno::API#countSensors private method for counting the number of sensors in the toplogy
+      #
+      # * *Args*    :
+      #   - ++ ->     Hash containing structured topology data
+      # * *Returns* :
+      #   -           Fixnum count of the number of sensors in the topology
+      # * *Raises* :
+      #             
+      #
+      def countSensors(topology)
+        count = 0
+        topology.each do |i|
+          unless i[:nodes].nil?
+            i[:nodes].each do |j|
+              unless j[:sensorlist].nil?
+                count += j[:sensorlist].count
+              end
+            end
+          end
+        end
+        return count
+      end
+      
+      
+      private :countSensors
       
     end
   end # End of API class
-
-
-# End of Ardtweeno Module
-end
+end # End of Ardtweeno Module

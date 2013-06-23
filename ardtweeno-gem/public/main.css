@@ -19,6 +19,10 @@ img {
         margin:120px auto;
 }
 
+#topology-canvas {
+	background-color: #F0F0F0;
+}
+
 #status {
         position: relative;
         top: 6px;
