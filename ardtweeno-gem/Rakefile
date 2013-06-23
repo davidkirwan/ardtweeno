@@ -1,3 +1,10 @@
+####################################################################################################
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
+# @description  Ardtweeno Gem Rakefile
+#
+# @date         23-06-2013
+####################################################################################################
+
 require 'fileutils'
 
 begin
@@ -6,8 +13,6 @@ rescue Exception => e
   puts 'bundler gem not found, please install bundler and try again.'
   exit
 end
-
-
 
 Bundler::GemHelper.install_tasks
 

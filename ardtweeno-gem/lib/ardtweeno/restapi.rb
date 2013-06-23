@@ -113,6 +113,18 @@ class RESTAPI < Sinatra::Base
   end
   
   
+  get '/topology' do
+    
+    begin
+      theResponse = 'alert("Coming soon!");'
+    rescue Exception => e
+      
+    end
+    
+    erb :topology, :locals => {:theTopology=>theResponse}
+  end
+  
+  
   get "/#{settings.newsURI}/create/post" do
     running = @@theDispatcher.running?
     erb :createpost, :locals => {:running => running}
