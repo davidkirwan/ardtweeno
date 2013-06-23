@@ -1,26 +1,28 @@
 html, body {
-        margin: 0;
-        padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-        background: #1E1C17;
-        color: #ccc;
-        font-family: 'Trebuchet MS', 'Lucida Grande', Arial, Helvetica, sans-serif;
-        line-height: 1.2em;
+    background: #1E1C17;
+    color: #ccc;
+    font-family: 'Trebuchet MS', 'Lucida Grande', Arial, Helvetica, sans-serif;
+    line-height: 1.2em;
 }
 
 img {
-        border: 0;
+    border: 0;
 }
 
 .preloader{
-        display:block;
-        margin:120px auto;
+    display:block;
+    margin:120px auto;
 }
 
 #punchcard-holder {
 	background-color: #F0F0F0;
+	margin: 1em;
+	border-radius: 10px;
 }
 
 #topology-canvas {
@@ -28,15 +30,15 @@ img {
 }
 
 #status {
-        position: relative;
-        top: 6px;
+    position: relative;
+    top: 6px;
 }
 
 
 a {
-        text-decoration: underline;
-        color: #FCC240;
-        text-decoration: none;
+    text-decoration: underline;
+    color: #FCC240;
+    text-decoration: none;
 }
 a:hover {
         color: #BF4B31;

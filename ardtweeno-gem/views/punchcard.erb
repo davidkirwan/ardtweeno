@@ -8,8 +8,15 @@
     <title>Ardtweeno Punchcard Graph</title>
   <% end %>
   <link href="/main.css" media="screen" rel="stylesheet" type="text/css" />
+  
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  
+  <link href="/bootstrap/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/jquery/jquery-2.0.2.min.js"></script>
+  <script type="text/javascript" src="/bootstrap/bootstrap.min.js"></script>
+
+  
   <script type="text/javascript" src="/raphael/raphael-min.js"></script>
   <script type="text/javascript" src="/raphael/g.raphael.js"></script>
   <script type="text/javascript" src="/raphael/g.dot.js"></script>
@@ -23,7 +30,9 @@
           data = <%= ourGraphData.to_s %>
         <% end %>
         
+        <% unless ourGraphDays.nil? %>
         axisy = <%= ourGraphDays %>,
+        <% end %>
         axisx = ["12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
 
         r.dotchart(10, 10, 620, 260, xs, ys, data, {symbol: "o", max: 10, heat: true, axis: "0 0 1 1", axisxstep: 23, axisystep: 6, axisxlabels: axisx, axisxtype: " ", axisytype: " ", axisylabels: axisy}).hover(function () {
@@ -37,9 +46,7 @@
   </head>
  
   <body>
-    <div>
-      <a href="/"><input class="control-panel-button" id="return-button" value="Return home"/></a>
-    </div>
+    <div id="content"><a href="/"><button class="btn btn-large btn-inverse" type="button">Home</button></a></div>
     <div id="punchcard-holder"></div>
   </body>
  
