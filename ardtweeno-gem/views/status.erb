@@ -10,7 +10,7 @@ $(function () {
                 useUTC: false
             }
         });
-    
+        keepUpdating = true;
         var chart;
         $('#loadgraph').highcharts({
             chart: {
@@ -27,28 +27,33 @@ $(function () {
                         setInterval(function() {
 
                             var x = (new Date()).getTime(); // current time
-
-                            $.ajax({
-                                url: '/api/v1/system/status',
-                                dataType: 'json',
-                                success: function(data){
-                                	var theData = JSON.parse(JSON.stringify(data));
-                                	console.log(theData.running);
-                                	console.log(theData.cpuload);
-                                	console.log(theData.memload);
-                                	
-                                	var x = (new Date()).getTime();
-                                	var y = parseFloat(theData.cpuload);
-                                	var z = parseFloat(theData.memload);
-                                	
-                                	series0.addPoint([x, y], true, true);
-                            		series1.addPoint([x, z], true, true);
-                                },
-                                error: function(xhr, status, error){
-                                    console.log("fail");
-                                }
-                            });
-
+							
+							
+							
+							if(keepUpdating)
+							{
+	                            $.ajax({
+	                                url: '/api/v1/system/status',
+	                                dataType: 'json',
+	                                success: function(data){
+	                                	var theData = JSON.parse(JSON.stringify(data));
+	                                	console.log(theData.running);
+	                                	console.log(theData.cpuload);
+	                                	console.log(theData.memload);
+	                                	
+	                                	var x = (new Date()).getTime();
+	                                	var y = parseFloat(theData.cpuload);
+	                                	var z = parseFloat(theData.memload);
+	                                	
+	                                	series0.addPoint([x, y], true, true);
+	                            		series1.addPoint([x, z], true, true);
+	                                },
+	                                error: function(xhr, status, error){
+	                                    console.log("fail");
+	                                }
+	                            });
+							}
+							
                         }, 10000);
                     }
                 }

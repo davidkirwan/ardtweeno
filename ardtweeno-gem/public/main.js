@@ -1,5 +1,11 @@
 var containerId = '#tabs-container';
 var tabsId = '#tabs';
+var keepUpdating;
+
+
+function hashchanged(){
+	keepUpdating = false;	
+}
 
 $(document).ready(function(){
 	// Preload tab on page load
@@ -17,6 +23,7 @@ $(document).ready(function(){
         return false;
     });
 });
+
 
 function loadTab(tabObj){
     if(!tabObj || !tabObj.length){ return; }
