@@ -1,6 +1,6 @@
 var containerId = '#tabs-container';
 var tabsId = '#tabs';
-var keepUpdating;
+var keepUpdating = false;
 
 
 function hashchanged(){
