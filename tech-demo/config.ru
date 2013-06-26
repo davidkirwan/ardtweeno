@@ -1,5 +1,5 @@
 require 'rubygems'
-require File.join(File.dirname(__FILE__), '/tech-demo.rb')
+require File.join(File.dirname(__FILE__), '/sample-demo.rb')
 
 
-run ArdtweenoDemo
+run SampleDemo::SampleApp 
