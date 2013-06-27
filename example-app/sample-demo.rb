@@ -64,19 +64,20 @@ class SampleApp < Sinatra::Base
       response = JSON.parse(response)
 
     rescue
-      throw :halt, [ 503, "503 Service Currently Unavailable" ]
+      redirect '/errors/503'
     end
     
-    erb :gateway, :locals => {:running=>response["running"]}
-    erb :index
+    erb :index, :locals => {:running=>response["running"]}
   end
   
+  get '/errors/503' do
+    erb :raise503
+  end
   
   get '/push/:node' do |node|
     `espeak "Movement detected on #{node}"`
   end
-  
-  end
+
   
 
 end # End of the SampleApp class
