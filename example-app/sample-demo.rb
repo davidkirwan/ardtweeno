@@ -66,12 +66,11 @@ class SampleApp < Sinatra::Base
     rescue
       redirect '/errors/503'
     end
-    
-    erb :index, :locals => {:running=>response["running"]}
+    erb :index, :layout => :main_layout, :locals => {:running=>response["running"]}
   end
   
   get '/errors/503' do
-    erb :raise503
+    erb :raise503, :layout => :main_layout
   end
   
   get '/push/:node' do |node|
