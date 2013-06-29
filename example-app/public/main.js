@@ -8,7 +8,7 @@ function startGateway()
 {
 	var randomNum = 'data=' + (Math.floor((Math.random() * 10000) + 1)).toString();
 	$.ajax({
-	  url: '/start',
+	  url: '/gateway/start',
 	  type: 'post',
 	  data: randomNum,
 	  success: function(data){
@@ -18,6 +18,24 @@ function startGateway()
 	  
 	  error: function(xhr, status, error){
 	    console.log("Failed to start the gateway");
+	  }
+	});
+}
+
+function stopGateway()
+{
+	var randomNum = 'data=' + (Math.floor((Math.random() * 10000) + 1)).toString();
+	$.ajax({
+	  url: '/gateway/stop',
+	  type: 'post',
+	  data: randomNum,
+	  success: function(data){
+	    console.log("Succeeded in stopping the gateway");
+	    window.location = "/";
+	  },
+	  
+	  error: function(xhr, status, error){
+	    console.log("Failed to stop the gateway");
 	  }
 	});
 }

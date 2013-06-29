@@ -3,7 +3,7 @@ $stdout.sync = true
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Sample App built on top of the Ardtweeno API
 #
-# @date         26-06-2013
+# @date         29-06-2013
 ####################################################################################################
 ##### Require statements
 require 'rubygems'
@@ -14,10 +14,11 @@ require 'rufus/scheduler'
 require 'date'
 require 'typhoeus'
 require File.join(File.dirname(__FILE__), '/settings-helper.rb')
+require File.join(File.dirname(__FILE__), '/exceptions.rb')
 
 
-module SampleDemo
-class SampleApp < Sinatra::Base
+module Example
+class App < Sinatra::Base
 
 
   ##### Variables
@@ -53,41 +54,104 @@ class SampleApp < Sinatra::Base
     
 #########################################################################################################
 
-    
+
+
+  not_found do
+    erb :raise404, :layout => :main_layout
+  end
+  
+  
+  
   get '/' do    
     key = "1230aea77d7bd38898fec74a75a87738dea9f657"
     
     begin
       response = Typhoeus::Request.get("http://#{settings.gateway}:#{settings.port}/api/v1/system/status", 
-					:body=> {:key => key}).body
+					:body=> {:key => key})
 
-      response = JSON.parse(response)
+      if response.options[:return_code] == :ok
+        begin
+          response = JSON.parse(response.body)
+          
+        rescue Exception => e
+          raise Example::Error500
+        end
+      elsif response.options[:return_code] == :couldnt_connect
+        raise Example::Error503
+      end
+      
       erb :index, :layout => :main_layout, :locals => {:running=>response["running"]}
       
-    rescue
+    rescue Example::Error500 => e
+      erb :raise500, :layout => :main_layout
+    rescue Example::Error503 => e
       erb :raise503, :layout => :main_layout
     end
     
   end
+
   
   
-  post '/start' do    
+  post '/gateway/start' do    
+    key = "1230aea77d7bd38898fec74a75a87738dea9f657"
+    
+    begin
+      response = Typhoeus::Request.get("http://#{settings.gateway}:#{settings.port}/api/v1/system/start", 
+          :body=> {:key => key})
+
+      if response.options[:return_code] == :ok
+        begin
+          response = JSON.parse(response.body)
+        rescue Exception => e
+          raise Example::Error500
+        end
+      elsif response.options[:return_code] == :couldnt_connect
+        raise Example::Error503
+      end
+      
+      # Return the response
+      return response
+    
+    rescue Example::Error500 => e
+      erb :raise500, :layout => :main_layout
+    rescue Example::Error503 => e
+      erb :raise503, :layout => :main_layout
+    end
+    
+  end
+
+
+
+  post '/gateway/stop' do    
     key = "1230aea77d7bd38898fec74a75a87738dea9f657"
     
     settings.log.debug params.inspect
     
     begin
-      response = Typhoeus::Request.get("http://#{settings.gateway}:#{settings.port}/api/v1/system/start", 
-          :body=> {:key => key}).body
+      response = Typhoeus::Request.get("http://#{settings.gateway}:#{settings.port}/api/v1/system/stop", 
+          :body=> {:key => key})
 
-      response = JSON.parse(response)
+      if response.options[:return_code] == :ok
+        begin
+          response = JSON.parse(response.body)
+        rescue Exception => e
+          raise Example::Error500
+        end
+      elsif response.options[:return_code] == :couldnt_connect
+        raise Example::Error503
+      end
       
+      # Return the response
       return response
-    rescue
+    
+    rescue Example::Error500 => e
+      erb :raise500, :layout => :main_layout
+    rescue Example::Error503 => e
       erb :raise503, :layout => :main_layout
     end
     
   end
+
   
   
   get '/push/:node' do |node|
