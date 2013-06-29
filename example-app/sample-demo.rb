@@ -62,16 +62,33 @@ class SampleApp < Sinatra::Base
 					:body=> {:key => key}).body
 
       response = JSON.parse(response)
-
+      erb :index, :layout => :main_layout, :locals => {:running=>response["running"]}
+      
     rescue
-      redirect '/errors/503'
+      erb :raise503, :layout => :main_layout
     end
-    erb :index, :layout => :main_layout, :locals => {:running=>response["running"]}
+    
   end
   
-  get '/errors/503' do
-    erb :raise503, :layout => :main_layout
+  
+  post '/start' do    
+    key = "1230aea77d7bd38898fec74a75a87738dea9f657"
+    
+    settings.log.debug params.inspect
+    
+    begin
+      response = Typhoeus::Request.get("http://#{settings.gateway}:#{settings.port}/api/v1/system/start", 
+          :body=> {:key => key}).body
+
+      response = JSON.parse(response)
+      
+      return response
+    rescue
+      erb :raise503, :layout => :main_layout
+    end
+    
   end
+  
   
   get '/push/:node' do |node|
     `espeak "Movement detected on #{node}"`
