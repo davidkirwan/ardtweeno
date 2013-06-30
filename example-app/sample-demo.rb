@@ -15,6 +15,7 @@ require 'date'
 require 'typhoeus'
 require File.join(File.dirname(__FILE__), '/settings-helper.rb')
 require File.join(File.dirname(__FILE__), '/exceptions.rb')
+require File.join(File.dirname(__FILE__), '/utility.rb')
 
 
 module Example
@@ -66,21 +67,12 @@ class App < Sinatra::Base
     key = "1230aea77d7bd38898fec74a75a87738dea9f657"
     
     begin
-      response = Typhoeus::Request.get("http://#{settings.gateway}:#{settings.port}/api/v1/system/status", 
-					:body=> {:key => key})
-
-      if response.options[:return_code] == :ok
-        begin
-          response = JSON.parse(response.body)
-          
-        rescue Exception => e
-          raise Example::Error500
-        end
-      elsif response.options[:return_code] == :couldnt_connect
-        raise Example::Error503
-      end
+      response = Example::Utility.root(key, settings.gateway, settings.port)
       
-      erb :index, :layout => :main_layout, :locals => {:running=>response["running"]}
+      erb :index, :layout => :main_layout, :locals => {:running=>response[:status]["running"],
+                                                       :packets=>0,
+                                                       :zones=>0
+                                                      }
       
     rescue Example::Error500 => e
       erb :raise500, :layout => :main_layout
@@ -92,23 +84,18 @@ class App < Sinatra::Base
 
   
   
+  get '/controlpanel' do    
+    erb :controlpanel, :layout => :main_layout
+  end
+  
+  
+  
   post '/gateway/start' do    
     key = "1230aea77d7bd38898fec74a75a87738dea9f657"
     
     begin
-      response = Typhoeus::Request.get("http://#{settings.gateway}:#{settings.port}/api/v1/system/start", 
-          :body=> {:key => key})
-
-      if response.options[:return_code] == :ok
-        begin
-          response = JSON.parse(response.body)
-        rescue Exception => e
-          raise Example::Error500
-        end
-      elsif response.options[:return_code] == :couldnt_connect
-        raise Example::Error503
-      end
-      
+      response = Example::Utility.gatewaystart(key, settings.gateway, settings.port)
+            
       # Return the response
       return response
     
@@ -122,18 +109,35 @@ class App < Sinatra::Base
 
 
 
-  post '/gateway/stop' do    
+  post '/gateway/stop' do
     key = "1230aea77d7bd38898fec74a75a87738dea9f657"
     
-    settings.log.debug params.inspect
+    begin
+      response = Example::Utility.gatewaystop(key, settings.gateway, settings.port)
+            
+      # Return the response
+      return response
+    
+    rescue Example::Error500 => e
+      erb :raise500, :layout => :main_layout
+    rescue Example::Error503 => e
+      erb :raise503, :layout => :main_layout
+    end
+    
+  end
+  
+  
+  
+  post '/gateway/config' do    
+    key = "1230aea77d7bd38898fec74a75a87738dea9f657"
     
     begin
-      response = Typhoeus::Request.get("http://#{settings.gateway}:#{settings.port}/api/v1/system/stop", 
+      response = Typhoeus::Request.get("http://#{settings.gateway}:#{settings.port}/api/v1/system/config", 
           :body=> {:key => key})
 
       if response.options[:return_code] == :ok
         begin
-          response = JSON.parse(response.body)
+          response = JSON.pretty_generate(JSON.parse(response.body))
         rescue Exception => e
           raise Example::Error500
         end

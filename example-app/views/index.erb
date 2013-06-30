@@ -1,27 +1,44 @@
 <div class="hero-unit">
- <h1>Ardtweeno Gateway</h1>
- <% if running %>
+  <h1>Ardtweeno Gateway</h1>
+  <% if running %>
   <p>is online and the SerialParser subsystem is: <span class="label label-success">active</span></p>
- <% else %>
+  <% else %>
   <p>is online but the SerialParser subsystem is: <span class="label label-warning">inactive</span></p>
- <div class="alert alert-info">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4>Info</h4>
-  <p>
-  	Shall I attempt to start the SerialParser?
-  	<button onclick="startGateway();" class="btn btn-small btn-inverse">Start</button>
-  </p>
+  <div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4>Info</h4>
+    <p>
+  	  Shall I attempt to start the SerialParser?
+      <button onclick="startGateway();" class="btn btn-small btn-inverse">Start</button>
+    </p>
   
- </div>
-<% end %>
-
-  <div class="row">
-    <div class="span5">
-  	  <p>Hi there</p>
-    </div>
-    <div class="span5">
-  	  <p>How are you</p>
-    </div>
   </div>
-  
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="span5">
+    <table class="table table-striped">
+      <thead>
+        <th>Zone</th>
+        <th>Name</th>
+        <th>Packets</th>
+      </thead>
+      <tbody>
+        <tr><td>zone1</td><td>node0</td><td>700</td></tr>
+        <tr><td>zone1</td><td>node1</td><td>3443</td></tr>
+      </tbody>
+      </table>
+  </div>
+  <div class="span5">
+    <table class="table table-striped">
+      <thead>
+        <th>Last 5 packets</th>
+      </thead>
+      <tbody>
+        <tr><td>zone1</td><td>node0</td><td>[700, 22,211]</td></tr>
+        <tr><td>zone1</td><td>node1</td><td>[3443, "hi", 44.3]</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
