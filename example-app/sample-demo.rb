@@ -75,8 +75,10 @@ class App < Sinatra::Base
                                                       }
       
     rescue Example::Error500 => e
+      status 500
       erb :raise500, :layout => :main_layout
     rescue Example::Error503 => e
+      status 503
       erb :raise503, :layout => :main_layout
     end
     
@@ -100,8 +102,10 @@ class App < Sinatra::Base
       return response
     
     rescue Example::Error500 => e
+      status 500
       erb :raise500, :layout => :main_layout
     rescue Example::Error503 => e
+      status 503
       erb :raise503, :layout => :main_layout
     end
     
@@ -119,8 +123,10 @@ class App < Sinatra::Base
       return response
     
     rescue Example::Error500 => e
+      status 500
       erb :raise500, :layout => :main_layout
     rescue Example::Error503 => e
+      status 503
       erb :raise503, :layout => :main_layout
     end
     
@@ -149,8 +155,10 @@ class App < Sinatra::Base
       return response
     
     rescue Example::Error500 => e
+      status 500
       erb :raise500, :layout => :main_layout
     rescue Example::Error503 => e
+      status 503
       erb :raise503, :layout => :main_layout
     end
     
