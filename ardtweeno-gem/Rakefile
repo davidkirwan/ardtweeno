@@ -2,19 +2,16 @@
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Ardtweeno Gem Rakefile
 #
-# @date         23-06-2013
+# @date         02-07-2013
 ####################################################################################################
-
-require 'fileutils'
 
 begin
   require 'bundler'
+  Bundler::GemHelper.install_tasks
 rescue Exception => e
-  puts 'bundler gem not found, please install bundler and try again.'
-  exit
+  raise 'bundler gem not found, please install bundler and try again.'
 end
 
-Bundler::GemHelper.install_tasks
 
 task :default => 'menu'
 
@@ -28,9 +25,7 @@ end
 
 desc "Run the unit testing suite on this gem."
 task :test => :tty0tty do
-  
   require "./test/test_helper.rb"
-
 end
 
 # Build the tty0tty binary before running tests
