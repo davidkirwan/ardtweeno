@@ -1,9 +1,9 @@
 $stdout.sync = true
 ####################################################################################################
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
-# @description  Sample App built on top of the Ardtweeno API
+# @description  Sample App which consumes the Ardtweeno API and provides some sample functionality
 #
-# @date         29-06-2013
+# @date         2013-07-04
 ####################################################################################################
 ##### Require statements
 require 'rubygems'
@@ -51,7 +51,7 @@ class App < Sinatra::Base
   # URI to the ardtweeno gateway
   set :gateway, @confdata["gateway"]["url"]
   set :port, @confdata["gateway"]["port"]
-  
+  set :key, @confdata["gateway"]["key"]
     
 #########################################################################################################
 
@@ -63,16 +63,15 @@ class App < Sinatra::Base
   
   
   
-  get '/' do    
-    key = "1230aea77d7bd38898fec74a75a87738dea9f657"
-    
+  get '/' do   
     begin
-      response = Example::Utility.root(key, settings.gateway, settings.port)
+      response = Example::Utility.root(settings.gateway, settings.port, settings.key)
       
-      erb :index, :layout => :main_layout, :locals => {:running=>response[:status]["running"],
-                                                       :packets=>0,
-                                                       :zones=>0
-                                                      }
+      erb :index, 
+          :layout => :main_layout, 
+          :locals => {:running=>response[:status]["running"],
+                      :packets=>response[:packets],
+                      :zones=>response[:zones]}
       
     rescue Example::Error500 => e
       status 500
@@ -81,7 +80,6 @@ class App < Sinatra::Base
       status 503
       erb :raise503, :layout => :main_layout
     end
-    
   end
 
   
@@ -92,12 +90,9 @@ class App < Sinatra::Base
   
   
   
-  post '/gateway/start' do    
-    key = "1230aea77d7bd38898fec74a75a87738dea9f657"
-    
+  post '/gateway/start' do
     begin
-      response = Example::Utility.gatewaystart(key, settings.gateway, settings.port)
-            
+      response = Example::Utility.gatewaystart(settings.gateway, settings.port, settings.key)
       # Return the response
       return response
     
@@ -108,17 +103,13 @@ class App < Sinatra::Base
       status 503
       erb :raise503, :layout => :main_layout
     end
-    
   end
 
 
 
   post '/gateway/stop' do
-    key = "1230aea77d7bd38898fec74a75a87738dea9f657"
-    
     begin
-      response = Example::Utility.gatewaystop(key, settings.gateway, settings.port)
-            
+      response = Example::Utility.gatewaystop(settings.gateway, settings.port, settings.key)
       # Return the response
       return response
     
@@ -129,28 +120,13 @@ class App < Sinatra::Base
       status 503
       erb :raise503, :layout => :main_layout
     end
-    
   end
   
   
   
-  post '/gateway/config' do    
-    key = "1230aea77d7bd38898fec74a75a87738dea9f657"
-    
+  post '/gateway/config' do
     begin
-      response = Typhoeus::Request.get("http://#{settings.gateway}:#{settings.port}/api/v1/system/config", 
-          :body=> {:key => key})
-
-      if response.options[:return_code] == :ok
-        begin
-          response = JSON.pretty_generate(JSON.parse(response.body))
-        rescue Exception => e
-          raise Example::Error500
-        end
-      elsif response.options[:return_code] == :couldnt_connect
-        raise Example::Error503
-      end
-      
+      response = Example::Utility.gatewayconfig(settings.gateway, settings.port, settings.key)
       # Return the response
       return response
     
@@ -161,7 +137,6 @@ class App < Sinatra::Base
       status 503
       erb :raise503, :layout => :main_layout
     end
-    
   end
 
   

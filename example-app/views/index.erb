@@ -18,26 +18,46 @@
 
 <div class="row">
   <div class="span5">
+  	<h3>Zone Information</h3>
     <table class="table table-striped">
       <thead>
-        <th>Zone</th>
         <th>Name</th>
-        <th>Packets</th>
+        <th>Nodes</th>
       </thead>
       <tbody>
-        <tr><td>zone1</td><td>node0</td><td>700</td></tr>
-        <tr><td>zone1</td><td>node1</td><td>3443</td></tr>
+      <% unless zones.nil? %>
+        <% zones.each do |i| %>
+        <tr>
+          <td><%= i["zonename"] %></td>
+          <td><%= i["nodes"] %></td>
+        </tr>
+        <% end %>
+      <% end %>
       </tbody>
-      </table>
+    </table>
   </div>
   <div class="span5">
+  	<h3>Last 5 Packets</h3>
     <table class="table table-striped">
       <thead>
-        <th>Last 5 packets</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Name</th>
+        <th>PacketNo</th>
+        <th>Data</th>
       </thead>
       <tbody>
-        <tr><td>zone1</td><td>node0</td><td>[700, 22,211]</td></tr>
-        <tr><td>zone1</td><td>node1</td><td>[3443, "hi", 44.3]</td></tr>
+      <% unless packets.nil? %>
+        <% packets.each do |i| %>
+        <tr>
+          <td><%= i["date"] %></td>
+          <td><%= i["hour"] + ":" + i["minute"] %></td>
+          <td><%= i["node"] %></td>
+          <td><%= i["seqNo"] %></td>
+          <td><%= i["data"] %></td>
+        </tr>
+        <% end %>
+      <% end %>
       </tbody>
     </table>
   </div>

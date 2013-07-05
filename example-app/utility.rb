@@ -6,21 +6,77 @@ module Example
 class Utility
   class << self
   
-    def root(key, uri, port)
+    # Retrieve the information for the / route
+    def root(uri, port, key)
       response = Hash.new
       
-      theStatus = status(key, uri, port)
+      # Retrieve the data
+      theStatus = status(uri, port, key)
+      thePackets = lastfivepackets(uri, port, key) 
+      theZones = listzones(uri, port, key)
+
+      # Create a response Hash
+      response = {:status=>theStatus,
+                  :packets=>thePackets,
+                  :zones=>theZones}
       
-      response = {:status=>theStatus}
-      
+      # Return the response Hash
       return response
     end
     
     
     
-    def status(key, gateway, port)
+    def listzones(gateway, port, key)
+      response = retrievezones(gateway, port, {:body=>{:key => key}})
+      
+      total = response["total"] 
+      unless total > 100
+        # The total number of zones exceeds the number which can be retrieved in a single API
+        # call, so buffer and retrieve the rest
+        
+        theZones = response["zones"]
+        
+        # Set the initial offset to the max 
+        offset = 100
+        # Set remaining initially to the total
+        remaining = total
+        
+        until remaining < 0
+          response = retrievezones(gateway, port, {:body=>{:key=>key, :offset=>offset}})
+          offset += 100
+          remaining = total - offset
+          theZones.concat(response["zones"])
+        end
+        
+        return theZones
+      end
+      
+      return response["zones"]
+    end
+    
+    
+    
+    def lastfivepackets(gateway, port, key)
+      
+      response = retrievepackets(gateway, port, {:body=>{:key => key}})
+      
+      total = response["total"] 
+      unless total < 5
+        # Determine the offset
+        offset = total - 5
+        body = {:key => key, :offset=>offset}
+        
+        response = retrievepackets(gateway, port, {:body=>body})
+      end
+      
+      return response["packets"].reverse
+    end
+    
+    
+    
+    def status(gateway, port, key)
       response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/system/status", 
-            :body=> {:key => key})
+            :body=> {:key=>key})
   
       if response.options[:return_code] == :ok
         begin
@@ -36,9 +92,9 @@ class Utility
     
     
     
-    def gatewaystart(key, gateway, port)
+    def gatewaystart(gateway, port, key)
       response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/system/start", 
-          :body=> {:key => key})
+          :body=> {:key=>key})
 
       if response.options[:return_code] == :ok
         begin
@@ -53,9 +109,9 @@ class Utility
 
 
 
-    def gatewaystop(key, gateway, port)
+    def gatewaystop(gateway, port, key)
       response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/system/stop", 
-          :body=> {:key => key})
+          :body=> {:key=>key})
 
       if response.options[:return_code] == :ok
         begin
@@ -67,7 +123,60 @@ class Utility
         raise Example::Error503
       end
     end  
+    
+    
+
+    def gatewayconfig(gateway, port, key)
+      response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/system/config", 
+          :body=> {:key=>key})
+
+      if response.options[:return_code] == :ok
+        begin
+          response = JSON.pretty_generate(JSON.parse(response.body))
+        rescue Exception => e
+          raise Example::Error500
+        end
+      elsif response.options[:return_code] == :couldnt_connect
+        raise Example::Error503
+      end
+    end
+    
+    
+    
+    def retrievezones(gateway, port, options={})
+      response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/zones", 
+            :body=> options[:body])
   
+      if response.options[:return_code] == :ok
+        begin
+          response = JSON.parse(response.body)
+            
+        rescue Exception => e
+          raise Example::Error500
+        end
+      elsif response.options[:return_code] == :couldnt_connect
+        raise Example::Error503
+      end
+    end
+    
+    
+    
+    def retrievepackets(gateway, port, options={})
+      response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/packets", 
+            :body=> options[:body])
+  
+      if response.options[:return_code] == :ok
+        begin
+          response = JSON.parse(response.body)
+            
+        rescue Exception => e
+          raise Example::Error500
+        end
+      elsif response.options[:return_code] == :couldnt_connect
+        raise Example::Error503
+      end
+    end
+    
   
   
   end
