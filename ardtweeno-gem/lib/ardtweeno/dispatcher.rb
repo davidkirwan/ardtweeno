@@ -64,9 +64,9 @@ module Ardtweeno
     #             
     #
     def constructPunchcard(params)
-      theData, theDays = Ardtweeno::API.buildPunchcard(@nodeManager.nodeList, params)
+      theData, theDays, theDateRange = Ardtweeno::API.buildPunchcard(@nodeManager.nodeList, params)
       
-      return theData, theDays
+      return theData, theDays, theDateRange
     end
     
     
