@@ -1,5 +1,9 @@
 
 $(document).ready(function(){
+	
+  //$('#control-panel-click').click(function(){
+  //  $('#control-panel-div').slideToggle(200);
+  //});
 
 });
 

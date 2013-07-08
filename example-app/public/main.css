@@ -11,3 +11,8 @@ h1 {
 	margin-top:20px;
 	margin-bottom:20px;
 }
+
+#content pre {
+	height:300px;
+	overflow:scroll;
+}
