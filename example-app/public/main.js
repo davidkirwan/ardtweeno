@@ -1,9 +1,9 @@
 
 $(document).ready(function(){
 	
-  //$('#control-panel-click').click(function(){
-  //  $('#control-panel-div').slideToggle(200);
-  //});
+  $('#control-panel-click').click(function(){
+    $('#controlpanel-menu').slideToggle(200);
+  });
 
 });
 

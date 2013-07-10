@@ -84,8 +84,19 @@ class App < Sinatra::Base
 
   
   
-  get '/controlpanel' do    
-    erb :controlpanel, :layout => :main_layout
+  get '/controlpanel' do
+    begin
+      response = Example::Utility.controlpanel(settings.gateway, settings.port, settings.key)
+      
+      erb :controlpanel, :layout => :main_layout, :locals => {:nodeList=>response[:nodes]}
+      
+    rescue Example::Error500 => e
+      status 500
+      erb :raise500, :layout => :main_layout
+    rescue Example::Error503 => e
+      status 503
+      erb :raise503, :layout => :main_layout
+    end
   end
   
   
@@ -93,7 +104,6 @@ class App < Sinatra::Base
   post '/gateway/start' do
     begin
       response = Example::Utility.gatewaystart(settings.gateway, settings.port, settings.key)
-      # Return the response
       return response
     
     rescue Example::Error500 => e
@@ -110,7 +120,6 @@ class App < Sinatra::Base
   post '/gateway/stop' do
     begin
       response = Example::Utility.gatewaystop(settings.gateway, settings.port, settings.key)
-      # Return the response
       return response
     
     rescue Example::Error500 => e
@@ -127,7 +136,6 @@ class App < Sinatra::Base
   post '/gateway/config' do
     begin
       response = Example::Utility.gatewayconfig(settings.gateway, settings.port, settings.key)
-      # Return the response
       return response
     
     rescue Example::Error500 => e

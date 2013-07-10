@@ -5,7 +5,7 @@ require File.join(File.dirname(__FILE__), '/exceptions.rb')
 module Example
 class Utility
   class << self
-  
+    
     # Retrieve the information for the / route
     def root(uri, port, key)
       response = Hash.new
@@ -25,6 +25,22 @@ class Utility
     end
     
     
+    
+    def controlpanel(uri, port, key)
+      response = Hash.new
+      
+      # Retrieve the data
+      theNodes = listnodes(uri, port, key)
+      
+      # Create the response Hash
+      response = {:nodes=>theNodes}
+      
+      # Return the response Hash
+      return response      
+    end
+
+
+
     
     def listzones(gateway, port, key)
       response = retrievezones(gateway, port, {:body=>{:key => key}})
@@ -52,6 +68,36 @@ class Utility
       end
       
       return response["zones"]
+    end
+    
+    
+    
+    def listnodes(gateway, port, key)
+      response = retrievenodes(gateway, port, {:body=>{:key => key}})
+      
+      total = response["total"] 
+      unless total > 100
+        # The total number of nodes exceeds the number which can be retrieved in a single API
+        # call, so buffer and retrieve the rest
+        
+        theNodes = response["nodes"]
+        
+        # Set the initial offset to the max 
+        offset = 100
+        # Set remaining initially to the total
+        remaining = total
+        
+        until remaining < 0
+          response = retrievenodes(gateway, port, {:body=>{:key=>key, :offset=>offset}})
+          offset += 100
+          remaining = total - offset
+          theNodes.concat(response["nodes"])
+        end
+        
+        return theNodes
+      end
+      
+      return response["nodes"]
     end
     
     
@@ -145,6 +191,24 @@ class Utility
     
     def retrievezones(gateway, port, options={})
       response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/zones", 
+            :body=> options[:body])
+  
+      if response.options[:return_code] == :ok
+        begin
+          response = JSON.parse(response.body)
+            
+        rescue Exception => e
+          raise Example::Error500
+        end
+      elsif response.options[:return_code] == :couldnt_connect
+        raise Example::Error503
+      end
+    end
+    
+    
+    
+    def retrievenodes(gateway, port, options={})
+      response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/nodes", 
             :body=> options[:body])
   
       if response.options[:return_code] == :ok
