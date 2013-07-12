@@ -117,7 +117,7 @@ module Ardtweeno
         db_collection = @confdata["db"]["dbPacketsColl"]
                 
         if @db == nil
-          @log.fatal "The database connector is not connected to a database!"
+          @log.warn "The database connector is not connected to a database!"
           @log.debug "Attempting to construct the MongoDB driver instance"
           
           begin
