@@ -57,8 +57,7 @@ class Utility
         raise Example::Error500 
       end
       
-      
-      return "yes"
+      return "Yes"
     end
     
     

@@ -26,7 +26,9 @@ function addWatch(node)
 	  success: function(data){
 	    console.log("Succeeded in adding a watch for this node");
 	    var divtoupdate = node + "-watch";
+	    var disablebutton = node;
 	    $("#"+divtoupdate).html(data);
+	    $("#"+disablebutton).addClass("disabled");
 	  },
 	  
 	  error: function(xhr, status, error){
