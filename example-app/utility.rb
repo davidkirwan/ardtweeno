@@ -51,6 +51,12 @@ class Utility
       if response.options[:return_code] == :couldnt_connect
         raise Example::Error503
       end
+      if response.code == 400
+        raise Example::Error500
+      elsif response.code == 500
+        raise Example::Error500 
+      end
+      
       
       return "yes"
     end

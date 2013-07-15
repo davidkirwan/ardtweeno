@@ -291,7 +291,7 @@ module Ardtweeno
       rescue Ardtweeno::AlreadyWatched => e
         raise e, "This node already has a watch associated with it"
       rescue Ardtweeno::InvalidWatch => e
-        raise e
+        raise e, "Invalid Parameters"
       end
     end 
     

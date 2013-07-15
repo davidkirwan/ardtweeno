@@ -31,7 +31,6 @@ function addWatch(node)
 	  
 	  error: function(xhr, status, error){
 	    console.log("Failed to add a watch for this node");
-	    window.location = "/";
 	  }
 	});
 }
