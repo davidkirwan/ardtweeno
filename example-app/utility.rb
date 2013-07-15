@@ -41,6 +41,21 @@ class Utility
 
 
 
+    def addwatch(uri, port, key, node)
+      body = {:key=>key,
+              :notifyURL=>"http://localhost:5000/push/#{node}", 
+              :method=>"GET", 
+              :timeout=>60}
+
+      response = Typhoeus::Request.post("http://#{uri}:#{port}/api/v1/watch/#{node}", :body=>body)
+      if response.options[:return_code] == :couldnt_connect
+        raise Example::Error503
+      end
+      
+      return "yes"
+    end
+    
+    
     
     def listzones(gateway, port, key)
       response = retrievezones(gateway, port, {:body=>{:key => key}})

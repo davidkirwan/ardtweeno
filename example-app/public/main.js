@@ -4,8 +4,37 @@ $(document).ready(function(){
   $('#control-panel-click').click(function(){
     $('#controlpanel-menu').slideToggle(200);
   });
+  
+  
+  $('.add-watch').click(function(){
+  	var theId = $(this).attr('id');
+  	console.log("Node ID: " + theId);
+  	addWatch(theId);
+  });
+  
 
 });
+
+
+function addWatch(node)
+{
+	var randomNum = 'data=' + (Math.floor((Math.random() * 10000) + 1)).toString();
+	$.ajax({
+	  url: '/gateway/watch/' + node.toString(),
+	  type: 'post',
+	  data: randomNum,
+	  success: function(data){
+	    console.log("Succeeded in adding a watch for this node");
+	    var divtoupdate = node + "-watch";
+	    $("#"+divtoupdate).html(data);
+	  },
+	  
+	  error: function(xhr, status, error){
+	    console.log("Failed to add a watch for this node");
+	    window.location = "/";
+	  }
+	});
+}
 
 
 function startGateway(uri, divtoupdate)

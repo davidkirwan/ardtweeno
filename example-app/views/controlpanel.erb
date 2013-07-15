@@ -21,6 +21,7 @@
     <thead>
       <th>Name</th>
       <th>Packets</th>
+      <th>Watched</th>
       <th>Action</th>
     </thead>
     <tbody>
@@ -29,7 +30,8 @@
       <tr>
         <td><%= i["name"] %></td>
         <td><%= i["packets"].to_s %></td>
-        <td><button id="<%= i["name"] %>-watch" class="btn btn-info">Add to watch list</button></td>
+        <td id="<%= i["name"] %>-watch"><%= if watchList.include?(i["name"]) then "Yes"; else "No"; end %></td>
+        <td><button id="<%= i["name"] %>" class="btn btn-info add-watch">Add to watch list</button></td>
       </tr>
       <% end %>
     <% end %>

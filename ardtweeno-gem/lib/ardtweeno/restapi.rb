@@ -318,17 +318,13 @@ class RESTAPI < Sinatra::Base
 
 
   get '/api/v1/system/status' do
-    # Considering making this api target public to avoid having to store API keys in the highcarts.js
-    # graphs..
-    #throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
     settings.log.debug "The system status hook has been called, reading the host configuration"
 
     begin
       return @@theDispatcher.status?().to_json
       
     rescue Exception => e
-      raise e
-      #throw :halt, [ 500, "500 Internal Server Error" ]
+      throw :halt, [ 500, "500 Internal Server Error" ]
     end
 
   end

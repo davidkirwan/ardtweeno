@@ -263,6 +263,8 @@ module Ardtweeno
       begin
         apitimer = Time.now
         
+        params = params.each_with_object({}){|(k,v), h| h[k.to_sym] = v}
+        
         if params.has_key? :node and 
            params.has_key? :notifyURL and 
            params.has_key? :method and
@@ -273,13 +275,14 @@ module Ardtweeno
             raise Ardtweeno::InvalidWatch, "Invalid Parameters"
           end
           
-          unless params[:timeout] >= 0
+          unless params[:timeout].to_i >= 0
             raise Ardtweeno::InvalidWatch, "Invalid Parameters"
           end
           
           @log.debug "Watch API call seems valid, passing to NodeManager"
           @nodeManager.addWatch(params)
         else
+          @log.debug params.inspect
           raise Ardtweeno::InvalidWatch, "Invalid Parameters"
         end
         

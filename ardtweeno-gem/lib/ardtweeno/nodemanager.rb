@@ -270,28 +270,23 @@ module Ardtweeno
       @log.debug "Traversing watchlist"
       @watchlist.each do |i|
         
-        @log.debug "Comparing " + i[:node].node + " to " + node
+        @log.debug "Comparing " + i[:node] + " to " + node
                 
-        if i[:node].node == node
+        if i[:node] == node
           
           @log.debug "Associated watch found, checking for method " + i[:method]
           
           if i[:method] == "POST"
             @log.debug "HTTP POST method executing"
-            @log.debug "URL: #{i[:notifyURL]}"
-            @log.debug "Title: Push notification"
-            @log.debug "Content: #{i[:node].node}"
-            @log.debug "Code: #{i[:node].to_s}"
-            
             Typhoeus::Request.post(i[:notifyURL], 
                                      :body=> { :title=>"Push notification",
-                                               :content=>"#{i[:node].node}",
+                                               :content=>"#{i[:node]}",
                                                :code=>""})
           elsif i[:method] == "GET"
             @log.debug "HTTP GET method executing" 
             Typhoeus::Request.get(i[:notifyURL], 
                                     :body=> { :title=>"Push notification",
-                                              :content=>"#{i[:node].node}",
+                                              :content=>"#{i[:node]}",
                                               :code=>""})
           end
 
