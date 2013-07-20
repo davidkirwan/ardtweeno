@@ -178,7 +178,7 @@ module Ardtweeno
       
       @watchlist.each do |i|
         
-        @log.debug "Comparing " + i[:node] + " and " + node
+        unless node.nil? then @log.debug "Comparing " + i[:node] + " and " + node; end
         if i[:node] == node
           return true
         end
@@ -241,13 +241,19 @@ module Ardtweeno
     #
     def removeWatch(node)
       begin
-        node = search({:node=>node})
+        @log.debug "removeWatch called, querying the node manager for the correct node"
+        @log.debug "Searching watchlist for node"
+        @log.debug "Size of watchlist before: " + @watchlist.size.to_s
         
         @watchlist.each do |i|
+          @log.debug "Comparing #{i[:node]} to #{node}"
           if i[:node] == node
+            @log.debug "Node to be deleted has been found, deleting"
             @watchlist.delete(i)
           end
         end
+        
+        @log.debug "Size of watchlist after: " + @watchlist.size.to_s
         
       rescue Ardtweeno::NotInNodeList => e
         raise e

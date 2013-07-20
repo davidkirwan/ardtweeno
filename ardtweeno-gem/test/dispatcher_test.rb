@@ -76,20 +76,20 @@ class DispatcherTest < Test::Unit::TestCase
                  :method=>"GET", 
                  :timeout=>60}
                             
-      @nomethod = {:node=>"node1",
+      @nomethod = {:node=>"node2",
                    :notifyURL=>"http://192.168.1.2:5000/push/node1",
                    :timeout=>60}
       
-      @notimeout = {:node=>"node1",
+      @notimeout = {:node=>"node3",
                     :notifyURL=>"http://192.168.1.2:5000/push/node1", 
                     :method=>"GET"}
       
-      @invalidtimeout = {:node=>"node1",
+      @invalidtimeout = {:node=>"node4",
                          :notifyURL=>"http://192.168.1.2:5000/push/node1", 
                          :method=>"GET", 
                          :timeout=>-60}
       
-      @invalidmethod = {:node=>"node1",
+      @invalidmethod = {:node=>"node5",
                         :notifyURL=>"http://192.168.1.2:5000/push/node1", 
                         :method=>"POSTSS", 
                         :timeout=>60}
@@ -192,6 +192,7 @@ class DispatcherTest < Test::Unit::TestCase
     assert_nothing_raised do
       @dispatch.addWatch(@validwatch)
     end
+    assert_equal({:watched=>true}, @dispatch.watched?({:node=>"node1"}))
     
     assert_raise Ardtweeno::AlreadyWatched do
       @dispatch.addWatch(@validwatch)  
@@ -200,22 +201,27 @@ class DispatcherTest < Test::Unit::TestCase
     assert_raise Ardtweeno::InvalidWatch do
       @dispatch.addWatch(@nonode)  
     end
+    assert_equal({:watched=>false}, @dispatch.watched?({}))
     
     assert_raise Ardtweeno::InvalidWatch do
       @dispatch.addWatch(@nomethod)  
     end
+    assert_equal({:watched=>false}, @dispatch.watched?({:node=>"node2"}))
     
     assert_raise Ardtweeno::InvalidWatch do
       @dispatch.addWatch(@notimeout)  
     end
+    assert_equal({:watched=>false}, @dispatch.watched?({:node=>"node3"}))
     
     assert_raise Ardtweeno::InvalidWatch do
       @dispatch.addWatch(@invalidtimeout)  
     end
+    assert_equal({:watched=>false}, @dispatch.watched?({:node=>"node4"}))
 
     assert_raise Ardtweeno::InvalidWatch do
       @dispatch.addWatch(@invalidmethod)  
     end
+    assert_equal({:watched=>false}, @dispatch.watched?({:node=>"node5"}))
 
   end
   

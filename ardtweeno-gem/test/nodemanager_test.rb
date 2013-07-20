@@ -159,7 +159,7 @@ class NodeManagerTest < Test::Unit::TestCase
     end
     
     assert_nothing_raised do
-      assert_equal(true, @nodemanager.watched?(@init[0]))  
+      assert_equal(true, @nodemanager.watched?("node6"))  
     end
     
     assert_nothing_raised do
@@ -167,7 +167,7 @@ class NodeManagerTest < Test::Unit::TestCase
     end
     
     assert_nothing_raised do
-      assert_equal(false, @nodemanager.watched?(@init[0]))  
+      assert_equal(false, @nodemanager.watched?("node6"))  
     end
     
   end
