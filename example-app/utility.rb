@@ -32,8 +32,12 @@ class Utility
       # Retrieve the data
       theNodes = listnodes(uri, port, key)
       
+      # Retreive the watchList data
+      theWatchList = listwatchednodes(uri, port, key)
+      
       # Create the response Hash
-      response = {:nodes=>theNodes}
+      response = {:nodes=>theNodes,
+                  :watchList=>theWatchList}
       
       # Return the response Hash
       return response      
@@ -88,6 +92,32 @@ class Utility
       end
       
       return response["zones"]
+    end
+    
+    
+    
+    def listwatchednodes(gateway, port, key)
+      response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/watch", 
+            :body=> {:key=>key})
+  
+      if response.options[:return_code] == :ok
+        begin
+          response = JSON.parse(response.body)
+          
+          watchList = Array.new
+          
+          response["watched"].each do |i|
+            watchList << i["node"]
+          end
+            
+          return watchList
+          
+        rescue Exception => e
+          raise Example::Error500
+        end
+      elsif response.options[:return_code] == :couldnt_connect
+        raise Example::Error503
+      end
     end
     
     

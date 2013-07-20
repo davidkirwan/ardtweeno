@@ -255,9 +255,34 @@ class RESTAPI < Sinatra::Base
     rescue Exception => e
       throw :halt, [ 400, "400 Bad Request" ]
     end
+  end
+  
+  
+  get '/api/v1/watch/:node' do |node|
+    settings.log.debug params.inspect
+    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    settings.log.debug "Check if a node is being watched"
     
+    begin
+      @@theDispatcher.watched?(params).to_json
+    rescue Exception => e
+      throw :halt, [ 400, "400 Bad Request" ]
+    end
   end
 
+
+  get '/api/v1/watch' do
+    settings.log.debug params.inspect
+    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    settings.log.debug "Check if a node is being watched"
+    
+    begin
+      @@theDispatcher.watchList.to_json
+    rescue Exception => e
+      raise e
+      #throw :halt, [ 400, "400 Bad Request" ]
+    end
+  end
 
 #########################################################################################################
   

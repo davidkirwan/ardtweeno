@@ -53,8 +53,6 @@ class App < Sinatra::Base
   set :port, @confdata["gateway"]["port"]
   set :key, @confdata["gateway"]["key"]
   
-  # Watched Node List
-  set :watchList, Array.new
 #########################################################################################################
 
 
@@ -91,7 +89,7 @@ class App < Sinatra::Base
       response = Example::Utility.controlpanel(settings.gateway, settings.port, settings.key)
       
       erb :controlpanel, :layout => :main_layout, :locals => {:nodeList=>response[:nodes], 
-                                                              :watchList=>settings.watchList}
+                                                              :watchList=>response[:watchList]}
       
     rescue Example::Error500 => e
       status 500
@@ -155,7 +153,6 @@ class App < Sinatra::Base
   post '/gateway/watch/:node' do |node|
     begin
       response = Example::Utility.addwatch(settings.gateway, settings.port, settings.key, node)
-      settings.watchList << node
       return response
       
     rescue Example::Error500 => e

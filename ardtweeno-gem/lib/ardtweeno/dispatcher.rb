@@ -244,6 +244,37 @@ module Ardtweeno
     end    
     
 
+
+    ##
+    # Ardtweeno::Dispatcher#watchList method to return Array of Hash containing watched node information
+    #
+    # * *Args*    :
+    #   - ++ ->    
+    # * *Returns* :
+    #   -         Array of Hash { String :node, String :notifyURL, 
+    #                             String :method, String :timeouts }
+    # * *Raises* :
+    #    
+    def watchList
+      return {:watched=>@nodeManager.watchList}
+    end
+
+
+    
+    ##
+    # Ardtweeno::Dispatcher#watched? method to discover if a node is being watched
+    #
+    # * *Args*    :
+    #   - ++ ->     params Hash containing: {:node String name of the node}
+    # * *Returns* :
+    #   -         Hash {watched=>true|false}  
+    # * *Raises* :
+    #
+    def watched?(params)
+      return {:watched=>@nodeManager.watched?(params[:node])}
+    end
+    
+    
     
     ##
     # Ardtweeno::Dispatcher#addWatch method to add a watch on a node

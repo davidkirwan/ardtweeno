@@ -178,8 +178,8 @@ module Ardtweeno
       
       @watchlist.each do |i|
         
-        @log.debug "Comparing " + i[:node] + " and " + node.node
-        if i[:node] == node.node 
+        @log.debug "Comparing " + i[:node] + " and " + node
+        if i[:node] == node
           return true
         end
       end
@@ -205,7 +205,7 @@ module Ardtweeno
         node = search({:node=>params[:node]})
         @log.debug "Found Node: " + node.inspect
         
-        if watched?(node)
+        if watched?(params[:node])
           raise Ardtweeno::AlreadyWatched
         end
         
@@ -244,7 +244,7 @@ module Ardtweeno
         node = search({:node=>node})
         
         @watchlist.each do |i|
-          if i[:node] == node.node
+          if i[:node] == node
             @watchlist.delete(i)
           end
         end
@@ -255,6 +255,24 @@ module Ardtweeno
     end
     
     
+    
+    ##
+    # Ardtweeno::NodeManager#watchList returns the list of nodes being watched
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -         Array of Hash { String :node, String :notifyURL, 
+    #                             String :method, String :timeouts }
+    # * *Raises* :
+    #   -         
+    #
+    def watchList
+      return @watchlist
+    end
+    
+    
+        
     ##
     # Ardtweeno::NodeManager#pushNotification pushes a notification to the node watcher
     #
