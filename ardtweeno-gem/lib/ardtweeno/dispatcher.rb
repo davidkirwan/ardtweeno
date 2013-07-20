@@ -361,7 +361,7 @@ module Ardtweeno
         node.enqueue(packet)
         
         @log.debug "Check if its being watched"
-        if @nodeManager.watched?(node)
+        if @nodeManager.watched?(node.node)
           @log.debug "There is a watch on this node, pushing notifications"
           @nodeManager.pushNotification(node.node)
         else
