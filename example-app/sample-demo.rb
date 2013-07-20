@@ -71,7 +71,8 @@ class App < Sinatra::Base
           :layout => :main_layout, 
           :locals => {:running=>response[:status]["running"],
                       :packets=>response[:packets],
-                      :zones=>response[:zones]}
+                      :zones=>response[:zones],
+                      :active=>0}
       
     rescue Example::Error500 => e
       status 500
@@ -89,7 +90,8 @@ class App < Sinatra::Base
       response = Example::Utility.controlpanel(settings.gateway, settings.port, settings.key)
       
       erb :controlpanel, :layout => :main_layout, :locals => {:nodeList=>response[:nodes], 
-                                                              :watchList=>response[:watchList]}
+                                                              :watchList=>response[:watchList],
+                                                              :active=>1}
       
     rescue Example::Error500 => e
       status 500

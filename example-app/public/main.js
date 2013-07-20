@@ -7,9 +7,11 @@ $(document).ready(function(){
   
   
   $('.add-watch').click(function(){
-  	var theId = $(this).attr('id');
-  	console.log("Node ID: " + theId);
-  	addWatch(theId);
+  	if(!$(this).hasClass('disabled')){
+  	  var theId = $(this).attr('id');
+  	  console.log("Node ID: " + theId);
+  	  addWatch(theId);	
+  	}
   });
   
 

@@ -22,6 +22,10 @@ h1 {
 	margin-bottom: 30px;
 }
 
+#content .row {
+	padding-left:20px;
+}
+
 #content pre {
 	height:300px;
 	overflow:scroll;
