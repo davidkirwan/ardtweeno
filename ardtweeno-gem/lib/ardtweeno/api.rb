@@ -743,16 +743,16 @@ module Ardtweeno
         @log.debug "From #{startRange} to #{endRange}"
         
         
-        (theStartDay..theEndDay).each do |i|
+        (theStart..today).each do |i|
           theDay = theStart.strftime('%a')
           days << theDay
           @log.debug theDay
            
           (0..23).each do |j|
-            theDate = theStart.year.to_s + "-" + "%02d" % theStart.month.to_s + "-"
+            theDate = theStart.year.to_s + "-" + "%02d" % theStart.month + "-" + "%02d" % i.day
+            theHour = "%02d" % j
             
-            theParams[:hour] = "%02d" % j
-            theParams[:date] = theDate + i
+            theParams = {:hour=>theHour, :date=>theDate}
             
             nodes = Ardtweeno::API.retrievepackets(nodeList, theParams)
             

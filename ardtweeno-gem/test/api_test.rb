@@ -51,7 +51,7 @@ class APITest < Test::Unit::TestCase
       
       # Create a DateTime instance
       today = DateTime.now
-      theDate = today.year.to_s() + "-" + "%02d" % today.month.to_s() + "-" + "%02d" % today.day.to_s()
+      theDate = today.year.to_s() + "-" + "%02d" % today.month.to_s() + "-" + "%02d" % today.day.to_s() 
       
       # Default values
       @date = theDate
@@ -85,7 +85,6 @@ class APITest < Test::Unit::TestCase
                   :withhourwrong=> {:hour=>"022"},
                   :withminute=> {:minute=>@minute},
                   :withminutewrong=> {:minute=>"022"},
-                  :withseqno=> {:seqno=>35},
                   :withseqnowrong=> {:seqno=>50000},
                   :withversion=> {:version=> "0.5.0"},
                   :withversionwrong=> {:version=> "0.0.0"},
@@ -129,8 +128,7 @@ class APITest < Test::Unit::TestCase
     
   end
   
-  
-    
+      
   # Test the retrievenodes method
   def test_retrievenodes
     results = @dispatch.retrieve_nodes(@params[:empty])
@@ -184,12 +182,18 @@ class APITest < Test::Unit::TestCase
   
   # Test the handleSeqNo method
   def test_handleSeqNo
-    results = @dispatch.retrieve_packets(@params[:withseqno])   
+    initial = @dispatch.retrieve_packets(@params[:empty])
+    value = initial[:packets].first
+    
+    sequenceNo = {:seqno=>value.seqNo}
+    
+    results = @dispatch.retrieve_packets(sequenceNo)   
     assert_equal(1, results[:packets].size)
     
     results = @dispatch.retrieve_packets(@params[:withseqnowrong])
     assert_equal(0, results[:packets].size)
   end
+  
   
   # Test the handleMinute method
   def test_handleMinute
@@ -273,5 +277,13 @@ class APITest < Test::Unit::TestCase
     end
     
   end
+
+
+  # Test the buildPunchcard method
+  def test_build_punchcard
+    
+  end  
+
+
 
 end

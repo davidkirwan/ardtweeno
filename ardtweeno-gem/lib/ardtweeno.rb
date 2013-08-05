@@ -36,7 +36,7 @@ module Ardtweeno
     Ardtweeno::NODEPATH = Ardtweeno::CONFIGPATH + "/nodelist.yaml" unless defined? Ardtweeno::NODEPATH
     Ardtweeno::POSTPATH = Ardtweeno::CONFIGPATH + "/posts.yaml" unless defined? Ardtweeno::POSTPATH
         
-    # Global Variables
+    # Class Variables
     @@seqCount = 0 unless defined? @@seqCount
     @@options = {} unless defined? @@options    
     
