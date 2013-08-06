@@ -76,10 +76,10 @@ class App < Sinatra::Base
       
     rescue Example::Error500 => e
       status 500
-      erb :raise500, :layout => :main_layout
+      erb :raise500, :layout => :main_layout, :locals => {:active=>0}
     rescue Example::Error503 => e
       status 503
-      erb :raise503, :layout => :main_layout
+      erb :raise503, :layout => :main_layout, :locals => {:active=>0}
     end
   end
 
@@ -95,10 +95,10 @@ class App < Sinatra::Base
       
     rescue Example::Error500 => e
       status 500
-      erb :raise500, :layout => :main_layout
+      erb :raise500, :layout => :main_layout, :locals => {:active=>0}
     rescue Example::Error503 => e
       status 503
-      erb :raise503, :layout => :main_layout
+      erb :raise503, :layout => :main_layout, :locals => {:active=>0}
     end
   end
   
@@ -111,10 +111,10 @@ class App < Sinatra::Base
     
     rescue Example::Error500 => e
       status 500
-      erb :raise500, :layout => :main_layout
+      erb :raise500, :layout => :main_layout, :locals => {:active=>0}
     rescue Example::Error503 => e
       status 503
-      erb :raise503, :layout => :main_layout
+      erb :raise503, :layout => :main_layout, :locals => {:active=>0}
     end
   end
 
@@ -127,10 +127,10 @@ class App < Sinatra::Base
     
     rescue Example::Error500 => e
       status 500
-      erb :raise500, :layout => :main_layout
+      erb :raise500, :layout => :main_layout, :locals => {:active=>0}
     rescue Example::Error503 => e
       status 503
-      erb :raise503, :layout => :main_layout
+      erb :raise503, :layout => :main_layout, :locals => {:active=>0}
     end
   end
   
@@ -143,10 +143,10 @@ class App < Sinatra::Base
     
     rescue Example::Error500 => e
       status 500
-      erb :raise500, :layout => :main_layout
+      erb :raise500, :layout => :main_layout, :locals => {:active=>0}
     rescue Example::Error503 => e
       status 503
-      erb :raise503, :layout => :main_layout
+      erb :raise503, :layout => :main_layout, :locals => {:active=>0}
     end
   end
 
@@ -159,10 +159,10 @@ class App < Sinatra::Base
       
     rescue Example::Error500 => e
       status 500
-      erb :raise500, :layout => :main_layout
+      erb :raise500, :layout => :main_layout, :locals => {:active=>0}
     rescue Example::Error503 => e
       status 503
-      erb :raise503, :layout => :main_layout
+      erb :raise503, :layout => :main_layout, :locals => {:active=>0}
     end
   end
   

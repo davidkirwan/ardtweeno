@@ -47,7 +47,7 @@ class Utility
 
     def addwatch(uri, port, key, node)
       body = {:key=>key,
-              :notifyURL=>"http://localhost:5000/push/#{node}", 
+              :notifyURL=>"http://192.168.1.6:5000/push/#{node}", 
               :method=>"GET", 
               :timeout=>60}
 
