@@ -2,7 +2,7 @@
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Ardtweeno serialparser subsystem test fixtures
 #
-# @date         05-06-2013
+# @date         2013-08-18
 ####################################################################################################
 
 require 'rubygems'
@@ -19,8 +19,6 @@ ENV['RACK_ENV'] = 'test'
 class ParserTest < Test::Unit::TestCase
 
   include Rack::Test::Methods
-  
-  attr_accessor :parser, :mock, :modem, :validdata, :invaliddata, :validdata_invalidnode
   
   
   # Test suite fixtures

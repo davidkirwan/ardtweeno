@@ -2,7 +2,7 @@
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Ardtweeno dispatcher system
 #
-# @date         23-06-2013
+# @date         2013-08-18
 ####################################################################################################
 
 # Imports
@@ -23,7 +23,8 @@ module Ardtweeno
     
     include Singleton
     
-    attr_accessor :nodeManager, :parser, :confdata, :nodedata, :db, :auth, :coll, :log, :running, :posts
+    attr_accessor :nodeManager, :parser, :confdata, :nodedata, :db, :auth, :coll, :log, :running, :posts,
+                  :statusbuffer
     
     
     ##
@@ -42,6 +43,8 @@ module Ardtweeno
       @running = false
       @parser = nil
       
+      @statusbuffer = Ardtweeno::RingBuffer.new(90)
+        
       if Ardtweeno.options[:test]
         @confdata = Ardtweeno.options[:confdata]
       else
@@ -522,7 +525,7 @@ module Ardtweeno
     # * *Args*    :
     #   - ++ ->   
     # * *Returns* :
-    #   -         Hash theResponse containing: bool running, String cpuload, String memload
+    #   -         Hash {Boolean running, String cpuload, String memload}
     # * *Raises* :
     #    
     def status?()
@@ -543,8 +546,8 @@ module Ardtweeno
           thememload = '%.2f' % ((usedMem / totalMem.to_f) * 100)
                   
           theResponse = {:running=>@running,
-                           :cpuload=>thecpuload,
-                           :memload=>thememload}
+                         :cpuload=>thecpuload,
+                         :memload=>thememload}
           
           @log.debug theResponse.inspect
           
@@ -552,17 +555,18 @@ module Ardtweeno
           
         else # When in testing mode, return blank data
           theResponse = {:running=>@running,
-                           :cpuload=>0.0,
-                           :memload=>0.0}
+                         :cpuload=>0.0,
+                         :memload=>0.0}
                            
           @log.debug theResponse.inspect                 
-                           
+          
           return theResponse
         end
         
       rescue Exception => e
+        raise e
+      end
       
-      end  
     end
 
   

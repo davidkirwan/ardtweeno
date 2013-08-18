@@ -2,7 +2,7 @@
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  API class for the Ardtweeno system
 #
-# @date         23-06-2013
+# @date         2013-08-05
 ####################################################################################################
 
 # Imports
@@ -201,7 +201,7 @@ module Ardtweeno
           @log.debug "version not found, returning empty array"
         end
         
-        return containerArray  
+        return containerArray
       end
 
 

@@ -1,4 +1,10 @@
-require 'rubygems'
+####################################################################################################
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
+# @description  Ardtweeno::NodeManager test fixtures
+#
+# @date         2013-08-18
+####################################################################################################
+
 require 'test/unit'
 require 'rack/test'
 require 'ardtweeno'
@@ -11,8 +17,6 @@ ENV['RACK_ENV'] = 'test'
 class NodeManagerTest < Test::Unit::TestCase
 
   include Rack::Test::Methods
-  
-  attr_accessor :dispatch
   
   
   # Test suite fixtures

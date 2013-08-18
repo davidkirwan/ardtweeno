@@ -2,10 +2,9 @@
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Ardtweeno dispatcher test fixtures
 #
-# @date         14-06-2013
+# @date         2013-06-14
 ####################################################################################################
 
-require 'rubygems'
 require 'test/unit'
 require 'rack/test'
 require 'ardtweeno'
@@ -18,8 +17,6 @@ ENV['RACK_ENV'] = 'test'
 class DispatcherTest < Test::Unit::TestCase
 
   include Rack::Test::Methods
-  
-  attr_accessor :dispatch, :confdata
   
   
   # Test suite fixtures

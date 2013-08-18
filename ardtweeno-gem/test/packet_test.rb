@@ -1,4 +1,10 @@
-require 'rubygems'
+###################################################################################################
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
+# @description  Ardtweeno::Packet test fixtures
+#
+# @date         2013-08-18
+####################################################################################################
+
 require 'test/unit'
 require 'rack/test'
 require 'ardtweeno'
@@ -11,8 +17,6 @@ ENV['RACK_ENV'] = 'test'
 class PacketTest < Test::Unit::TestCase
 
   include Rack::Test::Methods
-  
-  attr_accessor :packetArray
   
   
   # Test suite fixtures, setup before each test is executed

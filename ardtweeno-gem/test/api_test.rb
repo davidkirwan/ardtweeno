@@ -13,8 +13,6 @@ class APITest < Test::Unit::TestCase
 
   include Rack::Test::Methods
   
-  attr_accessor :dispatch, :nodelist, :params, :date, :hour, :minute, :confdata
-  
   
   # Test suite fixtures
   def setup

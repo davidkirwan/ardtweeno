@@ -16,6 +16,7 @@ require 'ardtweeno/node'
 require 'ardtweeno/configreader'
 require 'ardtweeno/api'
 require 'ardtweeno/db'
+require 'ardtweeno/ringbuffer'
 
 
 ##
