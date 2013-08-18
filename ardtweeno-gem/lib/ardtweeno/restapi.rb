@@ -354,7 +354,17 @@ class RESTAPI < Sinatra::Base
 
   end
 
+
+  get '/api/v1/system/status/list' do
+    settings.log.debug "The system status buffer hook has been called, returning the last 15 mins of status data"
+    
+    return {:buffer=>@@theDispatcher.statusbuffer.to_a}.to_json
+  end
+
 #########################################################################################################
+
+
+
 
 # End of RESTAPI Class
 end

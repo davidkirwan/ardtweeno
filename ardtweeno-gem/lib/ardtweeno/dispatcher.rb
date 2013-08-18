@@ -689,6 +689,16 @@ module Ardtweeno
     #
     def bootstrap
       
+      # Create a thread which updates the statusbuffer
+      @statusthread = Thread.new do
+        loop do
+          @statusbuffer.push(status?)
+          sleep(10)
+        end
+      end
+      
+      
+      
       # Read in the configuration files
       begin
         @log.debug "Reading in the configuration files"
