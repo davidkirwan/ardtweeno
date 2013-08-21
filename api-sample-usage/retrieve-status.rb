@@ -1,6 +1,6 @@
 ####################################################################################################
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
-# @description  API Sample Script for retreiving the gateway status
+# @description  API Sample Script for retrieving the gateway status
 #
 # @date         2013-08-21
 ####################################################################################################
@@ -10,7 +10,7 @@ require 'json'
 
 puts "This script will query the gateway and retrieve the status and system load."
 
-response = Typhoeus::Request.get("http://192.168.1.9:4567/api/v1/system/status")
+response = Typhoeus::Request.get("http://localhost:4567/api/v1/system/status")
 parsedResponse = JSON.parse(response.body)
 
 puts "\nSystem SerialParser subsystem running: " + parsedResponse["running"].to_s
