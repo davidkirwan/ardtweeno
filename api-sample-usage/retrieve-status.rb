@@ -8,9 +8,12 @@
 require 'typhoeus'
 require 'json' 
 
+puts "This script will query the gateway and retrieve the status and system load."
 
-puts ""
+response = Typhoeus::Request.get("http://192.168.1.9:4567/api/v1/system/status")
+parsedResponse = JSON.parse(response.body)
 
-response = Typhoeus::Request.get("http://localhost:4567/api/v1/system/status")
-
+puts "\nSystem SerialParser subsystem running: " + parsedResponse["running"].to_s
+puts "System CPU Load: #{parsedResponse["cpuload"]}%"
+puts "System MEM Usage: #{parsedResponse["memload"]}%\n\n"
 puts "API HTTP Code: [" + response.code.to_s + "] API Response: [" + response.options[:return_code].to_s + "]"
