@@ -98,6 +98,45 @@ class APITest < Test::Unit::TestCase
         @dispatch.store('{"data":[23.5,997.5,65],"key":"abcdef1"}')
       end
       
+      @punchData = Array.new
+       
+      144.times do
+        @punchData << 0
+      end
+      
+      (1..today.hour).each do
+        @punchData << 0
+      end
+      
+      @punchData << 5
+      
+      ((today.hour + 1)..23).each do
+        @punchData << 0
+      end
+      
+      @punchDays = Array.new
+      
+      theStart = today - 6
+      
+      (theStart..today).each do |i|
+        @punchDays << i.strftime('%a')
+      end
+      
+      @punchDays.reverse!
+      
+      theStartDay = "%02d" % theStart.day
+      theStartMonth = "%02d" % theStart.month
+      theStartYear = theStart.year.to_s
+            
+      theEndDay = "%02d" % today.day
+      theEndMonth = "%02d" % today.month
+      theEndYear = today.year.to_s
+      
+      startRange = theStartYear + "-" + theStartMonth + "-" + theStartDay
+      endRange = theEndYear + "-" + theEndMonth + "-" + theEndDay
+      
+      @punchRange = "#{startRange} to #{endRange}"
+      
     rescue Exception => e
       puts e.message
       puts e.backtrace
@@ -275,12 +314,17 @@ class APITest < Test::Unit::TestCase
     end
     
   end
-
-
+  
+  
   # Test the buildPunchcard method
-  def test_build_punchcard
+  def test_buildPunchcard
+    data, days, range = Ardtweeno::API.buildPunchcard(@nodeList, {:node=>"node1"})
     
-  end  
+    
+    assert_equal(data, @punchData)
+    assert_equal(days, @punchDays)
+    assert_equal(range, @punchRange)
+  end
 
 
 
