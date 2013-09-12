@@ -320,7 +320,6 @@ class APITest < Test::Unit::TestCase
   def test_buildPunchcard
     data, days, range = Ardtweeno::API.buildPunchcard(@nodeList, {:node=>"node1"})
     
-    
     assert_equal(data, @punchData)
     assert_equal(days, @punchDays)
     assert_equal(range, @punchRange)
