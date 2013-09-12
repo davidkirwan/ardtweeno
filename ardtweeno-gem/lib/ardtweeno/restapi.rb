@@ -109,7 +109,14 @@ class RESTAPI < Sinatra::Base
   
   
   get '/status' do
-    erb :status
+    begin
+      diskusage = @@theDispatcher.diskUsage
+      
+    rescue Exception => e
+      throw :halt, [ 500, "500 Internal Server Error" ]
+    end
+    
+    erb :status, :locals => {:diskusage=>diskusage}
   end
   
   
@@ -346,7 +353,7 @@ class RESTAPI < Sinatra::Base
     settings.log.debug "The system status hook has been called, reading the host configuration"
 
     begin
-      return @@theDispatcher.status?().to_json
+      return @@theDispatcher.status?.to_json
       
     rescue Exception => e
       throw :halt, [ 500, "500 Internal Server Error" ]

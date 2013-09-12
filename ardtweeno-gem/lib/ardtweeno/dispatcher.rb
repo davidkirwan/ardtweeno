@@ -514,10 +514,24 @@ module Ardtweeno
       
       cmd = 'ls -l' #'sudo reboot'
       sh "#{cmd}"
-      
     end
     
-
+    
+    
+    ##
+    # Ardtweeno::Dispatcher#bootstrap which configures the Dispatcher instance for initial operation
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -
+    # * *Raises* :
+    #
+    def diskUsage()
+      return Ardtweeno::API.diskUsage
+    end
+    
+    
     
     ##
     # Ardtweeno::Dispatcher#status? returns the system status of the Ardtweeno Gateway host
@@ -676,8 +690,6 @@ module Ardtweeno
         end
       end
       
-      
-      
       # Read in the configuration files
       begin
         @log.debug "Reading in the configuration files"
@@ -687,8 +699,6 @@ module Ardtweeno
         @posts = Ardtweeno::ConfigReader.load(Ardtweeno::POSTPATH)
 
       rescue Exception => e
-        @log.fatal e.message
-        @log.fatal e.backtrace
         raise e
       end
       
@@ -717,8 +727,6 @@ module Ardtweeno
         
         @nodeManager = Ardtweeno::NodeManager.new(nmoptions)
       rescue Exception => e
-        @log.debug e.message
-        @log.debug e.backtrace
         raise e
       end
       

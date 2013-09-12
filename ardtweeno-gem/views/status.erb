@@ -138,23 +138,26 @@ $(function () {
 <table class="table table-bordered">
   <thead>
   	<tr>
-  	  <td>header</td>
-  	  <td>header1</td>
-  	  <td>header2</td>
+  	  <td><h3><b>Device</b></h3></td>
+  	  <td><h3><b>Size</b></h3></td>
+  	  <td><h3><b>Used</b></h3></td>
+  	  <td><h3><b>Avail</b></h3></td>
+  	  <td><h3><b>Percent Used</b></h3></td>
+  	  <td><h3><b>Mount</b></h3></td>
   	</tr>
   </thead>
   
   <tbody>
+<% diskusage.each do |i| %>
   	<tr>
-  	  <td>test</td>
-  	  <td>test2</td>
-  	  <td>test3</td>
+  	  <td><%= i[:device] %></td>
+  	  <td><%= i[:size] %></td>
+  	  <td><%= i[:used] %></td>
+  	  <td><%= i[:avail] %></td>
+  	  <td><%= i[:use] %></td>
+  	  <td><%= i[:mount] %></td>
   	</tr>
-  	<tr>
-  	  <td>test</td>
-  	  <td>test2</td>
-  	  <td>test3</td>
-  	</tr>
+<% end %>
   </tbody>	
 </table>
   

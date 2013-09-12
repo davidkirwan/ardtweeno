@@ -906,6 +906,35 @@ module Ardtweeno
       end
       
       
+      ##
+      # Ardtweeno::API#diskUsage parse the disk usage statistics outputted by the linux utility df
+      #
+      # * *Args*    :
+      #   - ++ ->     
+      # * *Returns* :
+      #   -           Array of Hash {String, String, String, String, String, String}
+      # * *Raises* :
+      #             
+      #
+      def diskUsage
+        diskusage = Array.new
+
+        fileinfo = `df -h`
+        
+        lines = fileinfo.split("\n")
+        lines.delete_at(0)
+        
+        lines.each do |i|
+          i.gsub!(/\s+/, " ")
+          device, size, used, avail, use, mount = i.split(" ")
+          diskusage << {:device=>device, :size=>size, :used=>used, :avail=>avail, :use=>use, :mount=>mount}
+        end
+        
+        return diskusage
+      end
+      
+      
+      
       private :countSensors, :calculateMemLoad, :calculateAvgLoad, :calculateCPUCores
       
     end
