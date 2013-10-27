@@ -37,8 +37,6 @@ INSTALL
   s.add_dependency('bson_ext', '>= 1.6.2')
   s.add_dependency('sinatra', '>= 1.3.3')
   s.add_dependency('thin', '>= 1.5.0')
-  s.add_dependency('rufus-scheduler', '>= 2.0.0')
   s.add_dependency('typhoeus', '>= 0.6.3')
-  s.add_dependency('foreman', '>= 0.63.0')
   
 end

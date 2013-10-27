@@ -10,7 +10,7 @@ require 'rubygems'
 require 'sinatra/base'
 require 'ardtweeno'
 require 'logger'
-require 'rufus/scheduler'
+
 
 class RESTAPI < Sinatra::Base
 
@@ -58,9 +58,6 @@ class RESTAPI < Sinatra::Base
     set :options, {:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG, :confdata=>@confdata}
   end
   
-  # Rufus-scheduler object
-  set :scheduler, Rufus::Scheduler.start_new
-  
   # Setup the system for use
   Ardtweeno.setup(settings.options)
   @@theDispatcher = Ardtweeno::Dispatcher.instance
@@ -70,21 +67,6 @@ class RESTAPI < Sinatra::Base
   
   # Posts URI
   set :newsURI, @@theDispatcher.getPostsURI
-  
-#########################################################################################################  
-
-
-  settings.scheduler.every '60m' do
-      
-    begin
-      settings.log.debug "Running scheduled data flush"
-      @@theDispatcher.flush()
-                        
-    rescue Ardtweeno::DBError => e
-      settings.log.warn "ERROR: #{e.message}"
-    end
-     
-  end
 
     
 #########################################################################################################
