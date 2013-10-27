@@ -363,9 +363,14 @@ class RESTAPI < Sinatra::Base
 
 
   get '/api/v1/system/status/list' do
-    settings.log.debug "The system status buffer hook has been called, returning the last 15 mins of status data"
+    settings.log.debug "The system status list hook has been called, returning the last 15 mins of status data"
     
-    return {:buffer=>@@theDispatcher.statusbuffer.to_a}.to_json
+    begin
+      return {:buffer=>@@theDispatcher.statuslist}.to_json
+      
+    rescue Exception => e
+      throw :halt, [ 500, "500 Internal Server Error"]
+    end
   end
 
 #########################################################################################################

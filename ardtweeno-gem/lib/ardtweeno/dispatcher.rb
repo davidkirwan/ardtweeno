@@ -23,8 +23,7 @@ module Ardtweeno
     
     include Singleton
     
-    attr_accessor :nodeManager, :parser, :confdata, :nodedata, :db, :auth, :coll, :log, :running, :posts,
-                  :statusbuffer
+    attr_accessor :nodeManager, :parser, :confdata, :nodedata, :db, :auth, :coll, :log, :running, :posts
     
     
     ##
@@ -529,6 +528,49 @@ module Ardtweeno
     #
     def diskUsage()
       return Ardtweeno::API.diskUsage
+    end
+    
+    
+    
+    ##
+    # Ardtweeno::Dispatcher#statuslist returns a Array of Hash containing system statuses for
+    #                                  the last 15 minutes
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -         Array [Hash {Boolean running, String cpuload, String memload}]
+    # * *Raises* :
+    #
+    def statuslist()
+      @log.debug "Ardtweeno::Dispatcher#statuslist executing"
+      begin
+        rawdata = @statusbuffer.to_a
+        
+        cpu = Array.new
+        mem = Array.new
+        running = Array.new
+        
+        now = (Time.now.to_i * 1000) # Get the milliseconds since the epoch
+        start = now - (rawdata.size * 10000) # Get the milliseconds from the start of the buffer
+        
+        rawdata.each do |i|
+          cpu << [start, i[:cpuload]]
+          mem << [start, i[:memload]]
+          running << [start, i[:running]]
+          
+          start += 10000
+        end
+        
+        cpuseries = {:label=>"CPU &#37;", :data=>cpu, :color=>"#ED0E0E"}
+        memseries = {:label=>"MEM &#37;", :data=>mem, :color=>"#0E7AED"}
+        runningseries = {:label=>"Active", :data=>running}
+        
+        return [cpuseries, memseries, runningseries]
+        
+      rescue Exception => e
+        raise e
+      end
     end
     
     

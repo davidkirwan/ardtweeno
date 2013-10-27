@@ -1,149 +1,52 @@
 <p id="blurb">
-	System Status
+  System Status
 </p>
 
 <script type="text/javascript">
-$(function () {
-    $(document).ready(function() {
-        Highcharts.setOptions({
-            global: {
-                useUTC: false
-            }
-        });
-        keepUpdating = true;
-        var chart;
-        $('#loadgraph').highcharts({
-            chart: {
-                type: 'spline',
-                animation: Highcharts.svg, // don't animate in old IE
-                height: 400,
-                marginRight: 10,
-                events: {
-                    load: function() {
-    
-                        // set up the updating of the chart each second
-                        var series0 = this.series[0];
-                        var series1 = this.series[1];
-                        setInterval(function() {
+  $(function() {
 
-                            var x = (new Date()).getTime(); // current time
-							
-							
-							
-							if(keepUpdating)
-							{
-	                            $.ajax({
-	                                url: '/api/v1/system/status',
-	                                dataType: 'json',
-	                                success: function(data){
-	                                	var theData = JSON.parse(JSON.stringify(data));
-	                                	console.log(theData.running);
-	                                	console.log(theData.cpuload);
-	                                	console.log(theData.memload);
-	                                	
-	                                	var x = (new Date()).getTime();
-	                                	var y = parseFloat(theData.cpuload);
-	                                	var z = parseFloat(theData.memload);
-	                                	
-	                                	series0.addPoint([x, y], true, true);
-	                            		series1.addPoint([x, z], true, true);
-	                                },
-	                                error: function(xhr, status, error){
-	                                    console.log("fail");
-	                                }
-	                            });
-							}
-							
-                        }, 10000);
-                    }
-                }
-            },
-            title: {
-                text: 'Ardtweeno Gateway Statistics'
-            },
-            xAxis: {
-                type: 'datetime',
-                tickPixelInterval: 150
-            },
-            yAxis: {
-                title: {
-                    text: '% Load'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 0.1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function() {
-                        return '<b>'+ this.series.name +'</b><br/>'+
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+
-                        Highcharts.numberFormat(this.y, 2);
-                }
-            },
-            legend: {
-                enabled: true
-            },
-            exporting: {
-                enabled: false
-            },
-            series: [{
-                name: 'CPU Load',
-                marker: {
-                    symbol: 'square'
-                },
-                color: 'red',
-                data: (function() {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-    
-                    for (i = -89; i <= 0; i++) {
-                        data.push({
-                            x: time + i * 10000,
-                            y: 0.0
-                        });
-                    }
-                    return data;
-                })()
-            },
-            {
-                name: 'Mem Load',
-                marker: {
-                    symbol: 'triangle'
-                },
-                data: (function() {
-                    // generate an array of random data
-                    var data = [],
-                        time = (new Date()).getTime(),
-                        i;
-    
-                    for (i = -89; i <= 0; i++) {
-                        data.push({
-                            x: time + i * 10000,
-                            y: 0.0
-                        });
-                    }
-                    return data;
-                })()
-            }]
-        });
-    });
-    
-});                    
+    var options = {
+      xaxis: { mode: 'time' },
+            legend: { show: true,
+            	      container: null, 
+            		  position: 'ne', 
+            		  backgroundColor: '#DBBFFF', 
+            		  backgroundOpacity: 0.5 }
+    };
+
+    var data = [];
+    alreadyFetched = {};
+    $.plot("#placeholder", data, options);
+
+      function fetchData() {
+        function onDataReceived(series) {
+          var thePlot = [series.buffer[0], series.buffer[1]];
+          $.plot("#placeholder", thePlot, options);
+        }
+
+      $.ajax({
+        url: "/api/v1/system/status/list",
+        type: "GET",
+        dataType: "json",
+        success: onDataReceived
+      });
+
+      setTimeout(fetchData, 10000);
+    }
+
+    setTimeout(fetchData, 1000);
+  });
 </script>  
 
 <table class="table table-bordered">
   <thead>
   	<tr>
-  	  <td><h3><b>Device</b></h3></td>
-  	  <td><h3><b>Size</b></h3></td>
-  	  <td><h3><b>Used</b></h3></td>
-  	  <td><h3><b>Avail</b></h3></td>
-  	  <td><h3><b>Percent Used</b></h3></td>
-  	  <td><h3><b>Mount</b></h3></td>
+  	  <td><b>Device</b></td>
+  	  <td><b>Size</b></td>
+  	  <td><b>Used</b></td>
+  	  <td><b>Avail</b></td>
+  	  <td><b>Percent Used</b></td>
+  	  <td><b>Mount</b></td>
   	</tr>
   </thead>
   
@@ -162,5 +65,7 @@ $(function () {
 </table>
   
   
-<div id="loadgraph">
+<div class="graph-container">
+  <div id="placeholder" class="graph-placeholder"></div>
+  
 </div>
