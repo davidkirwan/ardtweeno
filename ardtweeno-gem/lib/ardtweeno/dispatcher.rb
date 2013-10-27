@@ -2,18 +2,17 @@
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Ardtweeno dispatcher system
 #
-# @date         14-06-2013
+# @date         2013-08-18
 ####################################################################################################
 
 # Imports
-require 'rubygems'
 require 'serialport'
 require 'logger'
 require 'yaml'
 require 'json'
 require 'singleton'
-require 'ardtweeno'
 require 'mongo'
+require 'ardtweeno'
 
 module Ardtweeno
   
@@ -43,6 +42,8 @@ module Ardtweeno
       @running = false
       @parser = nil
       
+      @statusbuffer = Ardtweeno::RingBuffer.new(90)
+        
       if Ardtweeno.options[:test]
         @confdata = Ardtweeno.options[:confdata]
       else
@@ -50,6 +51,51 @@ module Ardtweeno
         bootstrap()
       end
     end
+
+
+    
+    ##
+    # Ardtweeno::Dispatcher#constructPunchcard method for constructing the punchcard graph
+    #
+    # * *Args*    :
+    #   - ++ ->     
+    # * *Returns* :
+    #   -           Array data containing the 168 hourly packet totals for the last week,
+    #               Array of strings containing the names of the last 7 days
+    # * *Raises* :
+    #             
+    #
+    def constructPunchcard(params)
+      theData, theDays, theDateRange = Ardtweeno::API.buildPunchcard(@nodeManager.nodeList, params)
+      
+      return theData, theDays, theDateRange
+    end
+    
+    
+    
+    ##
+    # Ardtweeno::Dispatcher#constructTopology method for constructing the topology graph
+    #
+    # * *Args*    :
+    #   - ++ ->     Hash params, not really used for the moment
+    # * *Returns* :
+    #   -           String containing the Raphael.js code to generate the graph
+    # * *Raises* :
+    #             
+    #
+    def constructTopology(params=nil)
+      apitimer = Time.now
+      
+      nodes = Ardtweeno::API.retrievenodes(@nodeManager.nodeList, params)
+      zones = Ardtweeno::API.retrievezones(@confdata, params)
+      
+      topology = Ardtweeno::API.parseTopology(zones, nodes)
+      result = Ardtweeno::API.buildTopology(topology)
+      
+      @log.debug "Duration: #{Time.now - apitimer} seconds"
+      return result
+    end
+
 
 
     ##
@@ -73,7 +119,7 @@ module Ardtweeno
         db_collection = @confdata["db"]["dbPacketsColl"]
                 
         if @db == nil
-          @log.fatal "The database connector is not connected to a database!"
+          @log.warn "The database connector is not connected to a database!"
           @log.debug "Attempting to construct the MongoDB driver instance"
           
           begin
@@ -140,6 +186,7 @@ module Ardtweeno
     end
     
 
+
     ##
     # Ardtweeno::Dispatcher#retrieve_zones method for retrieving zone data from the system
     #
@@ -198,6 +245,38 @@ module Ardtweeno
       return result
     end    
     
+
+
+    ##
+    # Ardtweeno::Dispatcher#watchList method to return Array of Hash containing watched node information
+    #
+    # * *Args*    :
+    #   - ++ ->    
+    # * *Returns* :
+    #   -         Array of Hash { String :node, String :notifyURL, 
+    #                             String :method, String :timeouts }
+    # * *Raises* :
+    #    
+    def watchList
+      return {:watched=>@nodeManager.watchList}
+    end
+
+
+    
+    ##
+    # Ardtweeno::Dispatcher#watched? method to discover if a node is being watched
+    #
+    # * *Args*    :
+    #   - ++ ->     params Hash containing: {:node String name of the node}
+    # * *Returns* :
+    #   -         Hash {watched=>true|false}  
+    # * *Raises* :
+    #
+    def watched?(params)
+      return {:watched=>@nodeManager.watched?(params[:node])}
+    end
+    
+    
     
     ##
     # Ardtweeno::Dispatcher#addWatch method to add a watch on a node
@@ -217,6 +296,8 @@ module Ardtweeno
       begin
         apitimer = Time.now
         
+        params = params.each_with_object({}){|(k,v), h| h[k.to_sym] = v}
+        
         if params.has_key? :node and 
            params.has_key? :notifyURL and 
            params.has_key? :method and
@@ -227,13 +308,14 @@ module Ardtweeno
             raise Ardtweeno::InvalidWatch, "Invalid Parameters"
           end
           
-          unless params[:timeout] >= 0
+          unless params[:timeout].to_i >= 0
             raise Ardtweeno::InvalidWatch, "Invalid Parameters"
           end
           
           @log.debug "Watch API call seems valid, passing to NodeManager"
           @nodeManager.addWatch(params)
         else
+          @log.debug params.inspect
           raise Ardtweeno::InvalidWatch, "Invalid Parameters"
         end
         
@@ -242,10 +324,11 @@ module Ardtweeno
       rescue Ardtweeno::AlreadyWatched => e
         raise e, "This node already has a watch associated with it"
       rescue Ardtweeno::InvalidWatch => e
-        raise e
+        raise e, "Invalid Parameters"
       end
     end 
     
+
     
     ##
     # Ardtweeno::Dispatcher#store stores a packet retrieved by the API into the system
@@ -280,7 +363,7 @@ module Ardtweeno
         node.enqueue(packet)
         
         @log.debug "Check if its being watched"
-        if @nodeManager.watched?(node)
+        if @nodeManager.watched?(node.node)
           @log.debug "There is a watch on this node, pushing notifications"
           @nodeManager.pushNotification(node.node)
         else
@@ -301,6 +384,7 @@ module Ardtweeno
       
       return true 
     end  
+
     
     
     ##
@@ -369,6 +453,7 @@ module Ardtweeno
       return false
       
     end
+
     
     
     ##
@@ -411,9 +496,11 @@ module Ardtweeno
       return false
 
     end
+
+
     
     ##
-    # Ardtweeno::Dispatcher#reboot which reboots the Ardtweeno Gateway host
+    # Ardtweeno::Dispatcher#reboot which flushes data then reboots the Ardtweeno Gateway host
     #
     # * *Args*    :
     #   - ++ ->   
@@ -425,12 +512,67 @@ module Ardtweeno
       @log.debug "Dispatcher#reboot has been called, restarting the gateway host.."
       
       cmd = 'ls -l' #'sudo reboot'
-      
-      rebootFork = fork do
-        Signal.trap("SIGTERM") { exit }
-        `#{cmd}`
+      sh "#{cmd}"
+    end
+    
+    
+    
+    ##
+    # Ardtweeno::Dispatcher#bootstrap which configures the Dispatcher instance for initial operation
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -
+    # * *Raises* :
+    #
+    def diskUsage()
+      return Ardtweeno::API.diskUsage
+    end
+    
+    
+    
+    ##
+    # Ardtweeno::Dispatcher#statuslist returns a Array of Hash containing system statuses for
+    #                                  the last 15 minutes
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -         Array [Hash {Boolean running, String cpuload, String memload}]
+    # * *Raises* :
+    #
+    def statuslist()
+      @log.debug "Ardtweeno::Dispatcher#statuslist executing"
+      begin
+        rawdata = @statusbuffer.to_a
+        
+        cpu = Array.new
+        mem = Array.new
+        running = Array.new
+        
+        now = (Time.now.to_i * 1000) # Get the milliseconds since the epoch
+        start = now - (rawdata.size * 10000) # Get the milliseconds from the start of the buffer
+        
+        rawdata.each do |i|
+          cpu << [start, i[:cpuload]]
+          mem << [start, i[:memload]]
+          running << [start, i[:running]]
+          
+          start += 10000
+        end
+        
+        cpuseries = {:label=>"CPU &#37;", :data=>cpu, :color=>"#ED0E0E"}
+        memseries = {:label=>"MEM &#37;", :data=>mem, :color=>"#0E7AED"}
+        runningseries = {:label=>"Active", :data=>running}
+        
+        return [cpuseries, memseries, runningseries]
+        
+      rescue Exception => e
+        raise e
       end
     end
+    
     
     
     ##
@@ -439,47 +581,27 @@ module Ardtweeno
     # * *Args*    :
     #   - ++ ->   
     # * *Returns* :
-    #   -         Hash theResponse containing: bool running, String cpuload, String memload
+    #   -         Hash {Boolean running, String cpuload, String memload}
     # * *Raises* :
     #    
     def status?()
       @log.debug "Ardtweeno::Dispatcher#status? executing"
       begin
         unless Ardtweeno.options[:test] ||= false
-          # Get CPU      
-          maxLoad = calculateCPUCores()
-        
-          # Get Avgload
-          currentLoadPercentage = calculateAvgLoad(maxLoad)
-          
-          # Get MEM Usage
-          usedMem, totalMem = calculateMemLoad()
-          
-          
-          thecpuload = '%.2f' % currentLoadPercentage
-          thememload = '%.2f' % ((usedMem / totalMem.to_f) * 100)
-                  
-          theResponse = {:running=>@running,
-                           :cpuload=>thecpuload,
-                           :memload=>thememload}
-          
-          @log.debug theResponse.inspect
-          
+          theResponse = Ardtweeno::API.status
+          theResponse[:running] = @running
           return theResponse
-          
         else # When in testing mode, return blank data
           theResponse = {:running=>@running,
-                           :cpuload=>0.0,
-                           :memload=>0.0}
+                         :cpuload=>0.0,
+                         :memload=>0.0}
                            
-          @log.debug theResponse.inspect                 
-                           
+          @log.debug theResponse.inspect
           return theResponse
         end
-        
       rescue Exception => e
-      
-      end  
+        raise e
+      end
     end
 
   
@@ -497,6 +619,7 @@ module Ardtweeno
       return @running
     end
     
+
 
     ##
     # Ardtweeno::Dispatcher#authenticate? Checks the API key provided with that in the DB
@@ -522,6 +645,7 @@ module Ardtweeno
       end
     end
     
+
     
     ##
     # Ardtweeno::Dispatcher#getPostsURI returns the front page news URI ~/.ardtweeno/conf.yaml 
@@ -554,6 +678,7 @@ module Ardtweeno
         return Array.new
       end
     end
+
     
     
     ##
@@ -569,6 +694,7 @@ module Ardtweeno
       @posts["posts"] = newPosts
       Ardtweeno::ConfigReader.save(@posts, Ardtweeno::POSTPATH)
     end
+
     
     
     ##
@@ -586,6 +712,7 @@ module Ardtweeno
     end
 
 
+
     ##
     # Ardtweeno::Dispatcher#bootstrap which configures the Dispatcher instance for initial operation
     #
@@ -597,6 +724,14 @@ module Ardtweeno
     #
     def bootstrap
       
+      # Create a thread which updates the statusbuffer
+      @statusthread = Thread.new do
+        loop do
+          @statusbuffer.push(status?)
+          sleep(10)
+        end
+      end
+      
       # Read in the configuration files
       begin
         @log.debug "Reading in the configuration files"
@@ -606,8 +741,6 @@ module Ardtweeno
         @posts = Ardtweeno::ConfigReader.load(Ardtweeno::POSTPATH)
 
       rescue Exception => e
-        @log.fatal e.message
-        @log.fatal e.backtrace
         raise e
       end
       
@@ -636,8 +769,6 @@ module Ardtweeno
         
         @nodeManager = Ardtweeno::NodeManager.new(nmoptions)
       rescue Exception => e
-        @log.debug e.message
-        @log.debug e.backtrace
         raise e
       end
       
@@ -668,93 +799,11 @@ module Ardtweeno
       rescue Exception => e
         raise e
       end
-      
-      
+            
     end # End of the bootstrap()
-
-
-    def calculateMemLoad()
-      begin
-        memhash = Hash.new
-        meminfo = File.read('/proc/meminfo')
-        meminfo.each_line do |i| 
-        key, val = i.split(':')
-        if val.include?('kB') then val = val.gsub(/\s+kB/, ''); end
-          memhash["#{key}"] = val.strip
-        end
-            
-        totalMem = memhash["MemTotal"].to_i
-        freeMem = memhash["MemFree"].to_i + memhash["Buffers"].to_i + memhash["Cached"].to_i
-        usedMem = totalMem - freeMem
-            
-        @log.debug "Total Memory: #{totalMem} (100%)"
-        @log.debug "Used Memory: #{usedMem} (#{'%.2f' % ((usedMem / totalMem.to_f) * 100)}%)"
-        @log.debug "Free Memory: #{freeMem} (#{'%.2f' % ((freeMem / totalMem.to_f) * 100)}%)"
-        
-        return usedMem, totalMem
-        
-      rescue Exception => e
-        @log.debug "Some issue accessing /proc/meminfo"
-        usedMem, totalMem = 0, 0
-        
-        return usedMem, totalMem
-      end
-    end
-    
-    def calculateAvgLoad(maxLoad)
-      begin
-        loadavg = File.read('/proc/loadavg')
-        loads = loadavg.scan(/\d+.\d+/)
-        onemin = loads[0]
-        fivemin = loads[1]
-        fifteenmin = loads[2]
-            
-        @log.debug "LoadAvg are as follows: 1min #{onemin}, 5min #{fivemin}, 15min #{fifteenmin}"
-            
-        loadval = (onemin.to_f / maxLoad)
-        currentLoadPercentage = loadval * 100
-            
-        @log.debug "Currently running at #{'%.2f' % currentLoadPercentage}% of max load"
-        
-        return currentLoadPercentage
-          
-      rescue Exception => e
-        @log.debug "Some issue accessing /proc/loadavg"
-        onemin, fivemin, fifteenmin = 0, 0, 0
-        
-        loadval = (onemin.to_f / maxLoad)
-        currentLoadPercentage = loadval * 100
-        
-        return currentLoadPercentage
-      end
-    end
     
     
-    def calculateCPUCores()
-      begin # Checking for multi-core CPU
-        cpuinfo = File.read('/proc/cpuinfo')
-        coreinfo = cpuinfo.scan(/cpu cores\s+:\s+\d+/)
-          
-        tempVal = coreinfo[0]
-        numOfCores = tempVal.scan(/\d+/)[0].to_i
-        numOfThreadsPerCore = coreinfo.size / numOfCores
-        maxLoad = (numOfThreadsPerCore * numOfCores).to_f
-        
-        @log.debug "Found #{numOfCores} cores with #{numOfThreadsPerCore} threads per core"
-        @log.debug "Max desirable cpu load: #{maxLoad}"
-        
-        return maxLoad
-        
-      rescue Exception => e
-        @log.debug "Unable to find cpu core info in /proc/cpuinfo, assuming system has a single core"
-        maxLoad = 1.0
-        
-        return maxLoad
-      end
-    end
-    
-    
-    private :bootstrap, :calculateMemLoad, :calculateAvgLoad, :calculateCPUCores
+    private :bootstrap
     
   end
 end

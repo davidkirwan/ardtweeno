@@ -5,7 +5,6 @@
 # @date         14-06-2013
 ####################################################################################################
 
-require 'rubygems'
 require 'logger'
 require 'fileutils'
 require 'ardtweeno/serialparser'
@@ -17,6 +16,7 @@ require 'ardtweeno/node'
 require 'ardtweeno/configreader'
 require 'ardtweeno/api'
 require 'ardtweeno/db'
+require 'ardtweeno/ringbuffer'
 
 
 ##
@@ -37,7 +37,7 @@ module Ardtweeno
     Ardtweeno::NODEPATH = Ardtweeno::CONFIGPATH + "/nodelist.yaml" unless defined? Ardtweeno::NODEPATH
     Ardtweeno::POSTPATH = Ardtweeno::CONFIGPATH + "/posts.yaml" unless defined? Ardtweeno::POSTPATH
         
-    # Global Variables
+    # Class Variables
     @@seqCount = 0 unless defined? @@seqCount
     @@options = {} unless defined? @@options    
     

@@ -13,8 +13,6 @@ class APITest < Test::Unit::TestCase
 
   include Rack::Test::Methods
   
-  attr_accessor :dispatch, :nodelist, :params, :date, :hour, :minute, :confdata
-  
   
   # Test suite fixtures
   def setup
@@ -51,7 +49,7 @@ class APITest < Test::Unit::TestCase
       
       # Create a DateTime instance
       today = DateTime.now
-      theDate = today.year.to_s() + "-" + "%02d" % today.month.to_s() + "-" + "%02d" % today.day.to_s()
+      theDate = today.year.to_s() + "-" + "%02d" % today.month.to_s() + "-" + "%02d" % today.day.to_s() 
       
       # Default values
       @date = theDate
@@ -85,7 +83,6 @@ class APITest < Test::Unit::TestCase
                   :withhourwrong=> {:hour=>"022"},
                   :withminute=> {:minute=>@minute},
                   :withminutewrong=> {:minute=>"022"},
-                  :withseqno=> {:seqno=>35},
                   :withseqnowrong=> {:seqno=>50000},
                   :withversion=> {:version=> "0.5.0"},
                   :withversionwrong=> {:version=> "0.0.0"},
@@ -100,6 +97,45 @@ class APITest < Test::Unit::TestCase
       5.times do |i|
         @dispatch.store('{"data":[23.5,997.5,65],"key":"abcdef1"}')
       end
+      
+      @punchData = Array.new
+       
+      144.times do
+        @punchData << 0
+      end
+      
+      (1..today.hour).each do
+        @punchData << 0
+      end
+      
+      @punchData << 5
+      
+      ((today.hour + 1)..23).each do
+        @punchData << 0
+      end
+      
+      @punchDays = Array.new
+      
+      theStart = today - 6
+      
+      (theStart..today).each do |i|
+        @punchDays << i.strftime('%a')
+      end
+      
+      @punchDays.reverse!
+      
+      theStartDay = "%02d" % theStart.day
+      theStartMonth = "%02d" % theStart.month
+      theStartYear = theStart.year.to_s
+            
+      theEndDay = "%02d" % today.day
+      theEndMonth = "%02d" % today.month
+      theEndYear = today.year.to_s
+      
+      startRange = theStartYear + "-" + theStartMonth + "-" + theStartDay
+      endRange = theEndYear + "-" + theEndMonth + "-" + theEndDay
+      
+      @punchRange = "#{startRange} to #{endRange}"
       
     rescue Exception => e
       puts e.message
@@ -129,8 +165,7 @@ class APITest < Test::Unit::TestCase
     
   end
   
-  
-    
+      
   # Test the retrievenodes method
   def test_retrievenodes
     results = @dispatch.retrieve_nodes(@params[:empty])
@@ -184,12 +219,18 @@ class APITest < Test::Unit::TestCase
   
   # Test the handleSeqNo method
   def test_handleSeqNo
-    results = @dispatch.retrieve_packets(@params[:withseqno])   
+    initial = @dispatch.retrieve_packets(@params[:empty])
+    value = initial[:packets].first
+    
+    sequenceNo = {:seqno=>value.seqNo}
+    
+    results = @dispatch.retrieve_packets(sequenceNo)   
     assert_equal(1, results[:packets].size)
     
     results = @dispatch.retrieve_packets(@params[:withseqnowrong])
     assert_equal(0, results[:packets].size)
   end
+  
   
   # Test the handleMinute method
   def test_handleMinute
@@ -273,5 +314,17 @@ class APITest < Test::Unit::TestCase
     end
     
   end
+  
+  
+  # Test the buildPunchcard method
+  def test_buildPunchcard
+    data, days, range = Ardtweeno::API.buildPunchcard(@nodeList, {:node=>"node1"})
+    
+    assert_equal(data, @punchData)
+    assert_equal(days, @punchDays)
+    assert_equal(range, @punchRange)
+  end
+
+
 
 end

@@ -275,4 +275,12 @@ class RESTAPITest < Test::Unit::TestCase
   end
   
   
+  # Test the watch list commands
+  def test_watch_node
+    
+    
+      
+  end
+  
+  
 end

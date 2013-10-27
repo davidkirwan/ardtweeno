@@ -4,9 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>Ardtweeno Application Gateway</title>
   <link href="/main.css" media="screen" rel="stylesheet" type="text/css" />
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="/highlightjs/styles/monokai.css" />
   
 </head>
@@ -30,6 +28,7 @@
       <ul class="mytabs" id="tabs">
         <li class="current"><a href="/home">Home</a></li>
         <li><a href="/status">Status</a></li>
+        <li><a href="/topology">Topology</a></li>
       </ul>
       <div class="mytabs-container" id="tabs-container">
         <img src="/img/ajax_preloader.gif" width="64" height="64" class="preloader" />
@@ -40,15 +39,20 @@
     <div id="footer">
   	  <hr/>
       <p id="licence">
-        All content is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US">Attribution-NonCommercial 3.0 Unported</a>.<br /><br /><a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="/img/BY-NC.png" /></a>
+        Unless otherwise stated, all content is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US">Attribution-NonCommercial 3.0 Unported</a>.<br /><br /><a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="/img/BY-NC.png" /></a>
       </p>
     </div>
-  
-    <script type="text/javascript" src="/jquery-1.8.2.min.js"></script>
-  	<!--<script type="text/javascript" src="/jquery-2.0.1.min.js"></script>-->
-  	<script src="/highcharts.js"></script>
+    
+    <!--<script type="text/javascript" src="/jquery/jquery-1.8.2.min.js"></script>-->
+    <!--<script type="text/javascript" src="/jquery/jquery-1.9.1.min.js"></script>-->
+  	<!--<script type="text/javascript" src="/jquery/jquery-2.0.1.min.js"></script>-->
+	<script type="text/javascript" src="/jquery/jquery-2.0.2.min.js"></script>
+	<script type="text/javascript" src="/raphael/raphael-min.js"></script>
+	<link href="/flot/examples.css" rel="stylesheet" type="text/css">
+  	<script language="javascript" type="text/javascript" src="/flot/jquery.flot.js"></script>
+    <script language="javascript" type="text/javascript" src="/flot/jquery.flot.time.js"></script>
   	<script type="text/javascript" src="/main.js"></script>
-  	<script src="/highlightjs/highlight.pack.js"></script>
-  	<script>hljs.initHighlightingOnLoad();</script>
+  	<script type="text/javascript" src="/highlightjs/highlight.pack.js"></script>
+  	<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
   </body>
 </html>

@@ -1,0 +1,43 @@
+<button id="control-panel-click" class="btn btn-small btn-inverse">Gateway Control</button>
+<div id="controlpanel-menu">
+  <div id="controlpanel-button-rack">
+    <button onclick="configGateway('/controlpanel', '#controlpanel-response');" class="btn btn-small btn-info">Config</button>
+    <button onclick="startGateway('/controlpanel', '#controlpanel-response');" class="btn btn-small btn-success">Start</button>
+    <button onclick="stopGateway('/controlpanel', '#controlpanel-response');" class="btn btn-small btn-danger">Stop</button>
+  </div>
+
+  <pre class="alert alert-success">
+    <div id="controlpanel-response" class="muted"></div>
+  </pre>
+</div>
+
+<div id="controlpanel-node-list">
+  <h4>Node Watchlist</h4>
+  <p class="muted">Nodes which have been added to a watchlist will cause an alert to be generated when new
+  	packets of data arrive. The gateway will automatically inform this application of packets arriving for
+  	each watched node much like a push notification system.
+  </p>
+  <table class="table table-striped">
+    <thead>
+      <th>Name</th>
+      <th>Packets</th>
+      <th>Watched</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+    <% unless nodeList.nil? %>
+      <% nodeList.each do |i| %>
+      <tr>
+        <td><%= i["name"] %></td>
+        <td><%= i["packets"].to_s %></td>
+        <td id="<%= i["name"] %>-watch"><%= if watchList.include?(i["name"]) then "Yes"; else "No"; end %></td>
+        <td><button id="<%= i["name"] %>" 
+        			class="btn btn-info add-watch <%= if watchList.include?(i["name"]) then "disabled"; end %>"
+        			>Add to watch list</button>
+        </td>
+      </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+</div>

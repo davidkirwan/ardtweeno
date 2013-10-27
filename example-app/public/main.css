@@ -1,0 +1,32 @@
+#navmenu {
+	padding-top:20px;
+	
+}
+
+h1 {
+	padding-bottom:20px;
+}
+
+#controlpanel-button-rack {
+	margin-top:20px;
+	margin-bottom:20px;
+}
+
+#control-panel-click {
+	margin-top: 25px;
+	margin-bottom: 30px;
+}
+
+#controlpanel-menu {
+	display: none;
+	margin-bottom: 30px;
+}
+
+#content .row {
+	padding-left:20px;
+}
+
+#content pre {
+	height:300px;
+	overflow:scroll;
+}

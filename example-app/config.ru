@@ -1,0 +1,5 @@
+require 'rubygems'
+require File.join(File.dirname(__FILE__), '/sample-demo.rb')
+
+
+run Example::App 

@@ -1,3 +1,59 @@
+## Version 0.4.0
+- Implemented status graph using the flot.js library. Fixes #28
+- Implemented disk utility df parser - Table in /status endpoint now populated with disk usage data. Fixes #23
+- Refactored Ardtweeno::Dispatcher#status? and broke functionality to Ardtweeno::API#status. Refs #23
+- Implemented tests to cover Ardtweeno::API.buildPunchcard. Fixes #33
+- Added retrieve-zones to the api-examples directory. Refs #27
+- Updated retrieve-status.rb, and added retrieve-config and retrieve-nodes. Refs #28
+- Fleshed out implementation of the api example retrieve-status.rb. Refs #27
+- Renamed api example to fix typo
+- Initial implementation of API Example demonstrating how to retrieve   information about gateway status and load. Refs #27
+- Incorporated the Ardtweeno::RingBuffer into a buffer containing the last 15 minutes worth of status data. - Exposed the buffer through /api/v1/system/status/list it does not require authentication to use.
+- Added Ardtweeno::RingBuffer class to the Ardtweeno gem - Implemented test fixtures for the Ardtweeno::RingBuffer class
+- Resolved an issue in the example-app where the application was not handling an exception correctly when the gateway was unavailable. Refs #26
+- Resolved issue with date ranges during the first 7 days of the month. Punchcard graph generator now correctly calculates this range. Fixes #32
+- Added api-sample-usage directory containing snippets of examples of the API being used. Refs #27
+- Dispatcher#store was incorrectly sending invalid parameters to NodeManager#watched? Now resolved
+- Fixed issue with disabled buttons in the example-app controlpanel view continuing to generate AJAX calls 
+- Navbar now correctly sets the active class to the selected menu link. Refs #26
+- Added unit tests to cover functionality added to the API regarding querying the gateway for watch information
+- API extended to query the gateway for all nodes currently watched, with the details of the watchee 
+- API extended to query the gateway if an individual node is watched. Fixes #31 
+- Example app example-app now queries the API and displays whether or not the nodes are watched in the control panel view. Refs #26
+- Adding a watch now disables the button. Refs #26
+- Hardened the implementation of watch lists - example-app now listens for return codes from the /api/v1/watch/node and behaves accordingly. Refs #26
+- Tidied up the watch notification system slightly - Implemented means to add a node to a watchlist from the example-app control panel page. Refs #26
+- Alterered logging output from fatal to warn for error messages surrounding the MongoDB connector creation
+- Added skeleton interface for adding nodes to a watchlist from the example-app. Refs #26
+- continuing development on the example-app refs #26
+Merge branch 'punchcard-graph-date-range' into dev
+- Ardtweeno punchcard graph v1 now produces date range information which is available from the node URI in the topology graph. Fixes #29
+- Updated main README
+- Fleshing out basic functionality of the example-app 
+- last 5 packets and zone information listed on front page. Refs #26
+- Updated README for the ardtweeno-gem directory
+- Slightly updated install instructions 
+- Noticed issue with Rakefile on system before bundle and dependencies were installed was not exiting gracefully, hopefully fixed this issue now
+- example-app now correctly raises the desired HTML status codes when the Ardtweeno gateway is inaccessible. Refs #26
+- Further refactorisation of the example-app. Refs #26
+- Hardened example-app starting and stopping the gateway, while updating the interface with current status. Refs #26
+- example-app is aware if the Ardtweeno gateway is accessible, and whether the SerialParser is running 
+- example-app now has a basic interface developed to allow the starting of the SerialParser.  Refs #26
+- Refactored example-app view templates into reusable layouts. Refs #26
+- Adding some basic functionality to the example-app. Refs #26
+- Added skeleton example-app which consumes the Ardtweeno API. Refs #26
+- Deleting tech-demo app and starting to build a sample application which consumes the Ardtweeno API. Refs #26
+- Altered the output from the punchcard graph generator to display times in a 24 hour format HH. Fixes #25
+- Modified the Ardtweeno frontend Javascript to stop AJAX requests to the status API when navigating away from the status tab. Fixes #18
+- Added favicon.ico. Fixes #21
+- Added bootstrap styles to the punchcard view
+- Implemented punchcard graph generator accessible when clicking on a node in the topology graph. Refs #6
+- Implemented Topology graph generation internally and available from a tab menu on the gateway frontend. Fixes #5
+- Added skeleton implementation of topology view - Updated index view with a new AJAX menu tab linked to the topology view 
+- Added Raphael.js library which is used in the construction of the topology graph. Refs #5
+- Rakefile target test now cleans the tty0tty and then builds the binary before running tests. Fixes #19
+
+
 ## Version 0.3.1
 - Fixed runtime dependency added twice in gemspec. - Fixes #17
 - Release 0.3.0 merged to origin/master

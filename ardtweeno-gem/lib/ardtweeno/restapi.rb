@@ -109,7 +109,40 @@ class RESTAPI < Sinatra::Base
   
   
   get '/status' do
-    erb :status
+    begin
+      diskusage = @@theDispatcher.diskUsage
+      
+    rescue Exception => e
+      throw :halt, [ 500, "500 Internal Server Error" ]
+    end
+    
+    erb :status, :locals => {:diskusage=>diskusage}
+  end
+  
+  
+  get '/topology' do
+    settings.log.debug params.inspect
+    
+    begin
+      theResponse = @@theDispatcher.constructTopology(params)
+      
+    rescue Exception => e
+      throw :halt, [ 500, "500 Internal Server Error" ]
+    end
+    
+    erb :topology, :locals => {:theTopology=>theResponse}
+  end
+  
+  
+  get '/graph/v1/punchcard/:node' do |node|
+    begin
+      theData, theDays, theRange= @@theDispatcher.constructPunchcard(params)
+      
+    rescue Exception => e
+      throw :halt, [ 500, "500 Internal Server Error" ]
+    end
+
+    erb :punchcard, :locals => {:node=>params[:node], :ourGraphData=>theData, :ourGraphDays=>theDays, :ourGraphRange=>theRange}
   end
   
   
@@ -229,9 +262,34 @@ class RESTAPI < Sinatra::Base
     rescue Exception => e
       throw :halt, [ 400, "400 Bad Request" ]
     end
+  end
+  
+  
+  get '/api/v1/watch/:node' do |node|
+    settings.log.debug params.inspect
+    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    settings.log.debug "Check if a node is being watched"
     
+    begin
+      @@theDispatcher.watched?(params).to_json
+    rescue Exception => e
+      throw :halt, [ 400, "400 Bad Request" ]
+    end
   end
 
+
+  get '/api/v1/watch' do
+    settings.log.debug params.inspect
+    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    settings.log.debug "Check if a node is being watched"
+    
+    begin
+      @@theDispatcher.watchList.to_json
+    rescue Exception => e
+      raise e
+      #throw :halt, [ 400, "400 Bad Request" ]
+    end
+  end
 
 #########################################################################################################
   
@@ -292,22 +350,33 @@ class RESTAPI < Sinatra::Base
 
 
   get '/api/v1/system/status' do
-    # Considering making this api target public to avoid having to store API keys in the highcarts.js
-    # graphs..
-    #throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
     settings.log.debug "The system status hook has been called, reading the host configuration"
 
     begin
-      return @@theDispatcher.status?().to_json
+      return @@theDispatcher.status?.to_json
       
     rescue Exception => e
-      raise e
-      #throw :halt, [ 500, "500 Internal Server Error" ]
+      throw :halt, [ 500, "500 Internal Server Error" ]
     end
 
   end
 
+
+  get '/api/v1/system/status/list' do
+    settings.log.debug "The system status list hook has been called, returning the last 15 mins of status data"
+    
+    begin
+      return {:buffer=>@@theDispatcher.statuslist}.to_json
+      
+    rescue Exception => e
+      throw :halt, [ 500, "500 Internal Server Error"]
+    end
+  end
+
 #########################################################################################################
+
+
+
 
 # End of RESTAPI Class
 end

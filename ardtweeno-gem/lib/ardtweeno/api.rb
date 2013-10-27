@@ -1,12 +1,11 @@
 ####################################################################################################
-# @author       David Kirwan <davidkirwanirl@gmail.com>
+# @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  API class for the Ardtweeno system
 #
-# @date         21-02-2013
+# @date         2013-08-05
 ####################################################################################################
 
 # Imports
-require 'rubygems'
 require 'logger'
 require 'yaml'
 require 'json'
@@ -18,7 +17,6 @@ module Ardtweeno
     class << self
     
       attr_accessor :log
-
 
 
       ##
@@ -203,7 +201,7 @@ module Ardtweeno
           @log.debug "version not found, returning empty array"
         end
         
-        return containerArray  
+        return containerArray
       end
 
 
@@ -533,10 +531,412 @@ module Ardtweeno
 
 
       
+      ##
+      # Ardtweeno::API#parseTopology method to construct the topology Hash used in API#buildTopology
+      #
+      # * *Args*    :
+      #   - ++ ->   Hash zones containing raw data from API#retrievezones, 
+      #             Hash nodes containing raw data from API#retrievenodes
+      # * *Returns* :
+      #   -         
+      # * *Raises* :
+      #
+      def parseTopology(zones, nodes)
+        @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
+        @log.level = Ardtweeno.options[:level] ||= Logger::DEBUG
+        
+        zonelist = Array.new
+        
+        begin      
+          
+          zones[:zones].each do |i|
+            zonename = i[:zonename]
+            nodelist = Array.new
+            
+            i[:nodes].each do |j|
+              nodename = j
+              sensorlist = Array.new
+              
+              nodes[:nodes].each do |k|
+                if nodename == k[:name]
+                  sensorlist = k[:sensors]
+                end
+              end
+              
+              nodelist << {:name=> nodename, :sensorlist=> sensorlist}
+            end
+            
+            zonelist << {:zonename=>zonename, :nodes=>nodelist}
+          end
+          
+          response = zonelist
+          
+        rescue Exception => e
+          @log.debug e
+          return e
+        end
+        
+        @log.debug response.inspect
+        return response
+        
+      end
+      
+      
+      
+      ##
+      # Ardtweeno::API#buildTopology method for constructing the topology graph
+      #
+      # * *Args*    :
+      #   - ++ ->     Hash containing structured topology data
+      # * *Returns* :
+      #   -           String containing the Raphael.js code to generate the graph
+      # * *Raises* :
+      #             
+      #
+      def buildTopology(topology)
+        @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
+        @log.level = Ardtweeno.options[:level] ||= Logger::DEBUG
+        
+        @log.debug "Number of Zones: #{topology.count.to_s}"
+        response = ""           # Will hold our response
+        offset = 0              # Offset 
+        totalsensorcount = countSensors(topology)    
+        @log.debug "Total Sensor Count: " + totalsensorcount.to_s
+        
+        # Canvas height
+        defaultheight = 700
+        height = 100 + (totalsensorcount * 100)
+        if height <= defaultheight
+          height = defaultheight 
+          @log.debug "Height less than defaultheight, setting canvas height to 700"
+        end
+        @log.debug "Canvas height: " + height.to_s
+      
+        # Set up the Canvas
+        response += "var thepaper = new Raphael(document.getElementById('topology-canvas'), " +
+                                        "500, #{height});\n"
+                                        
+        # Draw the graph
+        topology.each_with_index do |i, index|
+          
+          # Initial hookup line
+          response += "var hookup1 = thepaper.path('M 50 #{75 + offset} l 50 0');\n"
+          
+          # Print the Zone name
+          response += "var zonetitle = thepaper.text(50, #{20+ offset}, '#{i[:zonename]}').attr({'font-size':20});"
+          
+          # Print the sensors
+          i[:nodes].each_with_index do |j, jndex|
+            
+            # Print the node
+            response += "var node = thepaper.path('M 100 #{100 + offset} " +
+                                "l 0 -50 l 50 0 l 0 50 l -50 0').attr(" +
+                                "{fill: 'red', 'href':'/graph/v1/punchcard/#{j[:name]}'});\n"
+            
+            # Print the node name
+            response += "var nodetitle = thepaper.text(125, #{40 + offset}, '#{j[:name]}');"
+            
+            
+            # Print the link to next node
+            if i[:nodes].count > 1 
+              unless (jndex + 1) == i.count
+                response += "var nextnode1 = thepaper.path('M 75 #{75 + offset} l 0 " +
+                            "#{(j[:sensorlist].count * 100) + 75} l 25 0');"
+              end
+            end
+            
+            # Print the sensors
+            j[:sensorlist].each_with_index do |k, kndex|
+              # Sensor 1 in each node is drawn slightly differently
+              if kndex == 0 
+                response += "var theline = thepaper.path('M 150 #{75 + offset} l 100 0');\n"
+                response += "var thecircle = thepaper.circle(270, #{ 75 + offset}" +
+                            ", 20).attr({fill:'green'});\n"
+                
+                # Print sensortitle
+                response += "var sensor1Title = thepaper.text(350, #{75 + offset}, '#{k}');"
+                
+                offset += 75
+              else              
+              # Sensors beyond first
+                response += "var theline = thepaper.path('M 200 #{offset} l 0 75 l 50 0');"
+                response += "var thecircle = thepaper.circle(270, #{ 75 + offset}, 20).attr({fill:'green'});\n"
+                
+                # Print sensortitle
+                response += "var sensor1Title = thepaper.text(350, #{75 + offset}, '#{k}');"
+                
+                offset += 75
+              end
+              
+            end
+            offset += 100
+          end
+        
+        end    
+  
+        return response
+      end
+      
+      
+      ##
+      # Ardtweeno::API#countSensors private method for counting the number of sensors in the toplogy
+      #
+      # * *Args*    :
+      #   - ++ ->     Hash containing structured topology data
+      # * *Returns* :
+      #   -           Fixnum count of the number of sensors in the topology
+      # * *Raises* :
+      #             
+      #
+      def countSensors(topology)
+        count = 0
+        topology.each do |i|
+          unless i[:nodes].nil?
+            i[:nodes].each do |j|
+              unless j[:sensorlist].nil?
+                count += j[:sensorlist].count
+              end
+            end
+          end
+        end
+        return count
+      end
+      
+      
+      
+      ##
+      # Ardtweeno::API#buildPunchcard generate the data used in the Punchcard graph
+      #
+      # * *Args*    :
+      #   - ++ ->     Array of Ardtweeno::Node, Hash params
+      # * *Returns* :
+      #   -           Array Fixnum, 168 data hourly packet total values for last week,
+      #               Array String previous 7 day names 
+      # * *Raises* :
+      #             
+      #
+      def buildPunchcard(nodeList, params)
+        @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
+        @log.level = Ardtweeno.options[:level] ||= Logger::WARN
+        
+        theParams = Hash.new
+        theParams[:node] = params[:node]
+        
+        data = Array.new
+        days = Array.new
+        
+        today = DateTime.now
+                
+        theStart = today - 6
+
+        theStartDay = "%02d" % theStart.day
+        theStartMonth = "%02d" % theStart.month
+        theStartYear = theStart.year.to_s
+              
+        theEndDay = "%02d" % today.day
+        theEndMonth = "%02d" % today.month
+        theEndYear = today.year.to_s
+        
+        startRange = theStartYear + "-" + theStartMonth + "-" + theStartDay
+        endRange = theEndYear + "-" + theEndMonth + "-" + theEndDay
+        
+        @log.debug "From #{startRange} to #{endRange}"
+        
+        
+        (theStart..today).each do |i|
+          theDay = theStart.strftime('%a')
+          days << theDay
+          @log.debug theDay
+           
+          (0..23).each do |j|
+            theDate = theStart.year.to_s + "-" + "%02d" % theStart.month + "-" + "%02d" % i.day
+            theHour = "%02d" % j
+            
+            theParams = {:hour=>theHour, :date=>theDate}
+            
+            nodes = Ardtweeno::API.retrievepackets(nodeList, theParams)
+            
+            data << nodes[:found].to_i
+          end
+          
+          theStart += 1
+        end
+        
+        @log.debug days.inspect
+        
+        return data, days.reverse, "#{startRange} to #{endRange}"
+      end
+      
+      
+      def status
+        @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
+        @log.level = Ardtweeno.options[:level] ||= Logger::DEBUG
+        # Get CPU
+        maxLoad = calculateCPUCores()
+        
+        # Get Avgload
+        currentLoadPercentage = calculateAvgLoad(maxLoad)
+          
+        # Get MEM Usage
+        usedMem, totalMem = calculateMemLoad()
+        
+        
+        thecpuload = '%.2f' % currentLoadPercentage
+        thememload = '%.2f' % ((usedMem / totalMem.to_f) * 100)
+                  
+        theResponse = {:cpuload=>thecpuload,
+                       :memload=>thememload}
+        
+        @log.debug theResponse.inspect
+        
+        return theResponse
+      end
+      
+      
+      ##
+      # Ardtweeno::API#calculateMemLoad calculate the Memory load on the system
+      #
+      # * *Args*    :
+      #   - ++ ->     
+      # * *Returns* :
+      #   -           Fixednum usedmem, Fixedmem totalmem
+      # * *Raises* :
+      #             
+      #
+      def calculateMemLoad()
+        begin
+          memhash = Hash.new
+          meminfo = File.read('/proc/meminfo')
+          meminfo.each_line do |i| 
+          key, val = i.split(':')
+          if val.include?('kB') then val = val.gsub(/\s+kB/, ''); end
+            memhash["#{key}"] = val.strip
+          end
+              
+          totalMem = memhash["MemTotal"].to_i
+          freeMem = memhash["MemFree"].to_i + memhash["Buffers"].to_i + memhash["Cached"].to_i
+          usedMem = totalMem - freeMem
+              
+          @log.debug "Total Memory: #{totalMem} (100%)"
+          @log.debug "Used Memory: #{usedMem} (#{'%.2f' % ((usedMem / totalMem.to_f) * 100)}%)"
+          @log.debug "Free Memory: #{freeMem} (#{'%.2f' % ((freeMem / totalMem.to_f) * 100)}%)"
+          
+          return usedMem, totalMem
+          
+        rescue Exception => e
+          @log.debug "Some issue accessing /proc/meminfo"
+          usedMem, totalMem = 0, 0
+          
+          return usedMem, totalMem
+        end
+      end
+    
+      
+      ##
+      # Ardtweeno::API#calculateAvgLoad calculate the average CPU load on the system
+      #
+      # * *Args*    :
+      #   - ++ ->     Float maxload
+      # * *Returns* :
+      #   -           Float loadpercentage
+      # * *Raises* :
+      #             
+      #
+      def calculateAvgLoad(maxLoad)
+        begin
+          loadavg = File.read('/proc/loadavg')
+          loads = loadavg.scan(/\d+.\d+/)
+          onemin = loads[0]
+          fivemin = loads[1]
+          fifteenmin = loads[2]
+              
+          @log.debug "LoadAvg are as follows: 1min #{onemin}, 5min #{fivemin}, 15min #{fifteenmin}"
+              
+          loadval = (onemin.to_f / maxLoad)
+          currentLoadPercentage = loadval * 100
+              
+          @log.debug "Currently running at #{'%.2f' % currentLoadPercentage}% of max load"
+          
+          return currentLoadPercentage
+            
+        rescue Exception => e
+          @log.debug "Some issue accessing /proc/loadavg"
+          onemin, fivemin, fifteenmin = 0, 0, 0
+          
+          loadval = (onemin.to_f / maxLoad)
+          currentLoadPercentage = loadval * 100
+          
+          return currentLoadPercentage
+        end
+      end
+      
+      
+      ##
+      # Ardtweeno::API#calculateCPUCores calculate number of CPU cores on the system and returns the
+      #                                  maximum desirable load
+      #
+      # * *Args*    :
+      #   - ++ ->     
+      # * *Returns* :
+      #   -           Float maxload
+      # * *Raises* :
+      #             
+      #
+      def calculateCPUCores()
+        begin # Checking for multi-core CPU
+          cpuinfo = File.read('/proc/cpuinfo')
+          coreinfo = cpuinfo.scan(/cpu cores\s+:\s+\d+/)
+            
+          tempVal = coreinfo[0]
+          numOfCores = tempVal.scan(/\d+/)[0].to_i
+          numOfThreadsPerCore = coreinfo.size / numOfCores
+          maxLoad = (numOfThreadsPerCore * numOfCores).to_f
+          
+          @log.debug "Found #{numOfCores} cores with #{numOfThreadsPerCore} threads per core"
+          @log.debug "Max desirable cpu load: #{maxLoad}"
+          
+          return maxLoad
+          
+        rescue Exception => e
+          @log.debug "Unable to find cpu core info in /proc/cpuinfo, assuming system has a single core"
+          maxLoad = 1.0
+          
+          return maxLoad
+        end
+      end
+      
+      
+      ##
+      # Ardtweeno::API#diskUsage parse the disk usage statistics outputted by the linux utility df
+      #
+      # * *Args*    :
+      #   - ++ ->     
+      # * *Returns* :
+      #   -           Array of Hash {String, String, String, String, String, String}
+      # * *Raises* :
+      #             
+      #
+      def diskUsage
+        diskusage = Array.new
+
+        fileinfo = `df -h`
+        
+        lines = fileinfo.split("\n")
+        lines.delete_at(0)
+        
+        lines.each do |i|
+          i.gsub!(/\s+/, " ")
+          device, size, used, avail, use, mount = i.split(" ")
+          diskusage << {:device=>device, :size=>size, :used=>used, :avail=>avail, :use=>use, :mount=>mount}
+        end
+        
+        return diskusage
+      end
+      
+      
+      
+      private :countSensors, :calculateMemLoad, :calculateAvgLoad, :calculateCPUCores
       
     end
   end # End of API class
-
-
-# End of Ardtweeno Module
-end
+end # End of Ardtweeno Module

@@ -1,34 +1,63 @@
 html, body {
-        margin: 0;
-        padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-        background: #1E1C17;
-        color: #ccc;
-        font-family: 'Trebuchet MS', 'Lucida Grande', Arial, Helvetica, sans-serif;
-        line-height: 1.2em;
+    background: #1E1C17;
+    color: #ccc;
+    font-family: 'Trebuchet MS', 'Lucida Grande', Arial, Helvetica, sans-serif;
+    line-height: 1.2em;
 }
 
 img {
-        border: 0;
+    border: 0;
 }
 
 .preloader{
-        display:block;
-        margin:120px auto;
+    display:block;
+    margin:120px auto;
+}
+
+#punchcard-home {
+	position:relative;
+	right: 15px;
+}
+
+#punchcard-title {
+	position: relative;
+	top: -90px;
+	left: 125px;
+}
+
+#punchcard-range {
+	position: relative;
+	top: -90px;
+	left: 125px;
+}
+
+#punchcard-holder {
+	position: relative;
+	top: -90px;
+	background-color: #F0F0F0;
+	margin: 1em;
+	border-radius: 10px;
+}
+
+#topology-canvas {
+	background-color: #F0F0F0;
 }
 
 #status {
-        position: relative;
-        top: 6px;
+    position: relative;
+    top: 6px;
 }
 
 
 a {
-        text-decoration: underline;
-        color: #FCC240;
-        text-decoration: none;
+    text-decoration: underline;
+    color: #FCC240;
+    text-decoration: none;
 }
 a:hover {
         color: #BF4B31;
@@ -462,3 +491,40 @@ table th[class*="span"],
   background-color: #c4e3f3;
 }
 
+
+.graph-container {
+	box-sizing: border-box;
+	width: 850px;
+	height: 450px;
+	padding: 20px 15px 15px 15px;
+	margin: 15px auto 30px auto;
+	border: 1px solid #ddd;
+	background: #fff;
+	background: linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+
+.graph-container {
+	width: 85%;
+	height: 300px;
+}
+
+.graph-placeholder {
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+	line-height: 1.2em;
+}
+
+.legend table {
+	border-spacing: 5px;
+}

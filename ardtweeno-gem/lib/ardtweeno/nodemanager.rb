@@ -178,8 +178,8 @@ module Ardtweeno
       
       @watchlist.each do |i|
         
-        @log.debug "Comparing " + i[:node] + " and " + node.node
-        if i[:node] == node.node 
+        unless node.nil? then @log.debug "Comparing " + i[:node] + " and " + node; end
+        if i[:node] == node
           return true
         end
       end
@@ -205,7 +205,7 @@ module Ardtweeno
         node = search({:node=>params[:node]})
         @log.debug "Found Node: " + node.inspect
         
-        if watched?(node)
+        if watched?(params[:node])
           raise Ardtweeno::AlreadyWatched
         end
         
@@ -241,13 +241,19 @@ module Ardtweeno
     #
     def removeWatch(node)
       begin
-        node = search({:node=>node})
+        @log.debug "removeWatch called, querying the node manager for the correct node"
+        @log.debug "Searching watchlist for node"
+        @log.debug "Size of watchlist before: " + @watchlist.size.to_s
         
         @watchlist.each do |i|
-          if i[:node] == node.node
+          @log.debug "Comparing #{i[:node]} to #{node}"
+          if i[:node] == node
+            @log.debug "Node to be deleted has been found, deleting"
             @watchlist.delete(i)
           end
         end
+        
+        @log.debug "Size of watchlist after: " + @watchlist.size.to_s
         
       rescue Ardtweeno::NotInNodeList => e
         raise e
@@ -255,6 +261,24 @@ module Ardtweeno
     end
     
     
+    
+    ##
+    # Ardtweeno::NodeManager#watchList returns the list of nodes being watched
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -         Array of Hash { String :node, String :notifyURL, 
+    #                             String :method, String :timeouts }
+    # * *Raises* :
+    #   -         
+    #
+    def watchList
+      return @watchlist
+    end
+    
+    
+        
     ##
     # Ardtweeno::NodeManager#pushNotification pushes a notification to the node watcher
     #
@@ -270,28 +294,23 @@ module Ardtweeno
       @log.debug "Traversing watchlist"
       @watchlist.each do |i|
         
-        @log.debug "Comparing " + i[:node].node + " to " + node
+        @log.debug "Comparing " + i[:node] + " to " + node
                 
-        if i[:node].node == node
+        if i[:node] == node
           
           @log.debug "Associated watch found, checking for method " + i[:method]
           
           if i[:method] == "POST"
             @log.debug "HTTP POST method executing"
-            @log.debug "URL: #{i[:notifyURL]}"
-            @log.debug "Title: Push notification"
-            @log.debug "Content: #{i[:node].node}"
-            @log.debug "Code: #{i[:node].to_s}"
-            
             Typhoeus::Request.post(i[:notifyURL], 
                                      :body=> { :title=>"Push notification",
-                                               :content=>"#{i[:node].node}",
+                                               :content=>"#{i[:node]}",
                                                :code=>""})
           elsif i[:method] == "GET"
             @log.debug "HTTP GET method executing" 
             Typhoeus::Request.get(i[:notifyURL], 
                                     :body=> { :title=>"Push notification",
-                                              :content=>"#{i[:node].node}",
+                                              :content=>"#{i[:node]}",
                                               :code=>""})
           end
 
