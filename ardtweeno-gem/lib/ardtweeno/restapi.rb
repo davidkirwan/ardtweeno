@@ -232,7 +232,8 @@ class RESTAPI < Sinatra::Base
     begin
       @@theDispatcher.retrieve_nodes(params).to_json # Returns String in JSON form
     rescue Exception => e
-      throw :halt, [ 500, "500 Internal Server Error" ]
+      raise e
+      #throw :halt, [ 500, "500 Internal Server Error" ]
     end
   end
 
@@ -320,20 +321,6 @@ class RESTAPI < Sinatra::Base
     "The Ardtweeno system is shutting down, this will take a moment..."    
   end
   
-  
-  # This is currently not implemented correctly  
-  get '/api/v1/system/reboot' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
-    settings.log.debug "The system reboot hook has been called, rebooting the host"
-      
-    begin
-      @@theDispatcher.reboot
-    rescue Exception => e
-      throw :halt, [ 500, "500 Internal Server Error" ]
-    end
-    
-    "The host is rebooting, this will take a moment..."
-  end
 
 
   get '/api/v1/system/status' do
