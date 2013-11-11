@@ -116,6 +116,11 @@ class RESTAPI < Sinatra::Base
   end
   
   
+  get '/api' do
+    erb :api
+  end
+  
+  
   get '/graph/v1/punchcard/:node' do |node|
     begin
       theData, theDays, theRange= @@theDispatcher.constructPunchcard(params)
