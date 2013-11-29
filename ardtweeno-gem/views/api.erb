@@ -1,0 +1,252 @@
+<p id="blurb">
+Ardtweeno Gateway HTTP REST API specification. For more information see <a href="https://github.com/davidkirwan/ardtweeno/wiki/API">here</a>
+</p>
+
+<div id="apitable">
+<table>
+      <tbody>
+      <tr>
+        <th>GET</th>
+        <th>PUT</th>
+        <th>DELETE</th>
+        <th>POST</th>
+        <th>Path</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+        <td class="path">Common to all endpoints:</td>
+        <td>
+          Parameters:
+          <ul>
+            <li>sort the result set, defaults to asc<code>/api/v1/packets?sort=(desc or asc)</code></li>
+            <li>offset the result set, by the passed integer number<code>/api/v1/packets?offset=(positive and negative work)</code></li>
+            <li>length the result set, is limited to only return the first integer number of results. Max of 200<code>/api/v1/packets?length=(positive integer)</code></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="path">/api/v1/nodes</td>
+        <td>
+          Retrieve a list of Nodes and authenticate with API Key:
+          <pre>/api/v1/nodes?key=0dfdFFeeDx</pre>
+          The following Parameters are respected:
+          <ul>
+            <li>name</li>
+            <li>nodekey</li>
+            <li>nodename</li>
+          </ul>
+          Typical response from the gateway:
+          <code>
+<pre>
+{
+  "nodes": [
+    {
+      "name": "node0",
+      "key": "500d81aafe637717a52f8650e54206e64da33d27",
+      "description": "This node has a temperature sensor",
+      "version": "0.2.1",
+      "sensors": [
+        "Temperature"
+      ],
+      "packets": 0
+    },
+    {
+      "name": "node1",
+      "key": "f937c37e949d9efa20d2958af309235c73ec039a",
+      "description": "This node has a movement sensor",
+      "version": "0.2.1",
+      "sensors": [
+        "Movement"
+      ],
+      "packets": 0
+    }
+  ],
+  "total": 2,
+  "found": 2
+}
+</pre>
+          </code>
+        </td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td></td>
+        <td></td>
+        <td>X</td>
+        <td class="path">/api/v1/packets</td>
+        <td>
+          Retrieve a list of packets and authenticate with API Key:
+          <pre>/api/v1/packets?key=0dfdFFeeDx</pre>
+          The following parameters are respected:
+          <ul>
+            <li>node</li>
+            <li>seqno</li>
+            <li>hour</li>
+            <li>minute</li>
+            <li>date</li>
+          </ul>
+          Typical response from the gateway:
+          <code>
+<pre>
+{
+  "packets": [
+    {
+      "date": "2013-11-11",
+      "hour": "22",
+      "minute": "04",
+      "node": "node0",
+      "key": "500d81aafe637717a52f8650e54206e64da33d27",
+      "seqNo": 0,
+      "data": [
+        13
+      ]
+    }
+  ],
+  "total": 1,
+  "found": 1
+}
+</pre>
+          </code>
+        </td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="path">/api/v1/zones</td>
+        <td>
+          Retrieve a list of zones and authenticate with API Key:
+          <pre>/api/v1/zones?key=0dfdFFeeDx</pre>
+          The following parameters are respected:
+          <ul>
+            <li>zonename</li>
+          </ul>
+          Typical response from the gateway:
+          <code>
+<pre>
+{
+  "zones": [
+    {
+      "zonename": "testzone1",
+      "key": "79a7c75758879243418fe2c87ec7d5d4e1451129",
+      "nodes": [
+        "node1"
+      ]
+    },
+    {
+      "zonename": "testzone0",
+      "key": "455a807bb34b1976bac820b07c263ee81bd267cc",
+      "nodes": [
+        "node0"
+      ]
+    }
+  ],
+  "total": 2,
+  "found": 2
+}
+</pre>
+          </code>
+        </td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="path">/api/v1/zones/:zonename</td>
+        <td>
+          Retrieve a list of zones and authenticate with API Key:
+          <pre>/api/v1/zones/testzone1?key=0dfdFFeeDx</pre>
+          Typical response from the gateway:
+          <code>
+<pre>
+{
+  "zones": [
+    {
+      "zonename": "testzone1",
+      "key": "79a7c75758879243418fe2c87ec7d5d4e1451129",
+      "nodes": [
+        "node1"
+      ]
+    }
+  ],
+  "total": 2,
+  "found": 1
+}
+</pre>
+          </code>
+        </td>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="path">/api/v1/watch</td>
+        <td>
+          Retrieve a list of nodes currently on the watch list and authenticate with API Key:
+          <pre>/api/v1/watch?key=0dfdFFeeDx</pre>
+          Typical response from the gateway:
+          <code>
+<pre>
+{
+  "watched": [
+    
+  ]
+}
+</pre>
+      </tr>
+      <tr>
+        <td>X</td>
+        <td></td>
+        <td></td>
+        <td>X</td>
+        <td class="path">/api/v1/watch/:node</td>
+        <td>
+          Retrieve a list of nodes currently on the watch list and authenticate with API Key:
+          <pre>/api/v1/watch/node0?key=0dfdFFeeDx</pre>
+          Typical response from the gateway:
+          <code>
+<pre>
+{
+  "watched": false
+}
+</pre>
+          </code>
+          To add a node to the watchlist use the following parameters in a POST request:
+          <ul>
+            <li>node</li>
+            <li>notifyURL</li>
+            <li>method</li>
+            <li>timeout</li>
+            See the following full example for more information:
+          <code>
+<pre>
+require 'rubygems'
+require 'typhoeus'
+require 'json'
+
+
+body = {:key=> "1230aea77d7bd38898fec74a75a87738dea9f657",
+                :notifyURL=>"http://some-server/push/notifications",
+                :method=>"POST",
+                :timeout=>"60"}
+
+puts Typhoeus::Request.post("http://localhost:4567/api/v1/watch/node2", :body=>body)
+</pre>
+          </code>            
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+    </table>
+</div>

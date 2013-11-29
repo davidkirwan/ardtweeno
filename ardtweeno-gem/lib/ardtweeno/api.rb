@@ -520,8 +520,13 @@ module Ardtweeno
         @log.debug "handleSort function executing"
         
         if theParams.has_key?(:sort) and theParams[:sort] == "desc"
-          theArray = theArray.sort_by {|x| x.seqNo}
-          return theArray.reverse()
+          begin
+          
+            theArray = theArray.sort_by {|x| x.seqNo}
+            return theArray.reverse()
+          rescue Exception => e
+            return theArray.reverse()
+          end
 
         else
           return theArray # Order is already ascending, return original array

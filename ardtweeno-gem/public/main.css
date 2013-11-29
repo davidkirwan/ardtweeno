@@ -528,3 +528,13 @@ table th[class*="span"],
 .legend table {
 	border-spacing: 5px;
 }
+
+
+#apitable td, th { font: 12px Verdana,sans-serif; color: #444; }
+#apitable td.path { font-family: monospace; }
+#apitable th { font-size 1em; font-weight: bold; }
+#apitable table { background: #F0F0F0; border-collapse: collapse; }
+#apitable table th, table td { vertical-align: top; border: 1px solid #bbb; padding: 5px; }
+#apitable code { background: #ffa; }
+#apitable pre { background: black; color: #0f0; padding: 10px; word-wrap: break-word;}
+#apitable table pre { background: #ffa; color: black; }
