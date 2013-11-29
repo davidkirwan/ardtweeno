@@ -232,7 +232,7 @@ class RESTAPITest < Test::Unit::TestCase
   # Test the system start parser command
   def test_system_start
     get "/api/v1/system/start", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
-    assert_equal("The Ardtweeno system is launching, this will take a moment...", last_response.body)
+    assert_equal('{"response":true,"running":true}', last_response.body)
     assert last_response.ok?
     
     # Test call with invalid key fails
@@ -244,7 +244,7 @@ class RESTAPITest < Test::Unit::TestCase
   # Test the system stop parser command
   def test_system_stop
     get "/api/v1/system/stop", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
-    assert_equal("The Ardtweeno system is shutting down, this will take a moment...", last_response.body)
+    assert_equal('{"response":true,"running":false}', last_response.body)
     assert last_response.ok?
     
     # Test call with invalid key fails

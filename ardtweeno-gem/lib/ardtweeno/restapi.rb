@@ -293,12 +293,12 @@ class RESTAPI < Sinatra::Base
     settings.log.debug "The system start hook has been called, launching the Ardtweeno system"
       
     begin
-      @@theDispatcher.start
+      theResponse = @@theDispatcher.start
     rescue Exception => e
       throw :halt, [ 500, "500 Internal Server Error" ]
     end 
       
-    "The Ardtweeno system is launching, this will take a moment..."
+    return {:response=>theResponse, :running=>@@theDispatcher.running?}.to_json
   end
     
     
@@ -307,12 +307,12 @@ class RESTAPI < Sinatra::Base
     settings.log.debug "The system stop hook has been called, shutting the Ardtweeno system down..."
     
     begin
-      @@theDispatcher.stop
+      theResponse = @@theDispatcher.stop
     rescue Exception => e
       throw :halt, [ 500, "500 Internal Server Error" ]
     end
       
-    "The Ardtweeno system is shutting down, this will take a moment..."    
+    return {:response=>theResponse, :running=>@@theDispatcher.running?}.to_json    
   end
   
   
