@@ -5,6 +5,7 @@
 <script type="text/javascript">
   $(function() {
 
+	keepUpdating = true;
     var options = {
       xaxis: { mode: 'time' },
             legend: { show: true,
@@ -31,7 +32,9 @@
         success: onDataReceived
       });
 
-      setTimeout(fetchData, 10000);
+	  if(keepUpdating){
+	  	setTimeout(fetchData, 10000);
+	  }
     }
 
     setTimeout(fetchData, 1000);
