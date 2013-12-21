@@ -637,7 +637,7 @@ module Ardtweeno
         
         @confdata["zones"].each do |i|
           if i["zonekey"] == key
-            return true
+            return true, i
           end
         end
         

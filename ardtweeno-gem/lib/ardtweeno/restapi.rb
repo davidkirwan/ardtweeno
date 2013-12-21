@@ -169,11 +169,15 @@ class RESTAPI < Sinatra::Base
   
 
   get '/api/v1/zones' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The retrieve zones hook has been called"
+
+    theParams = params    
+    unless zonedata.nil? then theParams[:zonename] = zonedata["zonename"]; end
     
     begin
-      @@theDispatcher.retrieve_zones(params).to_json # Returns String in JSON form
+      @@theDispatcher.retrieve_zones(theParams).to_json # Returns String in JSON form
     rescue Exception => e
       throw :halt, [ 500, "500 Internal Server Error" ]
     end
@@ -181,8 +185,12 @@ class RESTAPI < Sinatra::Base
   
   
   get '/api/v1/zones/:zonename' do |zoneid|
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The retrieve zones hook has been called"
+    
+    theParams = params    
+    unless zonedata.nil? then theParams[:zonename] = zonedata["zonename"]; end
     
     begin
       @@theDispatcher.retrieve_zones(params).to_json # Returns String in JSON form
