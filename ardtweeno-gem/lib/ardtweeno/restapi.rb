@@ -184,7 +184,7 @@ class RESTAPI < Sinatra::Base
   end
   
   
-  get '/api/v1/zones/:zonename' do |zoneid|
+  get '/api/v1/zones/:zonename' do |zonename|
     auth, zonedata = @@theDispatcher.authenticate?(params[:key])
     throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The retrieve zones hook has been called"
