@@ -107,7 +107,7 @@ class RESTAPITest < Test::Unit::TestCase
     get "/api/v1/zones", params={:zonename=>"testzone0", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     json = JSON.parse(last_response.body)
     
-    assert_equal(1, json["found"])
+    assert_equal(0, json["found"])
     assert_equal(2, json["total"])
     
     get "/api/v1/zones", params={:zonename=>"testzonez", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
@@ -115,12 +115,12 @@ class RESTAPITest < Test::Unit::TestCase
     assert_equal(0, json["found"])
     assert_equal(2, json["total"])
     
-    get "/api/v1/zones", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    get "/api/v1/zones", params={:key=>"455a807bb34b1976bac820b07c263ee81bd267cc"}
     json = JSON.parse(last_response.body)
-    assert_equal(2, json["found"])
+    assert_equal(1, json["found"])
     assert_equal(2, json["total"])
     
-    get "/api/v1/zones/testzone0", params={:zonename=>"testzone0", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    get "/api/v1/zones/testzone0", params={:zonename=>"testzone0", :key=>"455a807bb34b1976bac820b07c263ee81bd267cc"}
     json = JSON.parse(last_response.body)
     assert_equal(1, json["found"])
     assert_equal(2, json["total"])
@@ -237,7 +237,8 @@ class RESTAPITest < Test::Unit::TestCase
     
     # Test call with invalid key fails
     get "/api/v1/system/start", params={:node=>"node1", :key=>"898fec74a75a87738dea9f657"}
-    assert not(last_response.ok?)
+    assert_equal('{"response":false,"running":true}', last_response.body)
+    assert last_response.ok?
   end
   
   
@@ -249,7 +250,8 @@ class RESTAPITest < Test::Unit::TestCase
     
     # Test call with invalid key fails
     get "/api/v1/system/stop", params={:node=>"node1", :key=>"898fec74a75a87738dea9f657"}
-    assert not(last_response.ok?)
+    assert_equal('{"response":false,"running":false}', last_response.body)
+    assert last_response.ok?
   end
   
   
