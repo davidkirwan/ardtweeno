@@ -104,10 +104,10 @@ class RESTAPITest < Test::Unit::TestCase
 
   # Test retrieval of zones
   def test_retrieve_zones
-    get "/api/v1/zones", params={:zonename=>"testzone0", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    get "/api/v1/zones", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     json = JSON.parse(last_response.body)
     
-    assert_equal(0, json["found"])
+    assert_equal(2, json["found"])
     assert_equal(2, json["total"])
     
     get "/api/v1/zones", params={:zonename=>"testzonez", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
@@ -125,7 +125,7 @@ class RESTAPITest < Test::Unit::TestCase
     assert_equal(1, json["found"])
     assert_equal(2, json["total"])
     
-    get "/api/v1/zones/testzonez", params={:zonename=>"testzonez", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    get "/api/v1/zones/testzonez", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     json = JSON.parse(last_response.body)
     assert_equal(0, json["found"])
     assert_equal(2, json["total"])

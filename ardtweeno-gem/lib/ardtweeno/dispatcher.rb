@@ -632,7 +632,7 @@ module Ardtweeno
     #
     def authenticate?(key)
       if key == @confdata["adminkey"]
-        return true, {:zonename=>"admin",:zonekey=>key,:zonenodes=>@nodeManager.nodeList}
+        return true, {"zonename"=>"admin"}
       else
         
         @confdata["zones"].each do |i|
