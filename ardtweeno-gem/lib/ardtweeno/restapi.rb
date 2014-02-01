@@ -173,11 +173,15 @@ class RESTAPI < Sinatra::Base
     throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The retrieve zones hook has been called"
 
+puts params.inspect
+puts zonedata.inspect
+
     unless zonedata.nil?
-      unless params.has_key?("zonename")
-        params[:zonename] = zonedata["zonename"]
-      end
+      params["role"] = zonedata[:role]
+      unless params.has_key?("zonename") then params["zonename"] = zonedata["zonename"]; end
     end
+    
+    puts params.inspect
     
     begin
       @@theDispatcher.retrieve_zones(params).to_json # Returns String in JSON form
@@ -193,9 +197,7 @@ class RESTAPI < Sinatra::Base
     settings.log.debug "The retrieve zones hook has been called"
 
     unless zonedata.nil?
-      unless params.has_key?("zonename")
-        params[:zonename] = zonedata["zonename"]
-      end
+      params["role"] = zonedata[:role]
     end
     
     begin

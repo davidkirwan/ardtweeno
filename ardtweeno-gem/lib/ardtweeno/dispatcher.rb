@@ -630,13 +630,14 @@ module Ardtweeno
     #   -          true/false
     # * *Raises* :
     #
-    def authenticate?(key)
+    def authenticate?(key)      
       if key == @confdata["adminkey"]
-        return true, {"zonename"=>"admin"}
+        return true, {:role=>"admin"}
       else
         
         @confdata["zones"].each do |i|
           if i["zonekey"] == key
+            i[:role] = "zone"
             return true, i
           end
         end

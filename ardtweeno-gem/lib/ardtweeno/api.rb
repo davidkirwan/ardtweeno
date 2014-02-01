@@ -192,7 +192,7 @@ module Ardtweeno
         
         theArray.each do |i|
           # Found the zone required
-          if i[:zonename] == theParams[:zonename] or theParams[:zonename] == "admin"
+          if i[:zonename] == theParams[:zonename] or theParams[:role] == "admin"
             containerArray << i
           end
         end
