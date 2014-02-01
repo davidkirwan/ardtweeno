@@ -207,7 +207,8 @@ class RESTAPI < Sinatra::Base
 
     
   get '/api/v1/packets' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The retrieve packets hook has been called"
     
     begin
@@ -219,7 +220,8 @@ class RESTAPI < Sinatra::Base
   
     
   post '/api/v1/packets' do 
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The add packets hook has been called"
       
     settings.log.debug "Add packet API request: " + params[:payload]
@@ -237,7 +239,8 @@ class RESTAPI < Sinatra::Base
 #########################################################################################################
 
   get '/api/v1/nodes' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The retrieve nodes hook has been called"
     
     begin
@@ -252,8 +255,8 @@ class RESTAPI < Sinatra::Base
 #########################################################################################################
 
   post '/api/v1/watch/:node' do |node|
-    settings.log.debug params.inspect
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The add watch to node hook has been called"
     
     begin
@@ -265,8 +268,8 @@ class RESTAPI < Sinatra::Base
   
   
   get '/api/v1/watch/:node' do |node|
-    settings.log.debug params.inspect
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "Check if a node is being watched"
     
     begin
@@ -278,8 +281,8 @@ class RESTAPI < Sinatra::Base
 
 
   get '/api/v1/watch' do
-    settings.log.debug params.inspect
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "Check if a node is being watched"
     
     begin
@@ -293,7 +296,8 @@ class RESTAPI < Sinatra::Base
 #########################################################################################################
   
   get '/api/v1/system/config' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The system config hook has been called, querying the Ardtweeno gateway to retrieve config"
     
     begin
@@ -306,7 +310,8 @@ class RESTAPI < Sinatra::Base
   
   
   get '/api/v1/system/start' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The system start hook has been called, launching the Ardtweeno system"
       
     begin
@@ -320,7 +325,8 @@ class RESTAPI < Sinatra::Base
     
     
   get '/api/v1/system/stop' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The system stop hook has been called, shutting the Ardtweeno system down..."
     
     begin

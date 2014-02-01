@@ -236,7 +236,7 @@ class RESTAPITest < Test::Unit::TestCase
     assert last_response.ok?
     
     # Test call with invalid key fails
-    get "/api/v1/system/start", params={:node=>"node1", :key=>"898fec74a75a87738dea9f657"}
+    get "/api/v1/system/start", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     assert_equal('{"response":false,"running":true}', last_response.body)
     assert last_response.ok?
   end
@@ -249,7 +249,7 @@ class RESTAPITest < Test::Unit::TestCase
     assert last_response.ok?
     
     # Test call with invalid key fails
-    get "/api/v1/system/stop", params={:node=>"node1", :key=>"898fec74a75a87738dea9f657"}
+    get "/api/v1/system/stop", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     assert_equal('{"response":false,"running":false}', last_response.body)
     assert last_response.ok?
   end
