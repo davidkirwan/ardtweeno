@@ -298,6 +298,7 @@ class RESTAPI < Sinatra::Base
   get '/api/v1/system/config' do
     auth, zonedata = @@theDispatcher.authenticate?(params[:key])
     throw :halt, [ 404, "404 Page Not Found" ] unless auth
+    throw :halt, [ 401, "401 Not Authorised" ] unless zonedata[:role] == "admin"
     settings.log.debug "The system config hook has been called, querying the Ardtweeno gateway to retrieve config"
     
     begin
@@ -312,6 +313,7 @@ class RESTAPI < Sinatra::Base
   get '/api/v1/system/start' do
     auth, zonedata = @@theDispatcher.authenticate?(params[:key])
     throw :halt, [ 404, "404 Page Not Found" ] unless auth
+    throw :halt, [ 401, "401 Not Authorised" ] unless zonedata[:role] == "admin"
     settings.log.debug "The system start hook has been called, launching the Ardtweeno system"
       
     begin
@@ -327,6 +329,7 @@ class RESTAPI < Sinatra::Base
   get '/api/v1/system/stop' do
     auth, zonedata = @@theDispatcher.authenticate?(params[:key])
     throw :halt, [ 404, "404 Page Not Found" ] unless auth
+    throw :halt, [ 401, "401 Not Authorised" ] unless zonedata[:role] == "admin"
     settings.log.debug "The system stop hook has been called, shutting the Ardtweeno system down..."
     
     begin
