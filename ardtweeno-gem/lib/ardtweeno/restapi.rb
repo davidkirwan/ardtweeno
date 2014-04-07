@@ -173,11 +173,13 @@ class RESTAPI < Sinatra::Base
     throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The retrieve zones hook has been called"
 
-    theParams = params    
-    unless zonedata.nil? then theParams[:zonename] = zonedata["zonename"]; end
+    unless zonedata.nil?
+      params["role"] = zonedata[:role]
+      unless params.has_key?("zonename") then params["zonename"] = zonedata["zonename"]; end
+    end
     
     begin
-      @@theDispatcher.retrieve_zones(theParams).to_json # Returns String in JSON form
+      @@theDispatcher.retrieve_zones(params).to_json # Returns String in JSON form
     rescue Exception => e
       throw :halt, [ 500, "500 Internal Server Error" ]
     end
@@ -188,9 +190,10 @@ class RESTAPI < Sinatra::Base
     auth, zonedata = @@theDispatcher.authenticate?(params[:key])
     throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The retrieve zones hook has been called"
-    
-    theParams = params    
-    unless zonedata.nil? then theParams[:zonename] = zonedata["zonename"]; end
+
+    unless zonedata.nil?
+      params["role"] = zonedata[:role]
+    end
     
     begin
       @@theDispatcher.retrieve_zones(params).to_json # Returns String in JSON form
@@ -204,7 +207,8 @@ class RESTAPI < Sinatra::Base
 
     
   get '/api/v1/packets' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The retrieve packets hook has been called"
     
     begin
@@ -216,7 +220,8 @@ class RESTAPI < Sinatra::Base
   
     
   post '/api/v1/packets' do 
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The add packets hook has been called"
       
     settings.log.debug "Add packet API request: " + params[:payload]
@@ -234,7 +239,8 @@ class RESTAPI < Sinatra::Base
 #########################################################################################################
 
   get '/api/v1/nodes' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The retrieve nodes hook has been called"
     
     begin
@@ -249,8 +255,8 @@ class RESTAPI < Sinatra::Base
 #########################################################################################################
 
   post '/api/v1/watch/:node' do |node|
-    settings.log.debug params.inspect
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "The add watch to node hook has been called"
     
     begin
@@ -262,8 +268,8 @@ class RESTAPI < Sinatra::Base
   
   
   get '/api/v1/watch/:node' do |node|
-    settings.log.debug params.inspect
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "Check if a node is being watched"
     
     begin
@@ -275,8 +281,8 @@ class RESTAPI < Sinatra::Base
 
 
   get '/api/v1/watch' do
-    settings.log.debug params.inspect
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
     settings.log.debug "Check if a node is being watched"
     
     begin
@@ -290,7 +296,9 @@ class RESTAPI < Sinatra::Base
 #########################################################################################################
   
   get '/api/v1/system/config' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
+    throw :halt, [ 401, "401 Not Authorised" ] unless zonedata[:role] == "admin"
     settings.log.debug "The system config hook has been called, querying the Ardtweeno gateway to retrieve config"
     
     begin
@@ -303,7 +311,9 @@ class RESTAPI < Sinatra::Base
   
   
   get '/api/v1/system/start' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
+    throw :halt, [ 401, "401 Not Authorised" ] unless zonedata[:role] == "admin"
     settings.log.debug "The system start hook has been called, launching the Ardtweeno system"
       
     begin
@@ -317,7 +327,9 @@ class RESTAPI < Sinatra::Base
     
     
   get '/api/v1/system/stop' do
-    throw :halt, [ 404, "404 Page Not Found" ] unless @@theDispatcher.authenticate?(params[:key])
+    auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+    throw :halt, [ 404, "404 Page Not Found" ] unless auth
+    throw :halt, [ 401, "401 Not Authorised" ] unless zonedata[:role] == "admin"
     settings.log.debug "The system stop hook has been called, shutting the Ardtweeno system down..."
     
     begin
