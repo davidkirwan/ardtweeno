@@ -3,8 +3,8 @@ require 'rake'
 
 Gem::Specification.new do |s|
   s.name        = 'ardtweeno'
-  s.version     = '0.4.0'
-  s.date        = '2013-10-27'
+  s.version     = '0.5.0'
+  s.date        = '2014-04-08'
   s.summary     = 'Serial Device / IP Network Gateway designed as a PaaS to be run on the Raspberry Pi, exposes Sinatra API'
   s.description = <<-DESCRIPTION
 Ardtweeno - Application Gateway bridges device connected through a serial link to devices connected 
