@@ -297,9 +297,19 @@ module Ardtweeno
         @log.debug "Comparing " + i[:node] + " to " + node
                 
         if i[:node] == node
+          @log.debug "Ensuring the timeout cooloff period is respected"
+          now = Time.now.to_i
+          
+          if i.has_key?(:last_push)
+            timeout = i[:last_push] + i[:timeout].to_i
+            
+            if timeout > now
+              @log.debug "We are within the cooloff period, ignoring the push notification"
+              return 
+            end
+          end          
           
           @log.debug "Associated watch found, checking for method " + i[:method]
-          
           if i[:method] == "POST"
             @log.debug "HTTP POST method executing"
             Typhoeus::Request.post(i[:notifyURL], 
@@ -313,6 +323,8 @@ module Ardtweeno
                                               :content=>"#{i[:node]}",
                                               :code=>""})
           end
+          
+          i[:last_push] = now
 
         end
       end

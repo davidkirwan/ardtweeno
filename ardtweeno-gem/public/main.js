@@ -3,10 +3,6 @@ var tabsId = '#tabs';
 var keepUpdating = false;
 
 
-function hashchanged(){
-	keepUpdating = false;	
-}
-
 $(document).ready(function(){
 	// Preload tab on page load
 	if($(tabsId + ' LI.current A').length > 0){
