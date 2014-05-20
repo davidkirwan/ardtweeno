@@ -708,7 +708,6 @@ module Ardtweeno
       end
       
       
-      
       ##
       # Ardtweeno::API#buildPunchcard generate the data used in the Punchcard graph
       #
@@ -773,6 +772,44 @@ module Ardtweeno
       end
       
       
+      ##
+      # Ardtweeno::API#buildLineplot generate the data used in the Line Plot graph
+      #
+      # * *Args*    :
+      #   - ++ ->     Array of Ardtweeno::Node, Hash params
+      # * *Returns* :
+      #   -           Array Fixnum, 168 data hourly packet total values for last week,
+      #               Array String previous 7 day names 
+      # * *Raises* :
+      #             
+      #
+      def buildLineplot(nodeList, params)
+        @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
+        @log.level = Ardtweeno.options[:level] ||= Logger::WARN
+        
+        theParams = Hash.new
+        theParams[:node] = params[:node]
+        
+        data = Array.new
+        
+        data = Ardtweeno::API.retrievepackets(nodeList, theParams)
+        
+        @log.debug "Line Plot data: " + data.inspect
+        
+        return data
+      end      
+      
+      
+      ##
+      # Ardtweeno::API#status generate a status report for the system
+      #
+      # * *Args*    :
+      #   - ++ ->     
+      # * *Returns* :
+      #   -           {Fixednum :cpuload, Fixedmem :memload}
+      # * *Raises* :
+      #             
+      #
       def status
         @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
         @log.level = Ardtweeno.options[:level] ||= Logger::DEBUG

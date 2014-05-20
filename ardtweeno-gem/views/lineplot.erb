@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <% if defined? node %>
+    <title>Ardtweeno <%= node %> Line Plot Graph</title>
+  <% else %>
+    <title>Ardtweeno Line Plot Graph</title>
+  <% end %>
+  <link href="/main.css" media="screen" rel="stylesheet" type="text/css" />
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  
+  <link href="/bootstrap/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/jquery/jquery-2.0.2.min.js"></script>
+  <script type="text/javascript" src="/bootstrap/bootstrap.min.js"></script>
+  <script language="javascript" type="text/javascript" src="/flot/jquery.flot.js"></script>
+  <script language="javascript" type="text/javascript" src="/flot/jquery.flot.time.js"></script>
+
+<script type="text/javascript">
+  $(function() {
+
+	keepUpdating = true;
+    var options = {
+      xaxis: { mode: 'time' },
+            legend: { show: true,
+            	      container: null, 
+            		  position: 'ne', 
+            		  backgroundColor: '#DBBFFF', 
+            		  backgroundOpacity: 0.5 }
+    };
+
+    var data = [];
+    alreadyFetched = {};
+    $.plot("#placeholder", data, options);
+
+      function fetchData() {
+        function onDataReceived(series) {
+          var thePlot = [series.buffer[0], series.buffer[1]];
+          $.plot("#placeholder", thePlot, options);
+        }
+
+      $.ajax({
+        url: "/api/v1/system/status/list",
+        type: "GET",
+        dataType: "json",
+        success: onDataReceived
+      });
+
+	  if(keepUpdating){
+	  	setTimeout(fetchData, 10000);
+	  }
+    }
+
+    setTimeout(fetchData, 1000);
+  });
+</script>  
+
+    <script type="text/javascript">keepUpdating = false;</script>
+  </head>
+ 
+  <body>
+  	<div id="content">
+      <a href="/"><button id="punchcard-home" class="btn btn-large btn-inverse" type="button">Home</button></a>
+      <div class="graph-container">
+      	<% if defined? node %>
+          <h3 id="punchcard-title">Ardtweeno <%= node %> Line Plot Graph</h3>
+        <% else %>
+          <h3 id="punchcard-title">Ardtweeno Line Plot Graph</h3>
+        <% end %>
+      	
+  	    <div id="placeholder" class="graph-placeholder"></div>
+	  </div>
+	</div>
+  </body>
+ 
+</html>
+

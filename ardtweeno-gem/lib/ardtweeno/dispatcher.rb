@@ -74,6 +74,24 @@ module Ardtweeno
     
     
     ##
+    # Ardtweeno::Dispatcher#constructLineplot method for constructing the line plot graph
+    #
+    # * *Args*    :
+    #   - ++ ->     
+    # * *Returns* :
+    #   -           Array data containing the 168 hourly packet totals for the last week,
+    #               Array of strings containing the names of the last 7 days
+    # * *Raises* :
+    #             
+    #
+    def construct_lineplot(params)
+      theData = Ardtweeno::API.buildLineplot(@nodeManager.nodeList, params)
+      
+      return theData
+    end
+    
+    
+    ##
     # Ardtweeno::Dispatcher#constructTopology method for constructing the topology graph
     #
     # * *Args*    :
@@ -495,24 +513,6 @@ module Ardtweeno
       @log.debug "SerialParser system is inactive.. ignoring.."
       return false
 
-    end
-
-
-    
-    ##
-    # Ardtweeno::Dispatcher#reboot which flushes data then reboots the Ardtweeno Gateway host
-    #
-    # * *Args*    :
-    #   - ++ ->   
-    # * *Returns* :
-    #   -         
-    # * *Raises* :
-    #
-    def reboot()
-      @log.debug "Dispatcher#reboot has been called, restarting the gateway host.."
-      
-      cmd = 'ls -l' #'sudo reboot'
-      sh "#{cmd}"
     end
     
     

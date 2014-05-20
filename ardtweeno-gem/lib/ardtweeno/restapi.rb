@@ -123,13 +123,26 @@ class RESTAPI < Sinatra::Base
   
   get '/graph/v1/punchcard/:node' do |node|
     begin
-      theData, theDays, theRange= @@theDispatcher.constructPunchcard(params)
+      theData, theDays, theRange = @@theDispatcher.constructPunchcard(params)
       
     rescue Exception => e
       throw :halt, [ 500, "500 Internal Server Error" ]
     end
 
     erb :punchcard, :locals => {:node=>params[:node], :ourGraphData=>theData, :ourGraphDays=>theDays, :ourGraphRange=>theRange}
+  end
+  
+  
+  get '/graph/v1/lineplot/:node' do |node|
+    begin
+      theData = @@theDispatcher.construct_lineplot(params)
+      
+    rescue Exception => e
+      raise e
+      #throw :halt, [ 500, "500 Internal Server Error" ]
+    end
+
+    erb :lineplot, :locals => {:data=>nil}
   end
   
   

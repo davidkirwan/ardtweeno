@@ -174,5 +174,5 @@ class App < Sinatra::Base
 
   
 
-end # End of the SampleApp class
-end # End of the SampleDemo module
+end # End of the App class
+end # End of the Example module
