@@ -724,7 +724,6 @@ module Ardtweeno
         @log.level = Ardtweeno.options[:level] ||= Logger::WARN
         
         theParams = Hash.new
-        theParams[:node] = params[:node]
         
         data = Array.new
         days = Array.new
@@ -756,7 +755,7 @@ module Ardtweeno
             theDate = theStart.year.to_s + "-" + "%02d" % theStart.month + "-" + "%02d" % i.day
             theHour = "%02d" % j
             
-            theParams = {:hour=>theHour, :date=>theDate}
+            theParams = {:hour=>theHour, :date=>theDate, :node=>params[:node]}
             
             nodes = Ardtweeno::API.retrievepackets(nodeList, theParams)
             
