@@ -479,18 +479,27 @@ module Ardtweeno
         @log.debug "handleLength function executing"
         
         modifiedArray = Array.new
+        length = 0
         
         if theParams.has_key?(:length) and theParams[:length].to_i < 100
           length = theParams[:length].to_i
+          
           @log.debug "theParams has a length value of #{length}"
         else
           length = 100
           @log.debug "Defaulting to the default length of #{length}"
         end
         
-          
+        @log.debug "This is the size of theArray============ #{theArray.size}"
+        
         if theArray.size > length
           @log.debug "Length is smaller than the size of theArray"
+          
+          if theParams[:graph] 
+            length = theArray.size;
+            @log.debug "This is a graph, setting packets to max size"
+          end
+          
           (0..(length - 1)).step(1) do |i|
             modifiedArray << theArray[i]
           end
@@ -723,19 +732,17 @@ module Ardtweeno
         @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
         @log.level = Ardtweeno.options[:level] ||= Logger::WARN
         
-        theParams = Hash.new
-        
         data = Array.new
         days = Array.new
         
         today = DateTime.now
-                
+        
         theStart = today - 6
 
         theStartDay = "%02d" % theStart.day
         theStartMonth = "%02d" % theStart.month
         theStartYear = theStart.year.to_s
-              
+        
         theEndDay = "%02d" % today.day
         theEndMonth = "%02d" % today.month
         theEndYear = today.year.to_s
@@ -750,12 +757,12 @@ module Ardtweeno
           theDay = theStart.strftime('%a')
           days << theDay
           @log.debug theDay
-           
+          
           (0..23).each do |j|
             theDate = theStart.year.to_s + "-" + "%02d" % theStart.month + "-" + "%02d" % i.day
             theHour = "%02d" % j
             
-            theParams = {:hour=>theHour, :date=>theDate, :node=>params[:node]}
+            theParams = {:hour=>theHour, :date=>theDate, :node=>params[:node], :graph=>true}
             
             nodes = Ardtweeno::API.retrievepackets(nodeList, theParams)
             
