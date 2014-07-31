@@ -490,14 +490,12 @@ module Ardtweeno
           @log.debug "Defaulting to the default length of #{length}"
         end
         
-        @log.debug "This is the size of theArray============ #{theArray.size}"
-        
         if theArray.size > length
           @log.debug "Length is smaller than the size of theArray"
           
           if theParams[:graph] 
             length = theArray.size;
-            @log.debug "This is a graph, setting packets to max size"
+            @log.debug "This is a graph, setting packets length to max size"
           end
           
           (0..(length - 1)).step(1) do |i|
