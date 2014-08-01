@@ -557,14 +557,14 @@ module Ardtweeno
         rawdata.each do |i|
           cpu << [start, i[:cpuload]]
           mem << [start, i[:memload]]
-          running << [start, i[:running]]
+          if i[:running] then running << [start, 100]; else running << [start, 0]; end
           
           start += 10000
         end
         
         cpuseries = {:label=>"CPU &#37;", :data=>cpu, :color=>"#ED0E0E"}
         memseries = {:label=>"MEM &#37;", :data=>mem, :color=>"#0E7AED"}
-        runningseries = {:label=>"Active", :data=>running}
+        runningseries = {:label=>"Parser Active", :data=>running, :color=>"#088A08"}
         
         return [cpuseries, memseries, runningseries]
         

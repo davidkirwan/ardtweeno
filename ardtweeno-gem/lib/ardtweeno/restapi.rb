@@ -142,7 +142,7 @@ class RESTAPI < Sinatra::Base
       #throw :halt, [ 500, "500 Internal Server Error" ]
     end
 
-    erb :lineplot, :locals => {:data=>nil}
+    erb :lineplot, :locals => {:data=>theData, :node=>node}
   end
   
   

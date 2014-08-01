@@ -20,7 +20,6 @@
 <script type="text/javascript">
   $(function() {
 
-	keepUpdating = true;
     var options = {
       xaxis: { mode: 'time' },
             legend: { show: true,
@@ -30,33 +29,11 @@
             		  backgroundOpacity: 0.5 }
     };
 
-    var data = [];
-    alreadyFetched = {};
-    $.plot("#placeholder", data, options);
+    var graph_data = <%= data %>;
+    $.plot("#placeholder", graph_data, options);
 
-      function fetchData() {
-        function onDataReceived(series) {
-          var thePlot = [series.buffer[0], series.buffer[1]];
-          $.plot("#placeholder", thePlot, options);
-        }
-
-      $.ajax({
-        url: "/api/v1/system/status/list",
-        type: "GET",
-        dataType: "json",
-        success: onDataReceived
-      });
-
-	  if(keepUpdating){
-	  	setTimeout(fetchData, 10000);
-	  }
-    }
-
-    setTimeout(fetchData, 1000);
   });
-</script>  
-
-    <script type="text/javascript">keepUpdating = false;</script>
+</script>
   </head>
  
   <body>

@@ -21,7 +21,7 @@
 
       function fetchData() {
         function onDataReceived(series) {
-          var thePlot = [series.buffer[0], series.buffer[1]];
+          var thePlot = [series.buffer[0], series.buffer[1], series.buffer[2]];
           $.plot("#placeholder", thePlot, options);
         }
 
