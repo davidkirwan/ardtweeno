@@ -796,7 +796,6 @@ module Ardtweeno
         
         theParams = Hash.new
         theParams[:node] = params[:node]
-        #theParams[:graph] = true
         
         data = Array.new
         
