@@ -29,6 +29,7 @@ class PacketTest < Test::Unit::TestCase
     @theDate = today.year.to_s() + "-" + "%02d" % today.month.to_s() + "-" + "%02d" % today.day.to_s()
     @newHour = ("%02d" % today.hour).to_s
     @newMinute = ("%02d" % today.min).to_s
+    @newSecond = ("%02d" % today.sec).to_s
     
     # Instantiate the packetArray
     @packetArray = Array.new
@@ -55,7 +56,7 @@ class PacketTest < Test::Unit::TestCase
   def test_to_s
     @packetArray.each do |i|
       assert_equal(
-      "Packet No: #{i.seqNo} Key: 0123456789abcdef Node: defaultNode Date: #{@theDate} #{@newHour}:#{@newMinute} Data: [23.5, 997.8, 30]",
+      "Packet No: #{i.seqNo} Key: 0123456789abcdef Node: defaultNode Date: #{@theDate} #{@newHour}:#{@newMinute}:#{@newSecond} Data: [23.5, 997.8, 30]",
       i.to_s
       )
     end
@@ -63,8 +64,7 @@ class PacketTest < Test::Unit::TestCase
   
   # Test the Ardtweeno::Packet#to_json method
   def test_to_json
-    str = "{\"date\":\"#{@theDate}\",\"hour\":\"#{@newHour}\",\"minute\":\"#{@newMinute
-    }\",\"node\":\"defaultNode\",\"key\":\"0123456789abcdef\",\"seqNo\":0,\"data\":[23.5,997.8,30]}"
+    str = "{\"date\":\"#{@theDate}\",\"hour\":\"#{@newHour}\",\"minute\":\"#{@newMinute}\",\"second\":\"#{@newSecond}\",\"node\":\"defaultNode\",\"key\":\"0123456789abcdef\",\"seqNo\":0,\"data\":[23.5,997.8,30]}"
     
     assert_equal(str, @packetArray.first.to_json)
     

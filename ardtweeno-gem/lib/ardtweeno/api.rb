@@ -10,6 +10,7 @@ require 'logger'
 require 'yaml'
 require 'json'
 require 'date'
+require 'time'
 
 module Ardtweeno
 
@@ -791,53 +792,41 @@ module Ardtweeno
         @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
         @log.level = Ardtweeno.options[:level] ||= Logger::WARN
         
+        colour_codes = ["#40FF00", "#FFFF00", "#FF8000", "#FF4000", "#FE2E2E", "#FF0080", "#FF00FF", "#8000FF", "#0000FF", "#0080FF"]
+        
         theParams = Hash.new
         theParams[:node] = params[:node]
-        theParams[:graph] = true
+        #theParams[:graph] = true
         
         data = Array.new
         
-        #data = Ardtweeno::API.retrievepackets(nodeList, theParams)
+        nodes = Ardtweeno::API.retrievenodes(nodeList, {:name=>params[:node]})
+        packets = Ardtweeno::API.retrievepackets(nodeList, theParams)
         
-        data = [{"label"=>"Sensor 1 %","color"=>"#ED0E0E","data"=>[[1406849920000, 1], 
-                          [1406849980000, 2], 
-                          [1406850040000, 8], 
-                          [1406850100000, 3], 
-                          [1406850160000, 7], 
-                          [1406850220000, 3], 
-                          [1406850280000, 3], 
-                          [1406850340000, 2], 
-                          [1406850400000, 4], 
-                          [1406850460000, 2]
-                         ]
-               },
-               {"label"=>"Sensor 2 %","color"=>"#0E7AED","data"=>[[1406849920000, 7], 
-                          [1406849980000, 4], 
-                          [1406850040000, 8], 
-                          [1406850100000, 6], 
-                          [1406850160000, 6], 
-                          [1406850220000, 7], 
-                          [1406850280000, 3], 
-                          [1406850340000, 1], 
-                          [1406850400000, 9], 
-                          [1406850460000, 3]
-                         ]
-               },
-               {"label"=>"Sensor 3 %","color"=>"#0B4C5F","data"=>[[1406849920000, 7], 
-                          [1406849980000, 8], 
-                          [1406850040000, 2], 
-                          [1406850100000, 1], 
-                          [1406850160000, 6], 
-                          [1406850220000, 6], 
-                          [1406850280000, 3], 
-                          [1406850340000, 3], 
-                          [1406850400000, 8], 
-                          [1406850460000, 2]
-                         ]
-               }].to_json
+        nodes[:nodes][0][:sensors].each_with_index do |i, index|
+          data << {"label"=>i, "color"=>colour_codes[index], "data"=>[]}
+        end
         
+        unless packets[:packets].empty? 
+          packets[:packets].each do |i|
+            
+            year, month, day = i.date.split("-")
+            hour = i.hour
+            minute = i.minute
+            second = i.second
+            
+            time = Time.new(year, month, day, hour, minute, second).to_i * 1000
+            
+            unless i.data.empty?
+              i.data.each_with_index do |j, index|
+                data[index]["data"] << [time, j]
+              end
+            end
+            
+          end
+        end      
         
-        return data
+        return data.to_json
       end      
       
       

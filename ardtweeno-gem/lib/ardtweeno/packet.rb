@@ -21,7 +21,7 @@ module Ardtweeno
   class Packet
     
     # Class fields
-    attr_accessor :key, :seqNo, :date, :hour, :minute, :node, :data 
+    attr_accessor :key, :seqNo, :date, :hour, :minute, :second, :node, :data 
     
     ##
     # Ardtweeno::Packet#new for the Packet class
@@ -41,6 +41,7 @@ module Ardtweeno
       @date = theDate
       @hour = ("%02d" % today.hour).to_s
       @minute = ("%02d" % today.min).to_s
+      @second = ("%02d" % today.sec).to_s
       @data = newData
       @key = newKey
       
@@ -68,7 +69,7 @@ module Ardtweeno
     def to_s
       # Build the string up from field data
       str = "Packet No: " + @seqNo.to_s + " Key: " + @key + " Node: " + @node + " Date: " + @date +
-            " " + @hour + ":" + @minute + " Data: " + @data.to_s  
+            " " + @hour + ":" + @minute + ":" + @second + " Data: " + @data.to_s  
       
       # Returns the built string
       return str
@@ -87,7 +88,7 @@ module Ardtweeno
     def to_json(options={})
       
       jsonStr = '{"date":"' + @date + '","hour":"' + @hour + '","minute":"' +
-      @minute.to_s + '","node":"' + @node + '","key":"' + @key + '","seqNo":' +
+      @minute + '","second":"' + @second + '","node":"' + @node + '","key":"' + @key + '","seqNo":' +
       @seqNo.to_s + ',"data":' + @data.to_json + '}'
       
       return jsonStr
