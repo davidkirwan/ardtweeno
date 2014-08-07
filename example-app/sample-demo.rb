@@ -3,14 +3,13 @@ $stdout.sync = true
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Sample App which consumes the Ardtweeno API and provides some sample functionality
 #
-# @date         2013-07-04
+# @date         2014-08-06
 ####################################################################################################
 ##### Require statements
 require 'rubygems'
 require 'sinatra/base'
 require 'ardtweeno'
 require 'logger'
-require 'rufus/scheduler'
 require 'date'
 require 'typhoeus'
 require File.join(File.dirname(__FILE__), '/settings-helper.rb')
