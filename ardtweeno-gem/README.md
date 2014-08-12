@@ -28,7 +28,7 @@ If you would like to collaborate with me on this project please fork the reposit
 through a pull request! I gladly welcome constructive input!
 
 # COPYING / Licence
-This software is released under the Creative Commons Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0)
+This software is released under the GNU General Public License 3.0 Unported (CC BY-NC 3.0)
 for more information see the full details of this licence here: http://creativecommons.org/licenses/by-nc/3.0/
 
 For information regarding commercial use of the Ardtweeno Gateway, please contact the author at:
