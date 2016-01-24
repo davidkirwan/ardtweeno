@@ -2,8 +2,6 @@
 dev: /dev/ttyUSB0
 speed: 9600
 
-newsURI: b97cb9ae44747ee263363463b7e56
-
 # Administrator API Key
 adminkey: 1230aea77d7bd38898fec74a75a87738dea9f657
 
