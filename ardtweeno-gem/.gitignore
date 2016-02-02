@@ -3,3 +3,7 @@ coverage/
 *.gem
 Gemfile.lock
 resources/node_modules/
+test/debug/tty0tty-1.1/pts/tty0tty
+.bundle/
+tmp/
+vendor/

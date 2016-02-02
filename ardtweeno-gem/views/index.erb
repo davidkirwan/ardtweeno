@@ -2,7 +2,7 @@
 <html>
   <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Ardtweeno Application Gateway</title>
+  <title>Ardtweeno Application</title>
   <link href="/main.css" media="screen" rel="stylesheet" type="text/css" />
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="/highlightjs/styles/monokai.css" />
@@ -10,24 +10,20 @@
 </head>
   <body>
     <div id="header">
-    <div id="logo">Ardtweeno Application Gateway</div>
+    <div id="logo">Ardtweeno</div>
       <ul id="navigation">
         <% if running == true %>
 		  <li><a href="">Status [<img title="Running" id="status" src="/img/glossy_green_button.svg" height="25" width="25"></img>]</a></li>
 		<% else %>
 		  <li><a href="">Status [<img title="Stopped" id="status" src="/img/glossy_red_button.svg" height="25" width="25"></img>]</a></li>
 		<% end %>
-        <li><a href="http://donttase.me/aboutme">About Me</a></li>
-        <li><a href="http://donttase.me/blog">Blog</a></li>
-        <li><a href="http://donttase.me/github">Github</a></li>
-        <li><a href="http://donttase.me/linkedin">LinkedIn</a></li>
       </ul>
     </div>
 
     <div id="content">    
       <ul class="mytabs" id="tabs">
-        <li class="current"><a href="/home">Home</a></li>
-        <li><a href="/status">Status</a></li>
+        <li class="current"><a href="/home">Ardtweeno Status</a></li>
+        <li><a href="/status">Host Status</a></li>
         <li><a href="/topology">Topology</a></li>
         <li><a href="/api">API</a></li>
       </ul>

@@ -27,9 +27,8 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 ##### Require statements
 require 'rubygems'
 require 'sinatra/base'
-require 'ardtweeno'
 require 'logger'
-
+require 'ardtweeno'
 
 class RESTAPI < Sinatra::Base
 
@@ -38,7 +37,7 @@ class RESTAPI < Sinatra::Base
   set :root, File.join(File.dirname(__FILE__) + '/../../')
   set :public_folder, File.join(root, '/public')
   set :views, File.join(root, '/views')
-  
+  set :server, :puma  
   #############################################################################################
     
   # Create the logger instance
