@@ -8,9 +8,11 @@
 # Ardtweeno - Installation instructions
 The Ardtweeno system can be installed from https://rubygems.org/gems/ardtweeno through the _gem_ utility, or by checking 
 out the code from the git repository on https://github.com/davidkirwan/ardtweeno. To install change directory to the
-_ardtweeno-gem_ directory then use the _bundle install_ to install the dependencies. Use the _rake_ utility to build and 
-install the gem.
+_ardtweeno-gem_ directory then:
+
+_bundle install_
+_rake install_
 
 Tests can be run with the _rake test_ command from the ./ardtweeno-gem folder.
 
-To launch the system, simply type _foreman start -f Procfile -p <port>_ from the _ardtweeno-gem_ folder.
+To launch the system, simply type _rackup_ from the _ardtweeno-gem_ folder.
