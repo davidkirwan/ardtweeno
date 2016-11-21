@@ -393,7 +393,9 @@ module Ardtweeno
        
         @log.debug "Constructing a new Ardtweeno::Packet from the payload.."
         packet = Ardtweeno::Packet.new(Ardtweeno.nextSeq(), payload["key"], payload["data"])
-          
+        
+	if packet.data.size > node.sensors.size then raise Ardtweeno::SensorException, "Mismatch between sensors and sensor data counts"; end
+
         @log.debug "Adding packet to the node.."
         node.enqueue(packet)
         

@@ -33,5 +33,7 @@ DESCRIPTION
   s.add_dependency('sinatra', '>= 1.3.3')
   s.add_dependency('thin', '>= 1.5.0')
   s.add_dependency('typhoeus', '>= 0.6.3')
+  s.add_dependency('pry')
+  s.add_dependency('pry-byebug')
   
 end

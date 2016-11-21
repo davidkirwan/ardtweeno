@@ -24,6 +24,7 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 require 'logger'
 require 'fileutils'
+require 'pry'
 require 'ardtweeno/serialparser'
 require 'ardtweeno/dispatcher'
 require 'ardtweeno/exceptions'

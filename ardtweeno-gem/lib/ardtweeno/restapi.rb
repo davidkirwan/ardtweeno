@@ -261,6 +261,8 @@ class RESTAPI < Sinatra::Base
         
     rescue Ardtweeno::NodeNotAuthorised => e
       throw :halt, [ 401, "401 Unauthorised" ]
+    rescue Ardtweeno::SensorException
+      throw :halt, [ 400, "400 Bad Request" ]
     rescue Exception => e
       throw :halt, [ 400, "400 Bad Request" ]
     end

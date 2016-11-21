@@ -60,4 +60,6 @@ module Ardtweeno
   class AlreadyWatched < Exception
   end
   
+  class SensorException < Exception
+  end
 end

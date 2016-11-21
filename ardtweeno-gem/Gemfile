@@ -4,6 +4,8 @@ source "http://rubygems.org"
 # For Testing
 gem "rack-test"
 gem "test-unit"
+gem "pry"
+gem "pry-byebug"
 gem "rspec", :require => "spec"
 
 # For the HTTP REST API

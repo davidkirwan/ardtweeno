@@ -30,7 +30,7 @@ rescue Exception => e
 end
 
 
-task :default => 'menu'
+task :default => 'test'
 
 task :menu do
   puts welcomeMsg = <<-MSG
