@@ -41,5 +41,3 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 ## Usage Instructions
 See the WIKI for information regarding configuration and installation, and here for usage instructions: [usage](http://davidkirwan.github.io/ardtweeno)
 
-## Project Poster
-![Ardtweeno](http://davidkirwan.github.io/ardtweeno/ardtweeno-poster.png)
