@@ -46,10 +46,13 @@
   </head>
  
   <body>
-    <div id="content"><a href="/"><button id="punchcard-home" class="btn btn-large btn-inverse" type="button">Home</button></a></div>
-    <h3 id="punchcard-title">Punchcard Graph for <%= node %></h3>
-    <p id="punchcard-range"><%= ourGraphRange %></p>
-    <div id="punchcard-holder"></div>
+    <div id="content">
+      <h3 id="punchcard-title">Punchcard Graph for <%= node %></h3>
+      <p id="punchcard-range"><%= ourGraphRange %></p>
+      <div id="punchcard-holder"></div>
+      <a href="/"><button id="punchcard-home" class="btn btn-large btn-inverse" type="button">Home</button></a>
+      <a href="/graph/v1/lineplot/<%=node%>"><button id="punchcard-home" class="btn btn-large btn-inverse" type="button">Lineplot</button></a>
+    </div>
   </body>
  
 </html>

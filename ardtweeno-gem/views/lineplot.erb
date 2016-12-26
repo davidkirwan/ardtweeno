@@ -37,19 +37,18 @@
   </head>
  
   <body>
-  	<div id="content">
-      <a href="/"><button id="punchcard-home" class="btn btn-large btn-inverse" type="button">Home</button></a>
+    <div id="content">
       <div class="graph-container">
       	<% if defined? node %>
           <h3 id="punchcard-title">Ardtweeno <%= node %> Line Plot Graph</h3>
         <% else %>
           <h3 id="punchcard-title">Ardtweeno Line Plot Graph</h3>
         <% end %>
-      	
-  	    <div id="placeholder" class="graph-placeholder"></div>
-	  </div>
-	</div>
+        <div id="placeholder" class="graph-placeholder"></div>
+      </div>
+      <a href="/"><button id="punchcard-home" class="btn btn-large btn-inverse" type="button">Home</button></a>
+      <a href="/graph/v1/punchcard/<%=node%>"><button id="punchcard-home" class="btn btn-large btn-inverse" type="button">Punchcard</button></a>
+    </div>
   </body>
- 
 </html>
 

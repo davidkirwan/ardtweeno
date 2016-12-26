@@ -26,19 +26,14 @@ img {
 
 #punchcard-title {
 	position: relative;
-	top: -90px;
-	left: 125px;
 }
 
 #punchcard-range {
 	position: relative;
-	top: -90px;
-	left: 125px;
 }
 
 #punchcard-holder {
 	position: relative;
-	top: -90px;
 	background-color: #F0F0F0;
 	margin: 1em;
 	border-radius: 10px;
