@@ -47,7 +47,7 @@ class Utility
 
     def addwatch(uri, port, key, node)
       body = {:key=>key,
-              :notifyURL=>"http://localhost:5000/push/#{node}", 
+              :notifyURL=>"http://localhost:9292/push/#{node}", 
               :method=>"GET", 
               :timeout=>60}
 
@@ -189,7 +189,7 @@ class Utility
     
     
     def gatewaystart(gateway, port, key)
-      response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/system/start", 
+      response = Typhoeus::Request.post("http://#{gateway}:#{port}/api/v1/system/start", 
           :body=> {:key=>key})
 
       if response.options[:return_code] == :ok
@@ -206,7 +206,7 @@ class Utility
 
 
     def gatewaystop(gateway, port, key)
-      response = Typhoeus::Request.get("http://#{gateway}:#{port}/api/v1/system/stop", 
+      response = Typhoeus::Request.post("http://#{gateway}:#{port}/api/v1/system/stop", 
           :body=> {:key=>key})
 
       if response.options[:return_code] == :ok

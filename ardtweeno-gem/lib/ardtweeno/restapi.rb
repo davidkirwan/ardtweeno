@@ -344,7 +344,7 @@ class RESTAPI < Sinatra::Base
   end
   
   
-  get '/api/v1/system/start' do
+  post '/api/v1/system/start' do
     auth, zonedata = @@theDispatcher.authenticate?(params[:key])
     throw :halt, [ 404, "404 Page Not Found" ] unless auth
     throw :halt, [ 401, "401 Not Authorised" ] unless zonedata[:role] == "admin"
@@ -360,7 +360,7 @@ class RESTAPI < Sinatra::Base
   end
     
     
-  get '/api/v1/system/stop' do
+  post '/api/v1/system/stop' do
     auth, zonedata = @@theDispatcher.authenticate?(params[:key])
     throw :halt, [ 404, "404 Page Not Found" ] unless auth
     throw :halt, [ 401, "401 Not Authorised" ] unless zonedata[:role] == "admin"

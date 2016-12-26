@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link href="/bootstrap/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="/main.css" media="screen" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="/jquery/jquery-2.0.2.min.js"></script>
+    <script type="text/javascript" src="/jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="/bootstrap/bootstrap.min.js"></script>  
     <script type="text/javascript" src="/raphael/raphael-min.js"></script>
     <script type="text/javascript" src="/raphael/g.raphael.js"></script>
@@ -16,35 +16,32 @@
   </head>
  
   <body>
-  	
-  	<div class="container-fluid">
-  		<div class="row-fluid">
-  			<div id="navmenu" class="span2">
-  				<!-- Sidebar -->
-  				<ul class="nav nav-pills nav-stacked">
-  					<% unless active == nil %>
-  					<li <% if active==0 %>class="active" <% end %> ><a href="/">Home</a></li>
-  					<li <% if active==1 %>class="active" <% end %> ><a href="/controlpanel">Controlpanel</a></li>
-  					<li <% if active==2 %>class="active" <% end %> ><a href="#">Zones</a></li>
-  					<li <% if active==3 %>class="active" <% end %> ><a href="#">Nodes</a></li>
-  					<li <% if active==4 %>class="active" <% end %> ><a href="#">Packets</a></li>
-  					<% else %>
-  					<li><a href="/">Home</a></li>
-  					<li><a href="/controlpanel">Controlpanel</a></li>
-  					<li><a href="#">Zones</a></li>
-  					<li><a href="#">Nodes</a></li>
-  					<li><a href="#">Packets</a></li>
-  					<% end %>
-  				</ul>
-  			</div>
-  			
-  			<div id="content" class="span10">
-  				<!-- Content -->
-  				<%= yield %>
-  			</div>
-  		</div>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div id="navmenu" class="span2">
+        <!-- Sidebar -->
+	  <ul class="nav nav-pills nav-stacked">
+  	    <% unless active.nil? %>
+  	      <li <% if active==0 %>class="active" <% end %> ><a href="/">Home</a></li>
+  	      <li <% if active==1 %>class="active" <% end %> ><a href="/controlpanel">Controlpanel</a></li>
+  	      <li <% if active==2 %>class="active" <% end %> ><a href="#">Zones</a></li>
+  	      <li <% if active==3 %>class="active" <% end %> ><a href="#">Nodes</a></li>
+  	      <li <% if active==4 %>class="active" <% end %> ><a href="#">Packets</a></li>
+  	    <% else %>
+  	      <li><a href="/">Home</a></li>
+  	      <li><a href="/controlpanel">Controlpanel</a></li>
+  	      <li><a href="#">Zones</a></li>
+  	      <li><a href="#">Nodes</a></li>
+  	      <li><a href="#">Packets</a></li>
+  	    <% end %>
+  	  </ul>
+	</div>
+
+        <div id="content" class="span10">
+	<!-- Content -->
+          <%= yield %>
+        </div>
+      </div>
     </div>
-  	
   </body>
- 
 </html>

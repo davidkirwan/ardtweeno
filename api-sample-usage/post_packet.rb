@@ -21,7 +21,7 @@ while true
 
   testData = {"data" => data, "key" => "500d81aafe637717a52f8650e54206e64da33d27"}.to_json
 
-  response = Typhoeus::Request.post("http://localhost:4567/api/v1/packets", :body=> {:key => key, :payload=>testData})
+  response = Typhoeus::Request.post("http://localhost:9090/api/v1/packets", :body=> {:key => key, :payload=>testData})
   puts "API HTTP Code: [" + response.code.to_s + "] API Response: [" + response.options[:return_code].to_s + "]"
 
   sleep(rand(0.5..2))

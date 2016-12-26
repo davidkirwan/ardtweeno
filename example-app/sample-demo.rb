@@ -57,7 +57,7 @@ class App < Sinatra::Base
 
 
   not_found do
-    erb :raise404, :layout => :main_layout
+    erb :raise404, :layout => :main_layout, :locals => {:active=>0}
   end
   
   
