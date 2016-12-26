@@ -98,13 +98,14 @@ class RESTAPI < Sinatra::Base
   
     
   get '/home' do
-    theposts = settings.posts
-
-    if theposts.length >= 5
-      theposts = theposts[(theposts.length - 5), theposts.length]
+    begin
+      diskusage = @@theDispatcher.diskUsage
+      
+    rescue Exception => e
+      throw :halt, [ 500, "500 Internal Server Error" ]
     end
-
-    erb :home, :locals => {:postdata => theposts.reverse}
+    
+    erb :status, :locals => {:diskusage=>diskusage}
   end
   
   
