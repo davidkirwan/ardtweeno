@@ -71,7 +71,6 @@ module Ardtweeno
       @sensors = options[:sensors] ||= Array.new
       
       @packetqueue = Array.new
-      
     end
     
     
@@ -86,7 +85,6 @@ module Ardtweeno
     # * *Raises* :
     #   -         Ardtweeno::NotAPacket
     def enqueue(packet)
-      
       if packet.class == Ardtweeno::Packet
         packet.node = @node
         @packetqueue << packet
@@ -94,7 +92,6 @@ module Ardtweeno
       else
         raise Ardtweeno::NotAPacket
       end
-      
     end
     
     
@@ -108,13 +105,11 @@ module Ardtweeno
     # * *Raises* :
     #   -         Ardtweeno::PacketListEmpty
     def dequeue()
-      
       if @packetqueue.empty?
         raise Ardtweeno::PacketListEmpty
       else
         return @packetqueue.delete(@packetqueue.first)
       end
-      
     end
     
     

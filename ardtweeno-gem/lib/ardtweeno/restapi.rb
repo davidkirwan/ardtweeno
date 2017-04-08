@@ -79,14 +79,6 @@ class RESTAPI < Sinatra::Base
   # Setup the system for use
   Ardtweeno.setup(settings.options)
   @@theDispatcher = Ardtweeno::Dispatcher.instance
-  
-  # Posts Array
-  set :posts, @@theDispatcher.getPosts
-  
-  # Posts URI
-  set :newsURI, @@theDispatcher.getPostsURI
-
-    
 #########################################################################################################
 
     
@@ -164,33 +156,6 @@ class RESTAPI < Sinatra::Base
     erb :lineplot, :locals => {:data=>theData, :node=>node}
   end
   
-  
-  get "/#{settings.newsURI}/create/post" do
-    running = @@theDispatcher.running?
-    erb :createpost, :locals => {:running => running}
-  end
-  
-  
-  post "/#{settings.newsURI}/create/post" do
-    settings.log.debug params.inspect
-    
-    thePost = Hash.new
-    
-    unless params["title"].nil? then thePost[:posttitle] = params["title"]; end
-    unless params["content"].nil? then thePost[:postcontent] = params["content"]; end
-    unless params["code"].nil? then thePost[:postcode] = params["code"]; end 
-    
-    unless params["posts"].nil? then
-      if params["posts"] == 'makepost'
-        settings.posts << thePost
-
-        @@theDispatcher.savePosts(settings.posts)
-      end
-    end
-    
-    redirect '/'
-  end
-      
       
   not_found do
     '404 Page Not Found'

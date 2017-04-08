@@ -37,11 +37,8 @@ module Ardtweeno
   # Ardtweeno::Dispatcher system for the Ardtweeno Mesh Network
   #
   class Dispatcher
-    
     include Singleton
-    
     attr_accessor :nodeManager, :parser, :confdata, :nodedata, :db, :auth, :coll, :log, :running, :posts
-    
     
     ##
     # Constructor for the Ardtweeno::Dispatcher class
@@ -131,95 +128,6 @@ module Ardtweeno
       return result
     end
 
-
-
-    ##
-    # Ardtweeno::Dispatcher#flush method for flushing packet data to the Database
-    #
-    # * *Args*    :
-    #   - ++ ->     
-    # * *Returns* :
-    #   -           true
-    # * *Raises* :
-    #             Ardtweeno::DBError
-    def flush()
-      begin
-        @log.debug "Ardtweeno::Dispatcher#flush called"
-      
-        db_host = @confdata["db"]["dbHost"]
-        db_port = @confdata["db"]["dbPort"]
-        db_name = @confdata["db"]["dbName"]
-        db_username = @confdata["db"]["dbUser"]
-        db_password = @confdata["db"]["dbPass"]
-        db_collection = @confdata["db"]["dbPacketsColl"]
-                
-        if @db == nil
-          @log.warn "The database connector is not connected to a database!"
-          @log.debug "Attempting to construct the MongoDB driver instance"
-          
-          begin
-            @db = Mongo::Connection.new(db_host, db_port).db(db_name)
-
-          rescue Mongo::ConnectionFailure => e
-            raise Ardtweeno::DBError, e
-          end
-        end
-        
-        
-        # Ensure we are authenticated to use the MongoDB DB
-        begin
-          @auth = @db.authenticate(db_username, db_password)
-          @coll = @db.collection(db_collection)
-        rescue Mongo::AuthenticationError => e
-          raise Ardtweeno::DBError, e
-        end
-        
-        
-        nodeList = @nodeManager.nodeList
-        packetqueue = Array.new
-        
-        nodeList.each do |i|
-        
-          i.packetqueue.each do |j|
-          
-            data = {
-              :key=>j.key,
-              :seqNo=>j.seqNo,
-              :date=>j.date,
-              :hour=>j.hour,
-              :minute=>j.minute,
-              :node=>j.node,
-              :data=>j.data 
-            }
-          
-            packetqueue << data
-          end
-          
-          # Sorted the packetqueue by the sequence number sequentially
-          packetqueue = packetqueue.sort_by {|x| x[:seqNo]} # Not exactly ideal.. but it works ;p
-        end
-        
-        @log.debug "Packetqueue size: #{packetqueue.size}"
-        @log.debug "Saving packetqueue to the Database"
-        @nodeManager.flush()
-        
-        
-        begin
-          packetqueue.each do |i|
-            @coll.insert(i)
-          end
-        rescue Exception => e
-          raise e
-        end
-        
-        
-      rescue Ardtweeno::DBError => e
-        raise e
-      end  
-      
-      return true
-    end
-    
 
 
     ##
@@ -376,7 +284,6 @@ module Ardtweeno
     #            Ardtweeno::InvalidData if data is invalid or TypeError if not valid JSON
     def store(origionalPayload)
       begin
-        
         @log.debug "Payload recieved, processing.."
         payload = JSON.parse(origionalPayload)
           
@@ -434,7 +341,6 @@ module Ardtweeno
     # * *Raises* :
     #
     def start()
-      
       begin
         unless Ardtweeno.options[:test]   
           unless @running == true
@@ -470,7 +376,6 @@ module Ardtweeno
             
             @log.debug "Dispatcher#start has been called starting the system up.."
             @running = true
-            
             return true
             
           end
@@ -503,7 +408,6 @@ module Ardtweeno
     # * *Raises* :
     #
     def stop()
-      
       begin
         unless Ardtweeno.options[:test]        
           unless @running == false
@@ -513,7 +417,6 @@ module Ardtweeno
             
             @running = false
             @log.debug "Dispatcher#stop has been called shutting system down.."
-            
             return true
             
           end
@@ -531,7 +434,6 @@ module Ardtweeno
       
       @log.debug "SerialParser system is inactive.. ignoring.."
       return false
-
     end
     
     
@@ -667,39 +569,6 @@ module Ardtweeno
     
 
     
-    ##
-    # Ardtweeno::Dispatcher#getPostsURI returns the front page news URI ~/.ardtweeno/conf.yaml 
-    #
-    # * *Args*    :
-    #   - ++ ->   
-    # * *Returns* :
-    #   -          String which makes up the news post URI ie "/randomhash/create/post"
-    # * *Raises* :
-    #
-    def getPostsURI()
-      return @confdata["newsURI"]
-    end
-    
-    
-    
-    ##
-    # Ardtweeno::Dispatcher#getPosts returns the front page news posts loaded from ~/.ardtweeno/posts.yaml 
-    #
-    # * *Args*    :
-    #   - ++ ->   
-    # * *Returns* :
-    #   -          Array of Hash containing post data
-    # * *Raises* :
-    #
-    def getPosts()
-      unless @posts.nil? or @posts.empty?
-        return @posts["posts"]
-      else
-        return Array.new
-      end
-    end
-
-    
     
     ##
     # Ardtweeno::Dispatcher#config returns the configuration as read in from the confg.yaml configuration 
@@ -727,7 +596,6 @@ module Ardtweeno
     # * *Raises* :
     #
     def bootstrap
-      
       # Create a thread which updates the statusbuffer
       @statusthread = Thread.new do
         loop do
@@ -774,35 +642,6 @@ module Ardtweeno
       rescue Exception => e
         raise e
       end
-      
-      
-      # Create the MongoDB connector instance
-      begin
-        @log.debug @confdata["db"]["dbHost"]
-        @log.debug @confdata["db"]["dbPort"]
-        @log.debug @confdata["db"]["dbUser"]
-        @log.debug @confdata["db"]["dbPass"]
-        @log.debug @confdata["db"]["dbName"]
-        @log.debug @confdata["db"]["dbPacketsColl"]
-        
-        @log.debug "Constructing the MongoDB driver instance"
-        
-        db_host = @confdata["db"]["dbHost"]
-        db_port = @confdata["db"]["dbPort"]
-        db_name = @confdata["db"]["dbName"]
-        db_username = @confdata["db"]["dbUser"]
-        db_password = @confdata["db"]["dbPass"]
-        db_collection = @confdata["db"]["dbPacketsColl"]
-        
-        
-        @db = Mongo::Connection.new(db_host, db_port).db(db_name)
-        
-      rescue Mongo::ConnectionFailure => e
-        @log.fatal "#{e}"
-      rescue Exception => e
-        raise e
-      end
-            
     end # End of the bootstrap()
     
     

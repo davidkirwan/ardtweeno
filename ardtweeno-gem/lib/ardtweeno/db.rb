@@ -58,11 +58,118 @@ module Ardtweeno
         @dbconnector = Mongo::Connection.new(host, port).db(databaseName)
         @auth = @dbconnector.authenticate(my_user_name, my_password)
         @coll = @dbconnector.collection(collName)
-        
-        
       end
-      
+     
+      def create_connection(conf_data)
+	# Create the MongoDB connector instance
+	begin
+	  @log.debug @confdata["db"]["dbHost"]
+	  @log.debug @confdata["db"]["dbPort"]
+	  @log.debug @confdata["db"]["dbUser"]
+	  @log.debug @confdata["db"]["dbPass"]
+	  @log.debug @confdata["db"]["dbName"]
+	  @log.debug @confdata["db"]["dbPacketsColl"]
+	  
+	  @log.debug "Constructing the MongoDB driver instance"
+	  
+	  db_host = @confdata["db"]["dbHost"]
+	  db_port = @confdata["db"]["dbPort"]
+	  db_name = @confdata["db"]["dbName"]
+	  db_username = @confdata["db"]["dbUser"]
+	  db_password = @confdata["db"]["dbPass"]
+	  db_collection = @confdata["db"]["dbPacketsColl"]
+	  
+	  @db = Mongo::Connection.new(db_host, db_port).db(db_name)
+	  
+	rescue Mongo::ConnectionFailure => e
+	  @log.fatal "#{e}"
+	rescue Exception => e
+	  raise e
+	end
+      end # end of create_connection
     
+      ##
+      # Ardtweeno::Dispatcher#flush method for flushing packet data to the Database
+      #
+      # * *Args*    :
+      #   - ++ ->     
+      # * *Returns* :
+      #   -           true
+      # * *Raises* :
+      #             Ardtweeno::DBError
+      def flush()
+	begin
+	  @log.debug "Ardtweeno::Dispatcher#flush called"
+	
+	  db_host = @confdata["db"]["dbHost"]
+	  db_port = @confdata["db"]["dbPort"]
+	  db_name = @confdata["db"]["dbName"]
+	  db_username = @confdata["db"]["dbUser"]
+	  db_password = @confdata["db"]["dbPass"]
+	  db_collection = @confdata["db"]["dbPacketsColl"]
+		  
+	  if @db == nil
+	    @log.warn "The database connector is not connected to a database!"
+	    @log.debug "Attempting to construct the MongoDB driver instance"
+	    
+	    begin
+	      @db = Mongo::Connection.new(db_host, db_port).db(db_name)
+
+	    rescue Mongo::ConnectionFailure => e
+	      raise Ardtweeno::DBError, e
+	    end
+	  end
+	  
+	  
+	  # Ensure we are authenticated to use the MongoDB DB
+	  begin
+	    @auth = @db.authenticate(db_username, db_password)
+	    @coll = @db.collection(db_collection)
+	  rescue Mongo::AuthenticationError => e
+	    raise Ardtweeno::DBError, e
+	  end
+	  
+	  
+	  nodeList = @nodeManager.nodeList
+	  packetqueue = Array.new
+	  
+	  nodeList.each do |i|
+	    i.packetqueue.each do |j|
+	      data = {
+		:key=>j.key,
+		:seqNo=>j.seqNo,
+		:date=>j.date,
+		:hour=>j.hour,
+		:minute=>j.minute,
+		:node=>j.node,
+		:data=>j.data 
+	      }
+	    
+	      packetqueue << data
+	    end
+	    
+	    # Sorted the packetqueue by the sequence number sequentially
+	    packetqueue = packetqueue.sort_by {|x| x[:seqNo]} # Not exactly ideal.. but it works ;p
+	  end
+	  
+	  @log.debug "Packetqueue size: #{packetqueue.size}"
+	  
+	  begin
+	    packetqueue.each do |i|
+	      @coll.insert(i)
+	    end
+	  rescue Exception => e
+	    raise e
+	  end
+	  
+	  
+	rescue Ardtweeno::DBError => e
+	  raise e
+	end  
+	
+	return true
+      end
+
     end
   end
 end
