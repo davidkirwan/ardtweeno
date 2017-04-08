@@ -101,6 +101,17 @@ class RESTAPI < Sinatra::Base
   end
   
   
+  get '/configuration' do
+    begin
+      
+    rescue Exception => e
+      throw :halt, [ 500, "500 Internal Server Error" ]
+    end
+    
+    erb :configuration
+  end
+
+
   get '/status' do
     begin
       diskusage = @@theDispatcher.diskUsage
