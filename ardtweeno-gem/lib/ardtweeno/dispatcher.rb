@@ -702,22 +702,6 @@ module Ardtweeno
     
     
     ##
-    # Ardtweeno::Dispatcher#savePosts saves a post to ~/.ardtweeno/posts.yaml 
-    #
-    # * *Args*    :
-    #   - ++ ->   
-    # * *Returns* :
-    #   -          
-    # * *Raises* :
-    #
-    def savePosts(newPosts)
-      @posts["posts"] = newPosts
-      Ardtweeno::ConfigReader.save(@posts, Ardtweeno::POSTPATH)
-    end
-
-    
-    
-    ##
     # Ardtweeno::Dispatcher#config returns the configuration as read in from the confg.yaml configuration 
     # file
     #
@@ -758,7 +742,6 @@ module Ardtweeno
         
         @confdata = Ardtweeno::ConfigReader.load(Ardtweeno::DBPATH)
         @nodedata = Ardtweeno::ConfigReader.load(Ardtweeno::NODEPATH)
-        @posts = Ardtweeno::ConfigReader.load(Ardtweeno::POSTPATH)
 
       rescue Exception => e
         raise e
