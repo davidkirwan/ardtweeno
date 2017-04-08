@@ -1,5 +1,8 @@
 <div id="configuration">
-  <form>
+  <form action='/update_configuration' method='post'>
+    Device: <input type="text" name="device" id="device"></input><br/>
+    Configuration: <input type="textarea" name="config" id="config"></input><br/>
+    <input type='submit' value='Submit'/>
   </form>
 </div>
 <script type="text/javascript">keepUpdating = false;</script>

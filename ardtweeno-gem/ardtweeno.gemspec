@@ -1,6 +1,3 @@
-require 'rake'
-
-
 Gem::Specification.new do |s|
   s.name        = 'ardtweeno'
   s.version     = '0.6.0'
@@ -15,13 +12,13 @@ DESCRIPTION
   s.authors     = ['David Kirwan']
   s.email       = ['davidkirwanirl@gmail.com']
   s.require_paths = ["lib"]
-  s.files       = FileList['lib/**/*.rb',
+  s.files       = Dir['lib/**/*.rb',
                       '[A-Z]*',
                       'bin/*',
                       'public/*',
                       'views/*',
                       'resources/*',
-                      'test/**/*'].to_a
+                      'test/**/*']
   s.homepage    = 'http://rubygems.org/gems/ardtweeno'
   s.executables = ['']
   s.required_ruby_version = '>= 2.0.0'
