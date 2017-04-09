@@ -356,23 +356,22 @@ module Ardtweeno
               @running = false
               return false
             end
-                      
+            
+            # Parser Thread	    
             @parser = Thread.new do
-                           
               begin
                 loop do
                   serialparser.listen(key)
                 end
-                
               rescue Exception => e
                 @log.debug e.message
                 serialparser.close
                 @running = false
                 @parser.kill
                 @parser = nil
-                
               end
             end
+	    # Parser Thread
             
             @log.debug "Dispatcher#start has been called starting the system up.."
             @running = true
