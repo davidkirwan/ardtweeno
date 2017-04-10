@@ -52,10 +52,8 @@ module Ardtweeno
     def initialize
       @log = Ardtweeno.options[:log] ||= Logger.new(STDOUT)
       @log.level = Ardtweeno.options[:level] ||= Logger::DEBUG
-      
       @running = false
       @parser = nil
-      
       @statusbuffer = Ardtweeno::RingBuffer.new(90)
         
       if Ardtweeno.options[:test]
@@ -81,7 +79,6 @@ module Ardtweeno
     #
     def constructPunchcard(params)
       theData, theDays, theDateRange = Ardtweeno::API.buildPunchcard(@nodeManager.nodeList, params)
-      
       return theData, theDays, theDateRange
     end
     
@@ -100,7 +97,6 @@ module Ardtweeno
     #
     def construct_lineplot(params)
       theData = Ardtweeno::API.buildLineplot(@nodeManager.nodeList, params)
-      
       return theData
     end
     
@@ -117,13 +113,10 @@ module Ardtweeno
     #
     def constructTopology(params=nil)
       apitimer = Time.now
-      
       nodes = Ardtweeno::API.retrievenodes(@nodeManager.nodeList, params)
       zones = Ardtweeno::API.retrievezones(@confdata, params)
-      
       topology = Ardtweeno::API.parseTopology(zones, nodes)
       result = Ardtweeno::API.buildTopology(topology)
-      
       @log.debug "Duration: #{Time.now - apitimer} seconds"
       return result
     end
@@ -141,9 +134,7 @@ module Ardtweeno
     #    
     def retrieve_zones(params)
       apitimer = Time.now
-      
       result = Ardtweeno::API.retrievezones(@confdata, params)
-      
       @log.debug "Duration: #{Time.now - apitimer} seconds"
       return result
     end
@@ -181,9 +172,7 @@ module Ardtweeno
     #    
     def retrieve_packets(params)
       apitimer = Time.now
-      
       result = Ardtweeno::API.retrievepackets(@nodeManager.nodeList, params)
-      
       @log.debug "Duration: #{Time.now - apitimer} seconds"
       return result
     end    
@@ -238,19 +227,15 @@ module Ardtweeno
     def addWatch(params)
       begin
         apitimer = Time.now
-        
         params = params.each_with_object({}){|(k,v), h| h[k.to_sym] = v}
-        
         if params.has_key? :node and 
            params.has_key? :notifyURL and 
            params.has_key? :method and
            params.has_key? :timeout
           
-          
           unless params[:method] == "GET" or params[:method] == "POST"
             raise Ardtweeno::InvalidWatch, "Invalid Parameters"
           end
-          
           unless params[:timeout].to_i >= 0
             raise Ardtweeno::InvalidWatch, "Invalid Parameters"
           end
@@ -261,7 +246,6 @@ module Ardtweeno
           @log.debug params.inspect
           raise Ardtweeno::InvalidWatch, "Invalid Parameters"
         end
-        
         @log.debug "Duration: #{Time.now - apitimer} seconds"
         
       rescue Ardtweeno::AlreadyWatched => e
@@ -313,7 +297,6 @@ module Ardtweeno
         else
           @log.debug "There is no watch associated with this node"
         end
-        
         @log.debug "Success!"
         
       rescue Ardtweeno::NotInNodeList => e
@@ -344,11 +327,9 @@ module Ardtweeno
       begin
         unless Ardtweeno.options[:test]   
           unless @running == true
-            
             dev = @confdata["dev"]
             speed = @confdata["speed"]
             key = @confdata["adminkey"]
-            
             begin
               serialparser = Ardtweeno::SerialParser.new(dev, speed, 100, {:log=>@log, :level=>@log.level})
             rescue Exception => e
@@ -410,14 +391,12 @@ module Ardtweeno
       begin
         unless Ardtweeno.options[:test]        
           unless @running == false
-            
             @parser.kill
             @parser = nil
             
             @running = false
             @log.debug "Dispatcher#stop has been called shutting system down.."
             return true
-            
           end
         else
           unless @running == false
@@ -466,7 +445,6 @@ module Ardtweeno
       @log.debug "Ardtweeno::Dispatcher#statuslist executing"
       begin
         rawdata = @statusbuffer.to_a
-        
         cpu = Array.new
         mem = Array.new
         running = Array.new
@@ -478,7 +456,6 @@ module Ardtweeno
           cpu << [start, i[:cpuload]]
           mem << [start, i[:memload]]
           if i[:running] then running << [start, 100]; else running << [start, 0]; end
-          
           start += 10000
         end
         
@@ -554,7 +531,6 @@ module Ardtweeno
       if key == @confdata["adminkey"]
         return true, {:role=>"admin"}
       else
-        
         @confdata["zones"].each do |i|
           if i["zonekey"] == key
             i[:role] = "zone"
@@ -585,6 +561,23 @@ module Ardtweeno
 
 
 
+
+    ##
+    # Ardtweeno::Dispatcher#nodeconfig returns the configuration as read in from the nodelist.yaml configuration 
+    # file
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -          @nodedata
+    # * *Raises* :
+    #
+    def nodeconfig()
+      return @nodedata
+    end
+
+
+
     ##
     # Ardtweeno::Dispatcher#bootstrap which configures the Dispatcher instance for initial operation
     #
@@ -606,8 +599,7 @@ module Ardtweeno
       # Read in the configuration files
       begin
         @log.debug "Reading in the configuration files"
-        
-        @confdata = Ardtweeno::ConfigReader.load(Ardtweeno::DBPATH)
+        @confdata = Ardtweeno::ConfigReader.load(Ardtweeno::CONFIG)
         @nodedata = Ardtweeno::ConfigReader.load(Ardtweeno::NODEPATH)
 
       rescue Exception => e
@@ -617,24 +609,18 @@ module Ardtweeno
       # Create the NodeManager instance
       begin
         @log.debug "Creating an instance of NodeManager inside the Dispatcher"
-        
         nodelist = Array.new
 
         @nodedata.each do |i|
-          
           @log.debug i.inspect
-          
           noptions = {
             :description => i["description"], 
             :version => i["version"],
             :sensors => i["sensors"]
             }
-            
             @log.debug noptions.inspect
-            
           nodelist << Ardtweeno::Node.new(i["name"], i["key"], noptions)
         end
-        
         nmoptions = {:nodelist => nodelist}
         
         @nodeManager = Ardtweeno::NodeManager.new(nmoptions)

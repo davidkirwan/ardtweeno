@@ -99,16 +99,23 @@ class RESTAPI < Sinatra::Base
     
     erb :status, :locals => {:diskusage=>diskusage}
   end
-  
-  
+
+
   get '/configuration' do
     begin
-      
+      diskusage = @@theDispatcher.diskUsage
+      device = @@theDispatcher.config["dev"]
+      speed = @@theDispatcher.config["speed"]
+      zones = JSON.pretty_generate(@@theDispatcher.config["zones"])
+      nodes = JSON.pretty_generate(@@theDispatcher.nodeconfig)
+    
     rescue Exception => e
-      throw :halt, [ 500, "500 Internal Server Error" ]
+      #throw :halt, [ 500, "500 Internal Server Error" ]
+      raise e
     end
     
-    erb :configuration
+    erb :configuration, :locals => {:diskusage=>diskusage, :speed=>speed, :device=> device, :zones=>zones, :nodes=>nodes}
+
   end
 
 

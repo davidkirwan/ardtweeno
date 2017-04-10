@@ -50,9 +50,9 @@ module Ardtweeno
     
     # Constants
     Ardtweeno::VERSION = "0.6.0" unless defined? Ardtweeno::VERSION
-    Ardtweeno::CONFIGPATH = ENV['HOME'] + "/.ardtweeno" unless defined? Ardtweeno::CONFIGPATH
-    Ardtweeno::DBPATH = Ardtweeno::CONFIGPATH + "/conf.yaml" unless defined? Ardtweeno::DBPATH
-    Ardtweeno::NODEPATH = Ardtweeno::CONFIGPATH + "/nodelist.yaml" unless defined? Ardtweeno::NODEPATH
+    Ardtweeno::HOME = ENV['HOME'] + "/.ardtweeno" unless defined? Ardtweeno::HOME
+    Ardtweeno::CONFIG = Ardtweeno::HOME + "/conf.yaml" unless defined? Ardtweeno::CONFIG
+    Ardtweeno::NODEPATH = Ardtweeno::HOME + "/nodelist.yaml" unless defined? Ardtweeno::NODEPATH
         
     # Class Variables
     @@seqCount = 0 unless defined? @@seqCount
@@ -109,7 +109,7 @@ module Ardtweeno
       end    
       
       @log.debug "Checking to see if the configuration folder exists."
-      resourceDir = Ardtweeno::CONFIGPATH
+      resourceDir = Ardtweeno::HOME
       @log.debug resourceDir
       
       if File.directory?(resourceDir) 

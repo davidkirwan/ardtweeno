@@ -1,7 +1,9 @@
 <div id="configuration">
   <form action='/update_configuration' method='post'>
-    Device: <input type="text" name="device" id="device"></input><br/>
-    Configuration: <input type="textarea" name="config" id="config"></input><br/>
+    Device: <br/><input type="text" name="device" id="device" value="<%= device %>"></input><br/>
+    Speed: <br/><input type="text" name="speed" id="speed" value="<%= speed %>"></input><br/>
+    Zones: <br/><textarea name="config" id="config"><%= zones %></textarea><br/>
+    Nodes: <br/><textarea name="nconfig" id="nconfig"><%= nodes %></textarea><br/>
     <input type='submit' value='Submit'/>
   </form>
 </div>

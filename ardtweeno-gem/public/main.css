@@ -1,3 +1,37 @@
+/* * { border: 1px solid black; } */
+
+div#configuration {
+  padding-left:20px;
+}
+
+input#device {
+  vertical-align: top;
+  width: 50%;
+  border: 1px;
+}
+input#speed {
+  vertical-align: top;
+  width: 50%;
+  border: 1px;
+}
+
+textarea#config {
+  vertical-align: top;
+  width: 50%;
+  height: 200px;
+  resize: none;
+}
+textarea:focus {
+  outline-style: solid;
+  outline-width: 2px;
+}
+textarea#nconfig {
+  vertical-align: top;
+  width: 50%;
+  height: 200px;
+  resize: none;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -528,3 +562,4 @@ table th[class*="span"],
 #apitable code { background: #ffa; }
 #apitable pre { background: black; color: #0f0; padding: 10px; word-wrap: break-word;}
 #apitable table pre { background: #ffa; color: black; }
+
