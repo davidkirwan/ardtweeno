@@ -62,4 +62,16 @@ module Ardtweeno
   
   class SensorException < Exception
   end
+
+  class InvalidSerialSpeedException < Exception
+  end
+
+  class InvalidSerialDeviceException < Exception
+  end
+
+  class MalformedZoneJSONException < Exception
+  end
+
+  class MalformedNodeJSONException < Exception
+  end
 end

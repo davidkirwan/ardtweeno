@@ -563,6 +563,28 @@ module Ardtweeno
 
 
     ##
+    # Ardtweeno::Dispatcher#save_config saves the configuration to the config.yaml file 
+    # file
+    #
+    # * *Args*    :
+    #   - ++ ->   
+    # * *Returns* :
+    #   -          
+    # * *Raises* :
+    #             Some file exception...
+    def save_config(params)
+      begin
+	@confdata = Ardtweeno::ConfigReader.save(params, Ardtweeno::CONFIG, {:log=>@log})
+
+      rescue Exception => e
+	raise e
+      end
+    end
+
+
+
+
+    ##
     # Ardtweeno::Dispatcher#nodeconfig returns the configuration as read in from the nodelist.yaml configuration 
     # file
     #
@@ -600,7 +622,6 @@ module Ardtweeno
       begin
         @log.debug "Reading in the configuration files"
         @confdata = Ardtweeno::ConfigReader.load(Ardtweeno::CONFIG)
-        @nodedata = Ardtweeno::ConfigReader.load(Ardtweeno::NODEPATH)
 
       rescue Exception => e
         raise e
@@ -611,6 +632,7 @@ module Ardtweeno
         @log.debug "Creating an instance of NodeManager inside the Dispatcher"
         nodelist = Array.new
 
+	@nodedata = @confdata["nodes"]
         @nodedata.each do |i|
           @log.debug i.inspect
           noptions = {

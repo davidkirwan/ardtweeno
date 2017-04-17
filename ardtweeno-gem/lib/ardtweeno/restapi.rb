@@ -108,14 +108,37 @@ class RESTAPI < Sinatra::Base
       speed = @@theDispatcher.config["speed"]
       zones = JSON.pretty_generate(@@theDispatcher.config["zones"])
       nodes = JSON.pretty_generate(@@theDispatcher.nodeconfig)
-    
     rescue Exception => e
       #throw :halt, [ 500, "500 Internal Server Error" ]
       raise e
     end
     
     erb :configuration, :locals => {:diskusage=>diskusage, :speed=>speed, :device=> device, :zones=>zones, :nodes=>nodes}
+  end
 
+
+  post '/update_configuration' do
+    begin
+      auth, zonedata = @@theDispatcher.authenticate?(params[:key])
+      throw :halt, [ 401, "401 Unauthorised" ] unless auth && zonedata.key?(:role) && zonedata[:role] == "admin" 
+     
+      settings.log.debug params.inspect
+      @@theDispatcher.save_config(params)
+
+      redirect "/"
+
+    rescue Ardtweeno::InvalidSerialSpeedException => e
+      throw :halt, [ 400, e.message ]
+    rescue Ardtweeno::InvalidSerialDeviceException => e
+      throw :halt, [ 400, e.message ]
+    rescue Ardtweeno::MalformedZoneJSONException => e
+      throw :halt, [ 400, e.message ]
+    rescue Ardtweeno::MalformedNodeJSONException => e
+      throw :halt, [ 400, e.message ]
+    rescue Exception => e
+      #throw :halt, [ 500, "500 Internal Server Error" ]
+      raise e
+    end
   end
 
 
@@ -167,8 +190,7 @@ class RESTAPI < Sinatra::Base
       theData = @@theDispatcher.construct_lineplot(params)
       
     rescue Exception => e
-      raise e
-      #throw :halt, [ 500, "500 Internal Server Error" ]
+      throw :halt, [ 500, "500 Internal Server Error" ]
     end
 
     erb :lineplot, :locals => {:data=>theData, :node=>node}
