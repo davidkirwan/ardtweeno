@@ -83,7 +83,7 @@ class APITest < Test::Unit::TestCase
       @nodeList = Array.new
       
       5.times do |i|
-        @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}", {:version=>"0.5.0"})
+        @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}", {:version=>"0.5.0", :sensors=>["one", "two", "three"]})
       end
       
       nodemanager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})

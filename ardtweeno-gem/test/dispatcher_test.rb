@@ -45,13 +45,6 @@ class DispatcherTest < Test::Unit::TestCase
                   "speed"=>9600,
                   "newsURI"=>"b97cb9ae44747ee263363463b7e56",
                   "adminkey"=>"1230aea77d7bd38898fec74a75a87738dea9f657",
-                  "db"=>{"dbHost"=>"localhost",
-                         "dbPort"=>27017,
-                         "dbUser"=>"david",
-                         "dbPass"=>"86ddd1420701a08d4a4380ca5d240ba7",
-                         "dbName"=>"ardtweeno",
-                         "dbPacketsColl"=>"packets"
-                         },
                   "zones"=>[{"zonename"=>"testzone0",
                              "zonekey"=>"455a807bb34b1976bac820b07c263ee81bd267cc",
                              "zonenodes"=>["node0","node1"]
@@ -72,7 +65,7 @@ class DispatcherTest < Test::Unit::TestCase
       @nodeList = Array.new
       
       5.times do |i|
-        @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}")
+        @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}", {:sensors=>["one", "two", "three"]})
       end
       
       @nodemanager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})
@@ -239,11 +232,4 @@ class DispatcherTest < Test::Unit::TestCase
 
   end
   
-  
-  # Test to ensure the Ardtweeno::Dispatcher#getPostsURI is working correctly
-  def test_get_posts_URI
-    assert_equal(@dispatch.getPostsURI, "b97cb9ae44747ee263363463b7e56")
-  end
-  
-
 end

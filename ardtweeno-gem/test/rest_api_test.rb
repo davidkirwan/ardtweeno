@@ -46,13 +46,29 @@ class RESTAPITest < Test::Unit::TestCase
     today = DateTime.now
     theDate = today.year.to_s() + "-" + "%02d" % today.month.to_s() + "-" + "%02d" % today.day.to_s()
 
-    
+    @confdata = {"dev"=>"/dev/pts/2",
+                 "speed"=>9600,
+                 "adminkey"=>"1230aea77d7bd38898fec74a75a87738dea9f657",
+                 "zones"=>[{"zonename"=>"testzone0",
+                            "zonekey"=>"455a807bb34b1976bac820b07c263ee81bd267cc",
+                            "zonenodes"=>["node0","node1"]
+                            },
+                            {"zonename"=>"testzone1",
+                             "zonekey"=>"79a7c75758879243418fe2c87ec7d5d4e1451129",
+                             "zonenodes"=>["node2","node3"]
+                            }]
+                 }          
+                  
+    # Inform the Ardtweeno::Dispatcher we are in testing mode so do not run the bootstrap()
+    # method as we will be creating instances of all required classes in the fixtures then
+    # injecting them into the dispatcher
+    Ardtweeno.setup({:test=>true, :log=>Logger.new(STDOUT), :level=>Logger::DEBUG, :confdata=>@confdata})
     @dispatcher = Ardtweeno::Dispatcher.instance
     
     @nodeList = Array.new
     
     5.times do |i|
-      @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}")
+      @nodeList << Ardtweeno::Node.new("node#{i}", "abcdef#{i}", {:sensors=>["one", "two", "three"]})
     end
     
     @dispatcher.nodeManager = Ardtweeno::NodeManager.new({:nodelist => @nodeList})
@@ -77,28 +93,6 @@ class RESTAPITest < Test::Unit::TestCase
   end
   
   
-  # Check manual create post page loads
-  def test_create_post
-    
-    postURI = @dispatcher.getPostsURI
-    
-    # Check the form loads ok
-    get "/#{postURI}/create/post"
-    
-    assert_equal("http://example.org/#{postURI}/create/post", last_request.url)
-    assert last_response.ok?
-    
-    # Add a post to the system
-    post "/#{postURI}/create/post", 
-         params={"title"=>'Test Title', "content"=>'Test Content', "code"=>'Test Code'}
-    follow_redirect!
-    
-    assert_equal("http://example.org/", last_request.url)
-    assert last_response.ok?
-    
-  end
-  
-  
   # Test 404 raised for non existing pages
   def test_not_found
     get "/testingmctest/not/found"
@@ -112,7 +106,7 @@ class RESTAPITest < Test::Unit::TestCase
   def test_home
     get "/home"
     
-    assert last_response.body.include?("Ardtweeno is an application gateway which bridges")
+    assert last_response.body.include?("System Status")
     assert last_response.ok?
   end
   
@@ -255,12 +249,12 @@ class RESTAPITest < Test::Unit::TestCase
   
   # Test the system start parser command
   def test_system_start
-    get "/api/v1/system/start", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    post "/api/v1/system/start", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     assert_equal('{"response":true,"running":true}', last_response.body)
     assert last_response.ok?
     
     # Test call with invalid key fails
-    get "/api/v1/system/start", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    post "/api/v1/system/start", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     assert_equal('{"response":false,"running":true}', last_response.body)
     assert last_response.ok?
   end
@@ -268,12 +262,12 @@ class RESTAPITest < Test::Unit::TestCase
   
   # Test the system stop parser command
   def test_system_stop
-    get "/api/v1/system/stop", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    post "/api/v1/system/stop", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     assert_equal('{"response":true,"running":false}', last_response.body)
     assert last_response.ok?
     
     # Test call with invalid key fails
-    get "/api/v1/system/stop", params={:node=>"node1", :key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
+    post "/api/v1/system/stop", params={:key=>"1230aea77d7bd38898fec74a75a87738dea9f657"}
     assert_equal('{"response":false,"running":false}', last_response.body)
     assert last_response.ok?
   end
