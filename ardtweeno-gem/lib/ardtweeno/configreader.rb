@@ -3,7 +3,7 @@
 # @author       David Kirwan https://github.com/davidkirwan/ardtweeno
 # @description  Ardtweeno Gateway
 #
-# @date         2014-08-12
+# @date         2017-04-18
 ####################################################################################################
 
 This file is part of Ardtweeno.
@@ -53,23 +53,28 @@ module Ardtweeno
       
       
       # Saves the database to disk
-      def save(newData, path, options={})
+      def save(old_data, new_data, path, options={})
         @log = options[:log] ||= Logger.new(STDOUT)
         @log.level = options[:level] ||= Logger::DEBUG
 
         begin
-	  validate_data(newData)
-          #@data = newData
-        
-          #unless options[:mode] == 'append'
-          #  f = File.open(path, "w")
-          #else
-          #  f = File.open(path, "a")
-          #end
+	  validated_data = validate_data(new_data)
+	  @log.debug "data validated"
+          @data = old_data
+	  @data["speed"] = validated_data["speed"]
+	  @data["dev"] = validated_data["device"]
+	  @data["zones"] = validated_data["zones"]
+	  @data["nodes"] = validated_data["nodes"]
+
+          unless options[:mode] == 'append'
+            f = File.open(path, "w")
+          else
+            f = File.open(path, "a")
+          end
           
 	  @log.debug "Writing data to file"
-          #f.write(@data.to_yaml)
-          #f.close
+          f.write(@data.to_yaml)
+          f.close
         rescue Exception => e
 	  raise e
         end
@@ -79,10 +84,36 @@ module Ardtweeno
 
       # Validate the data before saving it
       def validate_data(new_data)
-        raise Ardtweeno::InvalidSerialSpeedException, "Invalid serial device speed specified" unless ["1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200"].include?(new_data["speed"])
-	raise Ardtweeno::InvalidSerialDeviceException, "Invalid device" unless File.exists?(new_data["device"]) 
-	raise Ardtweeno::MalformedZoneJSONException, "Zones json malformed" unless false
-	raise Ardtweeno::MalformedNodeJSONException, "Nodes json malformed" unless false
+	speed = new_data["speed"]
+	@log.debug speed
+	@log.debug "Verifying serial device speed"
+        raise Ardtweeno::InvalidSerialSpeedException, "Invalid serial device speed specified" unless ["1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200"].include?(speed)
+	device = new_data["device"]
+	@log.debug "Verifying existance of serial device"
+	raise Ardtweeno::InvalidSerialDeviceException, "Invalid device" unless File.exists?(device)
+
+	begin
+	  @log.debug "Verifying structure of the Zone JSON configuration"
+	  zones = JSON.parse(new_data["config"])
+	  @log.debug zones.class
+	  @log.debug zones.inspect
+	  raise Exception unless zones.class == Array
+	  zones.map {|i| raise Exception unless i.class == Hash && i.key?("zonename") && i.key?("zonekey") && i.key?("zonenodes")}
+	rescue Exception => e
+	  raise Ardtweeno::MalformedZoneJSONException, "Zones json malformed" unless false
+	end
+
+	begin
+	  @log.debug "Verifying structure of the Node JSON configuration"
+          nodes = JSON.parse(new_data["nconfig"])
+	  @log.debug nodes.class
+	  @log.debug nodes.inspect
+	  raise Exception unless nodes.class == Array
+	  nodes.map {|i| raise Exception unless i.class == Hash && i.key?("name") && i.key?("key") && i.key?("sensors")}
+	rescue Exception => e
+	  raise Ardtweeno::MalformedNodeJSONException, "Nodes json malformed" unless false
+	end
+	{"speed"=>speed,"device"=>device,"zones"=>zones,"nodes"=>nodes}
       end
       
     
